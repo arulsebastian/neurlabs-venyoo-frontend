@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>Welcome</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+          <script src="js/html5shiv.js"></script>
+          <script src="js/respond.min.js"></script>
+        <![endif]-->
+    <!-- Select -->    
+    <link rel="stylesheet" media="screen, projection" href="css/bootstrap-select.css">
+  </head>
+
+  <body>
+
+    <div class="wrapper">
+      <!-- Left Sec -->
+      <div class="left_sec">
+
+        <!-- Map -->
+        <div class="map_sec"><img src="images/map.jpg" alt=""></div>
+
+        <!-- Start Detail -->
+        <div class="start_detail"><img src="images/start_image.jpg" alt=""></div>
+
+      </div>
+    </div>
+
+    <!-- Js -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>  
+    <!-- Select Box -->
+    <script src="js/bootstrap-select.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        var mySelect = $('#first-disabled2');
+
+        $('#special').on('click', function () {
+          mySelect.find('option:selected').prop('disabled', true);
+          mySelect.selectpicker('refresh');
+        });
+        $('#special2').on('click', function () {
+          mySelect.find('option:disabled').prop('disabled', false);
+          mySelect.selectpicker('refresh');
+        });
+
+        var $basic2 = $('#basic2').selectpicker({
+          liveSearch: true,
+          maxOptions: 1
+        });
+      });
+    </script>
+
+  </body>
+  
+</html>
