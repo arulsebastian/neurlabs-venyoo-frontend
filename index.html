@@ -1,11 +1,124 @@
 <!doctype html>
 <html>
   <head>
-    <title>Webpack CSS example</title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Welcome</title>
     <link rel="stylesheet" href="/build/app.css" />
   </head>
   <body>
     <div id="main"></div>
-    <script src="/build/app.js"></script>
+    <!-- script src="/build/app.js"></script -->
+
+    <div class="wrapper">
+      <!-- Left Sec -->
+      <div class="left_sec">
+
+        <!-- Map -->
+        <div class="map_sec"><div id="map-canvas" style="width:920px;height:434px"></div></div>
+
+        <!-- Start Detail -->
+        <div class="start_detail"><img src="images/start_image.jpg" alt="" style="width:920px"></div>
+
+      </div>
+    </div>
+
+    <!-- Js -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>  
+    <!-- Use Bootstrap Slider http://seiyria.com/bootstrap-slider/ -->
+    <!-- Select Box -->
+    <script src="js/bootstrap-select.min.js"></script>
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+      $(document).ready(function () {
+        var mySelect = $('#first-disabled2');
+
+        $('#special').on('click', function () {
+          mySelect.find('option:selected').prop('disabled', true);
+          mySelect.selectpicker('refresh');
+        });
+        $('#special2').on('click', function () {
+          mySelect.find('option:disabled').prop('disabled', false);
+          mySelect.selectpicker('refresh');
+        });
+
+        var $basic2 = $('#basic2').selectpicker({
+          liveSearch: true,
+          maxOptions: 1
+        });
+      });
+
+      /* MAP and Twitter markers on it */
+      var twitterMarkers = [];
+
+      function initialize() {
+        /* Put Google Maps on the page */
+        var mapCanvas = document.getElementById('map-canvas');
+        var mapOptions = {
+          center: new google.maps.LatLng(22.5069837,-45.0795827),
+          zoom: 2,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+
+        /* Generate random markers */
+        var handles = ['Polina', 'Sri', 'Lev', 'Jim', 'Farid'];
+        var pics = [
+          'http://images3.alphacoders.com/199/199875.jpg',
+          'http://www.unlulerkervani.com/data/media/1021/Sendhil-Ramamurthy_4.jpg',
+          'https://s-media-cache-ak0.pinimg.com/236x/75/9a/a6/759aa6249d3c3ffb64b34b53f6697105.jpg',
+          'https://s-media-cache-ak0.pinimg.com/474x/bc/9d/5e/bc9d5e337b511530ccc3fe2eff0ca8c1.jpg',
+          'http://i.dailymail.co.uk/i/pix/2013/10/10/article-2451604-18A46B5B00000578-415_306x423.jpg'
+        ];
+        var tweets = [
+          'Life begins when you can spend your spare time programming instead of watching television.',
+          'I\'ve seen the forgeries I\'ve sent out.',
+          'jackpot: you may have an unneccessary change record',
+          'Success covers a multitude of blunders.',
+          'Danger, you haven\'t seen the last of me!',
+          'No, but the first of you turns my stomach!'
+        ];
+        for (var i = 0; i < 100; i++) {
+          var personId = Math.floor(Math.random() * handles.length);
+          twitterMarkers.push({
+            handle: handles[personId],
+            picUrl: pics[personId],
+            tweet: tweets[Math.floor(Math.random() * tweets.length)],
+            lat: Math.random() * 180 - 90, // -90 ... +90
+            lng: Math.random() * 360 - 180 // -180 ... +180
+          });
+        }
+
+        /* Put markers and infowindows on Google Maps */
+        var twitterIconUrl = 'https://abs.twimg.com/favicons/favicon.ico';
+        var infoWins = [];
+        twitterMarkers.forEach(function(markerData) {
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(markerData.lat, markerData.lng),
+            map: map,
+            icon: twitterIconUrl
+          });
+          var infoWin = new google.maps.InfoWindow({
+            content: 
+              '<h4>' + markerData.handle + '</h4>' +
+              '<img width="100px" src="' + markerData.picUrl + '" />' +
+              '<div style="width:100px">' + markerData.tweet + '</div>' +
+              '<button><img height="30px" src="https://cdn2.iconfinder.com/data/icons/socal-icon-set/2092/tw.png" /></button>' +
+              '<button><img height="30px" src="http://simpleicon.com/wp-content/uploads/retweet.png" /></button>'
+          });
+          infoWins.push(infoWin);
+          google.maps.event.addListener(marker, 'click', function() {
+            infoWins.forEach(function(infoWin) {
+              infoWin.close();
+            });
+            infoWin.open(map, marker);
+          });
+        });
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);      
+    </script>
+    
   </body>
 </html>

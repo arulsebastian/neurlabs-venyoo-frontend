@@ -2,12 +2,6 @@ const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const path = require("path");
 
-const sassLoaders = [
-  "css-loader",
-  "autoprefixer-loader?browsers=last 2 version",
-  "sass-loader?indentedSyntax=sass&includePaths[]=" + path.resolve(__dirname, "./src"),
-];
-
 const config = {
   entry: {
     app: ["./src/index"]
@@ -20,9 +14,13 @@ const config = {
         loaders: ["babel-loader"],
       },
       {
-        test: /\.sass$/,
-        loader: ExtractTextPlugin.extract("style-loader", sassLoaders.join("!")),
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract("style", "css!sass")
       },
+      {
+        test: /\.(woff)|(eot)|(svg)|(ttf)$/,
+        loader: "file-loader"
+      }
     ]
   },
   output: {
@@ -34,7 +32,7 @@ const config = {
     new ExtractTextPlugin("[name].css"),
   ],
   resolve: {
-    extensions: ["", ".js", ".sass"],
+    extensions: ["", ".js", ".scss"],
     modulesDirectories: ["src", "node_modules"],
   },
 };
