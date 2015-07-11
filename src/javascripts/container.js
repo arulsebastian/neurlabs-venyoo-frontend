@@ -12,13 +12,13 @@ import Actions from "./actions";
 const Container = React.createClass({
   render () {
     return (
-      <div className="container">
-        <div className="leftCol">
+      <div className="wrapper">
+        <div className="left_sec">
           <Map />
           <TimeSlider />
           <DataTable />
         </div>
-        <div className="rightCol">
+        <div className="right_sec">
           <Filters />
           <Actions />
         </div>

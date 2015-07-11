@@ -18,7 +18,7 @@ const config = {
         loader: ExtractTextPlugin.extract("style", "css!sass")
       },
       {
-        test: /\.(woff)|(eot)|(svg)|(ttf)$/,
+        test: /\.(woff)|(eot)|(ttf)|(svg)|(jpg)|(png)$/,
         loader: "file-loader"
       }
     ]
