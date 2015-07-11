@@ -1,15 +1,13 @@
 /* JS dependencies */
 import React from "react";
 
-/* Stylesheet dependencies */
+/* Static dependencies */
+import mapImage from '../images/map.jpg';
 
-
-const Map = React.createClass({
+export default React.createClass({
   render () {
     return (
-      <div className="map_sec"><img src="images/map.jpg" alt="" /></div>
+      <div className="map_sec"><img src={mapImage} alt="" /></div>
     );
   }
 });
-
-export default Map;

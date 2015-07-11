@@ -3,12 +3,10 @@ import React from "react";
 
 /* Stylesheet dependencies */
 
-const DataTable = React.createClass({
+export default React.createClass({
   render () {
     return (
       <div>DataTable</div>
     );
   }
 });
-
-export default DataTable;

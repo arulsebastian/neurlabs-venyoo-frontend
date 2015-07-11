@@ -3,12 +3,10 @@ import React from "react";
 
 /* Stylesheet dependencies */
 
-const TimeSlider = React.createClass({
+export default React.createClass({
   render () {
     return (
       <div>TimeSlider</div>
     );
   }
 });
-
-export default TimeSlider;

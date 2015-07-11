@@ -4,22 +4,27 @@ const path = require("path");
 
 const config = {
   entry: {
-    app: ["./src/index"]
+    javascript: ["./src/index.js"],
+    html: "./src/index.html"
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ["babel-loader"],
+        loaders: ["babel"],
       },
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract("style", "css!sass")
       },
       {
-        test: /\.(woff)|(eot)|(ttf)|(svg)|(jpg)|(png)$/,
-        loader: "file-loader"
+        test: /\.(jpg)|(png)|(woff)|(eot)|(ttf)|(svg)$/,
+        loader: "file"
+      },
+      {
+        test: /\.(html)$/,
+        loader: "file?name=[name].[ext]"
       }
     ]
   },

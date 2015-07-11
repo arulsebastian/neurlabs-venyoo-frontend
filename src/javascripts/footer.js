@@ -2,7 +2,7 @@ import React from "react";
 
 import "stylesheets/modules/footer";
 
-const Footer = React.createClass({
+export default React.createClass({
   render () {
     return (
       <div className="footer">
@@ -11,5 +11,3 @@ const Footer = React.createClass({
     );
   }
 });
-
-export default Footer;

@@ -9,7 +9,7 @@ import Actions from "./actions";
 /* Stylesheet dependencies */
 // import "stylesheets/modules/container";
 
-const Container = React.createClass({
+export default React.createClass({
   render () {
     return (
       <div className="wrapper">
@@ -26,5 +26,3 @@ const Container = React.createClass({
     );
   }
 });
-
-export default Container;
