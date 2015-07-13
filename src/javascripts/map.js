@@ -81,9 +81,15 @@ export default class Map extends React.Component {
               '<button><img height="30px" src="https://cdn2.iconfinder.com/data/icons/socal-icon-set/2092/tw.png" /></button>' +
               '<button><img height="30px" src="http://simpleicon.com/wp-content/uploads/retweet.png" /></button>';
 
+      var alertFunc = function () {
+        console.log('marker #' + index + ' clicked');
+      }
+
       return (
         <Marker
           position={marker.position}
+          key={index}
+          onClick={alertFunc}
           icon="https://abs.twimg.com/favicons/favicon.ico">
           <InfoWindow
             content={infoWindowContent} />
