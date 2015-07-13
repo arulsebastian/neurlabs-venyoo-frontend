@@ -10,19 +10,19 @@ import Actions from "./actions";
 // import "stylesheets/modules/container";
 
 export default React.createClass({
-  render () {
-    return (
-      <div className="wrapper">
-        <div className="left_sec">
-          <Map />
-          <TimeSlider />
-          <DataTable />
-        </div>
-        <div className="right_sec">
-          <Filters />
-          <Actions />
-        </div>
-      </div>
-    );
-  }
+	render () {
+		return (
+			<div className="wrapper">
+				<div className="left_sec">
+					<Map />
+					<TimeSlider />
+					<DataTable />
+				</div>
+				<div className="right_sec">
+					<Filters />
+					<Actions />
+				</div>
+			</div>
+		);
+	}
 });

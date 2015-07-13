@@ -5,9 +5,11 @@ import React from 'react';
 import sliderImage from '../images/start_image.jpg';
 
 export default class TimeSlider extends React.Component {
-  render () {
-    return (
-      <div className='start_detail'><img src={sliderImage} alt='' /></div>
-    );
-  }
+	render () {
+		return (
+			<div className='start_detail'>
+				
+			</div>
+		);
+	}
 }

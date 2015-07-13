@@ -4,11 +4,11 @@ import React from "react"
 /* Stylesheet dependencies */
 
 const Filters = React.createClass({
-  render () {
-    return (
-      <div>Filters</div>
-    );
-  }
+	render () {
+		return (
+			<div>Filters</div>
+		);
+	}
 });
 
 export default Filters;
