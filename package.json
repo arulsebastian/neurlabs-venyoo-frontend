@@ -1,32 +1,32 @@
 {
-  "name": "webpack-css-example",
-  "version": "1.0.0",
-  "description": "Example repo showing a webpack CSS build",
-  "main": "index.js",
-  "scripts": {
-    "build": "webpack"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bensmithett/webpack-css-example.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bensmithett/webpack-css-example/issues"
-  },
-  "homepage": "https://github.com/bensmithett/webpack-css-example",
-  "dependencies": {
-    "autoprefixer-loader": "1.1.0",
-    "css-loader": "^0.9.1",
-    "extract-text-webpack-plugin": "^0.3.8",
-    "sass-loader": "^0.4.1",
-    "style-loader": "^0.8.3",
-    "webpack": "^1.7.2",
-    "file-loader": "~0.8.4",
-    "react": "~0.13.3",
-    "react-google-maps": "~1.7.1",
-    "babel-core": "~5.6.17",
-    "babel-loader": "~5.3.1"
-  }
+	"name": "webpack-css-example",
+	"version": "1.0.0",
+	"description": "Example repo showing a webpack CSS build",
+	"main": "index.js",
+	"scripts": {
+		"build": "webpack"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/bensmithett/webpack-css-example.git"
+	},
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/bensmithett/webpack-css-example/issues"
+	},
+	"homepage": "https://github.com/bensmithett/webpack-css-example",
+	"dependencies": {
+		"autoprefixer-loader": "1.1.0",
+		"css-loader": "^0.9.1",
+		"extract-text-webpack-plugin": "^0.3.8",
+		"sass-loader": "^0.4.1",
+		"style-loader": "^0.8.3",
+		"webpack": "^1.7.2",
+		"file-loader": "~0.8.4",
+		"react": "~0.13.3",
+		"react-google-maps": "~1.7.1",
+		"babel-core": "~5.6.17",
+		"babel-loader": "~5.3.1"
+	}
 }

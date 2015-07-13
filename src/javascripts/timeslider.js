@@ -8,7 +8,7 @@ export default class TimeSlider extends React.Component {
 	render () {
 		return (
 			<div className='start_detail'>
-				
+				TimeSlider
 			</div>
 		);
 	}

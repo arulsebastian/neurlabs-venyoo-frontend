@@ -61,7 +61,7 @@ export default class Map extends React.Component {
 					containerProps = {{
 						// ...otherProps,
 						style: {
-							width: '400px',
+							width: '100%',
 							height: '400px'
 						}
 					}}
