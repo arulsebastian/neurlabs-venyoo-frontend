@@ -18,7 +18,8 @@ export default class TimeSlider extends React.Component {
 					data-slider-max="20"
 					data-slider-step="1"
 					data-slider-value="14"
-					data-slider-handle="triangle" />
+					data-slider-handle="triangle"
+					style={{ width : 350 }} />
 			</div>
 		);
 	}
