@@ -36,17 +36,18 @@ export default class TimeSlider extends React.Component {
 			width  : 0,
 			height : 0
 		};
-		console.log('timeScale = ', timeScale);
-		console.log('sliderCanvas = ', sliderCanvas, ', top = ', sliderCanvas.offsetTop, ', left = ', sliderCanvas.offsetLeft);
+		var pointerPos = null; // current position of time pointer
 
 		/* Event handlers */
 		attachMouseHandler();
 		attachResizeHandler();
 
-		function drawCanvas (pointerPos) {
+		function drawCanvas () {
 			var leftSpace = 10; // px
 			var rightSpace = 10; // px
 
+			if (pointerPos === null)
+				pointerPos = canvasDim.width / 2;
 			if (pointerPos < leftSpace)
 				pointerPos = leftSpace;
 			if (pointerPos > (canvasDim.width - rightSpace))
@@ -68,20 +69,19 @@ export default class TimeSlider extends React.Component {
 
 		function attachMouseHandler () {
 			var isMouseDown = false;
+
 			timeScale.addEventListener('mousedown', function () {
-				// console.log('mouse is down');
 				isMouseDown = true;
+				drawCanvas();
 			});
 			timeScale.addEventListener('mouseup', function () {
-				// console.log('mouse is up');
 				isMouseDown = false;
 			});
 			timeScale.addEventListener('mousemove', function (event) {
+				pointerPos = event.pageX - canvasDim.x;
+
 				if (isMouseDown) {
-					var x = event.pageX - canvasDim.x;
-					var y = event.pageY - canvasDim.y;
-					// console.log('mouse is moving, x = ' + x + ', y = ' + y);
-					drawCanvas(x);
+					drawCanvas();
 				}
 			});
 		}
@@ -92,8 +92,6 @@ export default class TimeSlider extends React.Component {
 		}
 
 		function resizeCanvas () {
-			console.log('the slider div\'s size: ' + timeScale.offsetWidth + 'x' + timeScale.offsetHeight);
-
 			/* Adjust canvas size */
 			canvasDim.width  = sliderCanvas.width  = timeScale.offsetWidth;
 			canvasDim.height = sliderCanvas.height = timeScale.offsetHeight;
@@ -102,7 +100,7 @@ export default class TimeSlider extends React.Component {
 			canvasDim.x = sliderCanvas.offsetLeft;
 			canvasDim.y = sliderCanvas.offsetTop;
 
-			drawCanvas(canvasDim.width / 2);
+			drawCanvas();
 		};
 	}
 }
