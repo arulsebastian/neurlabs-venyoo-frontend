@@ -49,8 +49,9 @@ export default class TimeSlider extends React.Component {
 
 	componentDidMount () {
 		/* Initialization */
-		var timeScale = React.findDOMNode(this.refs.sliderTimescale);
-		var sliderCanvas = React.findDOMNode(this.refs.sliderCanvas);
+		var self = this;
+		var timeScale = React.findDOMNode(self.refs.sliderTimescale);
+		var sliderCanvas = React.findDOMNode(self.refs.sliderCanvas);
 		var ctx = sliderCanvas.getContext('2d');
 		var canvasDim = {
 			x : 0,
@@ -77,17 +78,23 @@ export default class TimeSlider extends React.Component {
 
 			// Clear the canvas
 			ctx.clearRect(0, 0, canvasDim.width, canvasDim.height);
-			// Big blue rect :)
-			ctx.fillStyle = 'blue';
-			ctx.fillRect(10, 10, timeScale.offsetWidth - 20, 10);
+			// Plot axis
+			var intervalWidth = (canvasDim.width - (leftSpace + rightSpace)) / self.state.intervals.length;
+			var plotPath = new Path2D();
+			self.state.intervals.forEach(function (height, index) {
+				plotPath.moveTo(leftSpace + intervalWidth * index, 20);
+				plotPath.lineTo(leftSpace + intervalWidth * index, 19 - height / 3);
+			});
+			ctx.strokeStyle = '#000000';
+			ctx.stroke(plotPath);
 			// Draw a triangle
 			ctx.fillStyle = 'red';
-			var path = new Path2D();
-			path.moveTo(pointerPos,      20);
-			path.lineTo(pointerPos + 10, 30);
-			path.lineTo(pointerPos - 10, 30);
+			var pointerPath = new Path2D();
+			pointerPath.moveTo(pointerPos,     20);
+			pointerPath.lineTo(pointerPos + 7, 30);
+			pointerPath.lineTo(pointerPos - 7, 30);
 			ctx.fillStyle = pointerColor;
-			ctx.fill(path);
+			ctx.fill(pointerPath);
 		}		
 
 		function attachMouseHandler () {
