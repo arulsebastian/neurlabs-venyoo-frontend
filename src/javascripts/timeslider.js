@@ -66,30 +66,36 @@ export default class TimeSlider extends React.Component {
 		attachResizeHandler();
 
 		function drawCanvas () {
+			var leftSpace  = 10; // px
+			var rightSpace = 10; // px
+			var intervalWidth = (canvasDim.width - (leftSpace + rightSpace)) / self.state.intervals.length;
+			var currInterval = 0;
+
 			// Clear the canvas
 			ctx.clearRect(0, 0, canvasDim.width, canvasDim.height);
 			
+			checkAndNormalizePointerPos();
 			drawPlot();
 			drawPointer();
 			
 			function checkAndNormalizePointerPos () {
-				var leftSpace  = 10; // px
-				var rightSpace = 10; // px
-
+				/* Default value is in the middle */
 				if (pointerPos === null)
 					pointerPos = canvasDim.width / 2;
-				if (pointerPos < leftSpace)
-					pointerPos = leftSpace;
-				if (pointerPos > (canvasDim.width - rightSpace))
-					pointerPos =  canvasDim.width - rightSpace;
+				/* Make it stepwise and check boundaries */
+				currInterval = posToIntervalNumber(pointerPos);
+				if (currInterval < 0)
+					currInterval = 0;
+				if (currInterval >= self.state.intervals.length)
+					currInterval =  self.state.intervals.length - 1;
+				pointerPos = intervalNumberToPos(currInterval);
 			}
 
 			function drawPlot () {
-				var intervalWidth = (canvasDim.width - (leftSpace + rightSpace)) / self.state.intervals.length;
 				var plotPath = new Path2D();
 				self.state.intervals.forEach(function (height, index) {
-					plotPath.moveTo(leftSpace + intervalWidth * (index + 0.5), 20);
-					plotPath.lineTo(leftSpace + intervalWidth * (index + 0.5), 19 - height / 3);
+					plotPath.moveTo(intervalNumberToPos(index), 20);
+					plotPath.lineTo(intervalNumberToPos(index), 19 - height / 3);
 				});
 				ctx.strokeStyle = '#000000';
 				ctx.stroke(plotPath);
@@ -103,6 +109,14 @@ export default class TimeSlider extends React.Component {
 				pointerPath.lineTo(pointerPos - 7, 30);
 				ctx.fillStyle = pointerColor;
 				ctx.fill(pointerPath);
+			}
+
+			function posToIntervalNumber (pos) {
+				return Math.round((pos - leftSpace - intervalWidth / 2) / intervalWidth);
+			}
+
+			function intervalNumberToPos (intervalNum) {
+				return (leftSpace + intervalWidth * (intervalNum + 0.5));
 			}
 		}		
 
