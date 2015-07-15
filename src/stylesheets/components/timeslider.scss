@@ -1,3 +1,5 @@
+@import "../utilities/noselect.scss";
+
 $height: 30px;
 $start-label-width: 50px;
 $finish-label-width: 50px;
@@ -9,6 +11,7 @@ $finish-label-width: 50px;
 	background-color: red;
 }
 .slider_timescale {
+	position: relative;
 	width: auto;
 	height: $height;
 	margin-left: $start-label-width;
@@ -20,4 +23,16 @@ $finish-label-width: 50px;
 	height: $height;
 	float: right;
 	background-color: blue;
+}
+.slider_start_time {
+	position: absolute;
+	left: 0;
+	transform: rotate(-90deg) translateX(-50%) translateY(-50%);
+	font-size: 0.6em;
+}
+.slider_finish_time {
+	position: absolute;
+	right: 0;
+	transform: rotate(90deg) translateX(50%) translateY(-50%);
+	font-size: 0.6em;
 }

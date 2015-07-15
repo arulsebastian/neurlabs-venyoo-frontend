@@ -6,18 +6,37 @@ import Slider from 'bootstrap-slider';
 import sliderImage from '../images/start_image.jpg';
 
 export default class TimeSlider extends React.Component {
+	constructor (props) {
+		super(props);
+
+		var intervalsNum = 72;  // 12 hours of 10min intervals
+		var tweetsMax    = 100; // max amount of tweets per interval
+		var intervals    = [];
+
+		for (var i = 0; i < intervalsNum; i++)
+			intervals.push(Math.floor(Math.random() * tweetsMax));
+
+		this.state = {
+			startTime  : '1:00am',
+			finishTime : '1:00pm',
+			intervals  : intervals
+		};
+	}
+
 	render () {
 		return (
 			<div className='start_detail'>
 				<img src={sliderImage} />
 				
 				<div className='slider_start_label'>
-					Start
+					<span>Start</span>
 				</div>
 				<div className='slider_finish_label'>
-					Finish
+					<span>Finish</span>
 				</div>
 				<div className='slider_timescale' ref='sliderTimescale'>
+					<span className='slider_start_time'>{this.state.startTime}</span>
+					<span className='slider_finish_time'>{this.state.finishTime}</span>
 					<canvas ref='sliderCanvas'/>
 				</div>
 
