@@ -66,35 +66,44 @@ export default class TimeSlider extends React.Component {
 		attachResizeHandler();
 
 		function drawCanvas () {
-			var leftSpace = 10; // px
-			var rightSpace = 10; // px
-
-			if (pointerPos === null)
-				pointerPos = canvasDim.width / 2;
-			if (pointerPos < leftSpace)
-				pointerPos = leftSpace;
-			if (pointerPos > (canvasDim.width - rightSpace))
-				pointerPos =  canvasDim.width - rightSpace;
-
 			// Clear the canvas
 			ctx.clearRect(0, 0, canvasDim.width, canvasDim.height);
-			// Plot axis
-			var intervalWidth = (canvasDim.width - (leftSpace + rightSpace)) / self.state.intervals.length;
-			var plotPath = new Path2D();
-			self.state.intervals.forEach(function (height, index) {
-				plotPath.moveTo(leftSpace + intervalWidth * (index + 0.5), 20);
-				plotPath.lineTo(leftSpace + intervalWidth * (index + 0.5), 19 - height / 3);
-			});
-			ctx.strokeStyle = '#000000';
-			ctx.stroke(plotPath);
-			// Draw a triangle
-			ctx.fillStyle = 'red';
-			var pointerPath = new Path2D();
-			pointerPath.moveTo(pointerPos,     20);
-			pointerPath.lineTo(pointerPos + 7, 30);
-			pointerPath.lineTo(pointerPos - 7, 30);
-			ctx.fillStyle = pointerColor;
-			ctx.fill(pointerPath);
+			
+			drawPlot();
+			drawPointer();
+			
+			function checkAndNormalizePointerPos () {
+				var leftSpace  = 10; // px
+				var rightSpace = 10; // px
+
+				if (pointerPos === null)
+					pointerPos = canvasDim.width / 2;
+				if (pointerPos < leftSpace)
+					pointerPos = leftSpace;
+				if (pointerPos > (canvasDim.width - rightSpace))
+					pointerPos =  canvasDim.width - rightSpace;
+			}
+
+			function drawPlot () {
+				var intervalWidth = (canvasDim.width - (leftSpace + rightSpace)) / self.state.intervals.length;
+				var plotPath = new Path2D();
+				self.state.intervals.forEach(function (height, index) {
+					plotPath.moveTo(leftSpace + intervalWidth * (index + 0.5), 20);
+					plotPath.lineTo(leftSpace + intervalWidth * (index + 0.5), 19 - height / 3);
+				});
+				ctx.strokeStyle = '#000000';
+				ctx.stroke(plotPath);
+			}
+
+			function drawPointer () {
+				ctx.fillStyle = 'red';
+				var pointerPath = new Path2D();
+				pointerPath.moveTo(pointerPos,     20);
+				pointerPath.lineTo(pointerPos + 7, 30);
+				pointerPath.lineTo(pointerPos - 7, 30);
+				ctx.fillStyle = pointerColor;
+				ctx.fill(pointerPath);
+			}
 		}		
 
 		function attachMouseHandler () {
@@ -104,10 +113,11 @@ export default class TimeSlider extends React.Component {
 				isMouseDown = true;
 				drawCanvas();
 			});
-			timeScale.addEventListener('mouseup', function () {
+			// use window to allow mouse to go out of the element's boundaries
+			window.addEventListener('mouseup', function () {
 				isMouseDown = false;
 			});
-			timeScale.addEventListener('mousemove', function (event) {
+			window.addEventListener('mousemove', function (event) {
 				pointerPos = event.pageX - canvasDim.x;
 
 				if (isMouseDown) {
