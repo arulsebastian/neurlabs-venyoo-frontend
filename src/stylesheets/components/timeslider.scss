@@ -1,3 +1,23 @@
-#ex1Slider .slider-selection {
-	background: #BABABA;
+$height: 30px;
+$start-label-width: 50px;
+$finish-label-width: 50px;
+
+.slider_start_label {
+	width: $start-label-width;
+	height: $height;
+	float: left;
+	background-color: red;
+}
+.slider_timescale {
+	width: auto;
+	height: $height;
+	margin-left: $start-label-width;
+	margin-right: $finish-label-width;
+	background-color: green;
+}
+.slider_finish_label {
+	width: $finish-label-width;
+	height: $height;
+	float: right;
+	background-color: blue;
 }
