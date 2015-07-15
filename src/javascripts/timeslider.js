@@ -18,8 +18,7 @@ export default class TimeSlider extends React.Component {
 					Finish
 				</div>
 				<div className='slider_timescale' ref='sliderTimescale'>
-					<div>
-					</div>
+					<canvas ref='sliderCanvas'/>
 				</div>
 
 			</div>
@@ -28,15 +27,33 @@ export default class TimeSlider extends React.Component {
 
 	componentDidMount () {
 		var timeScale = React.findDOMNode(this.refs.sliderTimescale);
+		var sliderCanvas = React.findDOMNode(this.refs.sliderCanvas);
 
-		timeScale.addEventListener("mousedown", function () {
+		console.log('timeScale = ', timeScale);
+		console.log('sliderCanvas = ', sliderCanvas);
+
+		timeScale.addEventListener('mousedown', function () {
 			console.log('mouse is down');
 		});
-		timeScale.addEventListener("mouseup", function () {
+		timeScale.addEventListener('mouseup', function () {
 			console.log('mouse is up');
 		});
-		timeScale.addEventListener("mousemove", function () {
+		timeScale.addEventListener('mousemove', function () {
 			console.log('mouse is moving');
 		});
+		window.addEventListener('resize', adjustCanvas);
+		adjustCanvas();
+
+		function adjustCanvas () {
+			console.log('the div\'s size: ' + timeScale.offsetWidth + 'x' + timeScale.offsetHeight);
+			sliderCanvas.width = timeScale.offsetWidth;
+			sliderCanvas.height = timeScale.offsetHeight;
+
+			/* Draw on a canvas */
+			var ctx = sliderCanvas.getContext('2d');
+			ctx.rect(10, 10, timeScale.offsetWidth - 20, 10);
+			ctx.fillStyle = 'blue';
+			ctx.fill();
+		};
 	}
 }
