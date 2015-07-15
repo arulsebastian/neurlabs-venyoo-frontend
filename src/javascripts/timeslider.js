@@ -5,6 +5,9 @@ import Slider from 'bootstrap-slider';
 /* Static dependencies */
 import sliderImage from '../images/start_image.jpg';
 
+/* Constants */
+const pointerColor = '#2E7FB1';
+
 export default class TimeSlider extends React.Component {
 	constructor (props) {
 		super(props);
@@ -29,10 +32,10 @@ export default class TimeSlider extends React.Component {
 				<img src={sliderImage} />
 				
 				<div className='slider_start_label'>
-					<span>Start</span>
+					<div>Start</div>
 				</div>
 				<div className='slider_finish_label'>
-					<span>Finish</span>
+					<div>Finish</div>
 				</div>
 				<div className='slider_timescale' ref='sliderTimescale'>
 					<span className='slider_start_time'>{this.state.startTime}</span>
@@ -83,6 +86,7 @@ export default class TimeSlider extends React.Component {
 			path.moveTo(pointerPos,      20);
 			path.lineTo(pointerPos + 10, 30);
 			path.lineTo(pointerPos - 10, 30);
+			ctx.fillStyle = pointerColor;
 			ctx.fill(path);
 		}		
 
