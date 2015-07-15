@@ -3,7 +3,6 @@ import React from 'react';
 import Slider from 'bootstrap-slider';
 
 /* Static dependencies */
-import sliderImage from '../images/start_image.jpg';
 
 /* Constants */
 const pointerColor = '#2E7FB1';
@@ -29,7 +28,6 @@ export default class TimeSlider extends React.Component {
 	render () {
 		return (
 			<div className='start_detail'>
-				<img src={sliderImage} />
 				
 				<div className='slider_start_label'>
 					<div>Start</div>
@@ -66,8 +64,8 @@ export default class TimeSlider extends React.Component {
 		attachResizeHandler();
 
 		function drawCanvas () {
-			var leftSpace  = 10; // px
-			var rightSpace = 10; // px
+			var leftSpace  = 0; // px
+			var rightSpace = 0; // px
 			var intervalWidth = (canvasDim.width - (leftSpace + rightSpace)) / self.state.intervals.length;
 			var currInterval = 0;
 
@@ -95,7 +93,7 @@ export default class TimeSlider extends React.Component {
 				var plotPath = new Path2D();
 				self.state.intervals.forEach(function (height, index) {
 					plotPath.moveTo(intervalNumberToPos(index), 20);
-					plotPath.lineTo(intervalNumberToPos(index), 19 - height / 3);
+					plotPath.lineTo(intervalNumberToPos(index), 19 - height / 6);
 				});
 				ctx.strokeStyle = '#000000';
 				ctx.stroke(plotPath);

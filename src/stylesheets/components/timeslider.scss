@@ -1,5 +1,3 @@
-@import "../utilities/noselect.scss";
-
 $height: 30px;
 $start-label-width: 40px;
 $finish-label-width: 40px;
@@ -40,12 +38,12 @@ $background-color: #ccc;
 .slider_start_time {
 	position: absolute;
 	left: 0;
-	transform: rotate(-90deg) translateX(-50%) translateY(-50%);
+	bottom: 0;
 	font-size: 0.6em;
 }
 .slider_finish_time {
 	position: absolute;
 	right: 0;
-	transform: rotate(90deg) translateX(50%) translateY(-50%);
+	bottom: 0;
 	font-size: 0.6em;
 }
