@@ -82,8 +82,8 @@ export default class TimeSlider extends React.Component {
 			var intervalWidth = (canvasDim.width - (leftSpace + rightSpace)) / self.state.intervals.length;
 			var plotPath = new Path2D();
 			self.state.intervals.forEach(function (height, index) {
-				plotPath.moveTo(leftSpace + intervalWidth * index, 20);
-				plotPath.lineTo(leftSpace + intervalWidth * index, 19 - height / 3);
+				plotPath.moveTo(leftSpace + intervalWidth * (index + 0.5), 20);
+				plotPath.lineTo(leftSpace + intervalWidth * (index + 0.5), 19 - height / 3);
 			});
 			ctx.strokeStyle = '#000000';
 			ctx.stroke(plotPath);
@@ -122,13 +122,18 @@ export default class TimeSlider extends React.Component {
 		}
 
 		function resizeCanvas () {
-			/* Adjust canvas size */
-			canvasDim.width  = sliderCanvas.width  = timeScale.offsetWidth;
-			canvasDim.height = sliderCanvas.height = timeScale.offsetHeight;
+			var timeScaleRect = timeScale.getBoundingClientRect();
 
-			/* Save canvas position */
-			canvasDim.x = sliderCanvas.offsetLeft;
-			canvasDim.y = sliderCanvas.offsetTop;
+			/* Adjust canvas size */
+			canvasDim.width  = sliderCanvas.width  = timeScaleRect.width;
+			canvasDim.height = sliderCanvas.height = timeScaleRect.height;
+
+			/* Save canvas position in 500ms */
+			setTimeout(function () {
+				var canvasRect = sliderCanvas.getBoundingClientRect();
+				canvasDim.x = canvasRect.left;
+				canvasDim.y = canvasRect.top;
+			}, 100);
 
 			drawCanvas();
 		};
