@@ -1,8 +1,9 @@
 /* JS dependencies */
 import React from 'react';
+import jQuery from 'jquery';
 
 /* Static dependencies */
-import mapImage from '../images/map.jpg';
+import tweet_content from '../tweet_content.html';
 
 export default class Map extends React.Component {
 	constructor (...args) {
@@ -64,8 +65,13 @@ export default class Map extends React.Component {
 		var twitterMarkers = [];
 
 		map = placeGoogleMaps(mapCanvas);
-		twitterMarkers = generateRandomMarkers();
-		placeMarkerAndInfoWins(twitterMarkers);
+		twitterMarkers = generateRandomMarkers(4);
+		// Load info window content and place markers
+		jQuery.get('/tweet_content.html', function (data) {
+			if (data) {
+				placeMarkerAndInfoWins(twitterMarkers, data);
+			}
+		});
 
 		function placeGoogleMaps (canvas) {
 			var mapOptions = {
@@ -76,7 +82,7 @@ export default class Map extends React.Component {
 			return new google.maps.Map(canvas, mapOptions);			
 		}
 
-		function generateRandomMarkers () {
+		function generateRandomMarkers (num) {
 			var resultMarkers = [];
 
 			var handles = ['Polina', 'Sri', 'Lev', 'Jim', 'Farid'];
@@ -95,7 +101,7 @@ export default class Map extends React.Component {
 				'Danger, you haven\'t seen the last of me!',
 				'No, but the first of you turns my stomach!'
 			];
-			for (var i = 0; i < 100; i++) {
+			for (var i = 0; i < num; i++) {
 				var personId = Math.floor(Math.random() * handles.length);
 				resultMarkers.push({
 					handle: handles[personId],
@@ -109,22 +115,21 @@ export default class Map extends React.Component {
 			return resultMarkers;			
 		}
 
-		function placeMarkerAndInfoWins (markers) {
+		function placeMarkerAndInfoWins (markers, contentLayout) {
 			var twitterIconUrl = 'https://abs.twimg.com/favicons/favicon.ico';
 			var infoWins = [];
 			markers.forEach(function(markerData) {
+				var content = contentLayout;
+				content = content.replace('{{ infowin_handle }}', markerData.handle);
+				content = content.replace('{{ infowin_picUrl }}', markerData.picUrl);
+				content = content.replace('{{ infowin_tweet }}',  markerData.tweet);
+
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(markerData.lat, markerData.lng),
-					map: map,
-					// icon: twitterIconUrl
+					map: map
 				});
 				var infoWin = new google.maps.InfoWindow({
-					content: 
-						'<h4>' + markerData.handle + '</h4>' +
-						'<img style="width:100px" src="' + markerData.picUrl + '" />' +
-						'<div style="width:100px">' + markerData.tweet + '</div>' +
-						'<button><img style="height:30px" src="https://cdn2.iconfinder.com/data/icons/socal-icon-set/2092/tw.png" /></button>' +
-						'<button><img style="height:30px" src="http://simpleicon.com/wp-content/uploads/retweet.png" /></button>'
+					content: content
 				});
 				infoWins.push(infoWin);
 				google.maps.event.addListener(marker, 'click', function() {
