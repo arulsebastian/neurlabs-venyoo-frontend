@@ -1,6 +1,5 @@
 /* JS dependencies */
 import React from 'react';
-import Slider from 'bootstrap-slider';
 
 /* Static dependencies */
 

@@ -68,8 +68,6 @@ export default class Map extends React.Component {
 		placeMarkerAndInfoWins(twitterMarkers);
 
 		function placeGoogleMaps (canvas) {
-			console.log('placeGoogleMaps, canvas = ', canvas);
-
 			var mapOptions = {
 				center: new google.maps.LatLng(22.5069837,-45.0795827),
 				zoom: 2,
@@ -118,7 +116,7 @@ export default class Map extends React.Component {
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(markerData.lat, markerData.lng),
 					map: map,
-					icon: twitterIconUrl
+					// icon: twitterIconUrl
 				});
 				var infoWin = new google.maps.InfoWindow({
 					content: 
