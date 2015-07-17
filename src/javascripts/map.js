@@ -85,7 +85,8 @@ export default class Map extends React.Component {
 		function generateRandomMarkers (num) {
 			var resultMarkers = [];
 
-			var handles = ['Polina', 'Sri', 'Lev', 'Jim', 'Farid'];
+			var handles   = ['@polina', '@sri', '@lev', '@jim', '@farid'];
+			var usernames = ['Polina', 'Sri', 'Lev', 'Jim', 'Farid'];
 			var pics = [
 				'http://images3.alphacoders.com/199/199875.jpg',
 				'http://www.unlulerkervani.com/data/media/1021/Sendhil-Ramamurthy_4.jpg',
@@ -105,6 +106,7 @@ export default class Map extends React.Component {
 				var personId = Math.floor(Math.random() * handles.length);
 				resultMarkers.push({
 					handle: handles[personId],
+					username: usernames[personId],
 					picUrl: pics[personId],
 					tweet: tweets[Math.floor(Math.random() * tweets.length)],
 					lat: Math.random() * 180 - 90, // -90 ... +90
@@ -120,6 +122,7 @@ export default class Map extends React.Component {
 			var infoWins = [];
 			markers.forEach(function(markerData) {
 				var content = contentLayout;
+				content = content.replace('{{ infowin_username }}', markerData.username);
 				content = content.replace('{{ infowin_handle }}', markerData.handle);
 				content = content.replace('{{ infowin_picUrl }}', markerData.picUrl);
 				content = content.replace('{{ infowin_tweet }}',  markerData.tweet);

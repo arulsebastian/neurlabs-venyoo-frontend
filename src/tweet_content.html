@@ -1,5 +1,88 @@
-<h4>{{ infowin_handle }}</h4>
-<img style="width:100px" src="{{ infowin_picUrl }}" />
-<div style="width:100px">{{ infowin_tweet }}</div>
-<button><img style="height:30px" src="https://cdn2.iconfinder.com/data/icons/socal-icon-set/2092/tw.png" /></button>
-<button><img style="height:30px" src="http://simpleicon.com/wp-content/uploads/retweet.png" /></button>
+<style>
+/* $padding: 10px; */
+
+.tweet_info {
+	position: relative;
+	width: 150px;
+	/* padding: 10px; /* $padding; */
+	margin-top: 5px;
+	/* border: black solid 1px; */
+}
+
+.twitter_pic {
+	position: absolute;
+	right: 0; /* $padding; */
+	top: 0; /* $padding; */
+}
+
+.user_info {
+	position: relative;
+	overflow: auto;
+}
+
+.user_pic {
+	float: left;
+	padding-right: 5px; /* $padding/2; */
+	padding-bottom: 5px; /* $padding/2; */
+	width: 30px;
+	height: 30px;
+}
+.user_name {
+	padding-top: 2px;
+	font-weight: bold;
+	font-size: 0.7em;
+}
+.user_handle {
+	color: #ccc;
+	font-size: 0.6em;
+}
+
+.twitter_message {
+	font-size: 0.7em;
+}
+.twitter_message_link {
+	color: blue;
+}
+
+.twitter_controls {
+	overflow: auto;
+}
+
+.twitter_public_controls > img {
+	float: left;
+	padding: 5px 5px 0 0; /* $padding/2 $padding/2 0 0; */
+}
+
+.twitter_private_controls > img {
+	float: left;
+	padding: 5px 0 0 5px; /* $padding/2 0 0 $padding/2; */
+}
+
+.twitter_private_controls {
+	float: right;
+}
+</style>
+
+<div class="tweet_info">
+	<img class="twitter_pic" src="http://placehold.it/25x25"/>
+	<div class="user_info">
+		<img class="user_pic" src="{{ infowin_picUrl }}"/>
+		<div class="user_name">{{ infowin_username }}</div>
+		<div class="user_handle">{{ infowin_handle }}</div>
+	</div>
+	<div class="twitter_message">
+		{{ infowin_tweet }} <span class="twitter_message_link">#today</span></div>
+	<div class="twitter_controls">
+		<div class="twitter_private_controls">
+			<img class="twitter_direct_message" src="http://placehold.it/10x10"/>
+			<img class="twitter_quote" src="http://placehold.it/10x10"/>
+		</div>    
+		
+		<div class="twitter_public_controls">
+			<img class="twitter_back" src="http://placehold.it/10x10"/>
+			<img class="twitter_add_contact" src="http://placehold.it/10x10"/>
+			<img class="twitter_favorite" src="http://placehold.it/10x10"/>
+			<img class="twitter_retweet" src="http://placehold.it/10x10"/>
+		</div>
+	</div>
+</div>
