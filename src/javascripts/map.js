@@ -53,9 +53,7 @@ export default class Map extends React.Component {
 
 	render () {
 		return (
-			<div className="map_sec">
-				<div ref="mapCanvas" className="map_canvas"></div>
-			</div>
+			<div ref="mapCanvas" className="map_canvas" style="width: 100%; height: 718px;"></div>
 		);
 	}
 
