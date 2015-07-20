@@ -31,7 +31,8 @@ export default React.createClass({
 			<div className="wrapper">
 				{/* Map block */}
 				<div className="map_block">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6874863.052680733!2d-117.16151799999996!3d32.71616899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d954a7de4514ad%3A0xc23d2f349e970aed!2sTHE+US+GRANT%2C+a+Luxury+Collection+Hotel%2C+San+Diego!5e0!3m2!1sen!2sin!4v1435239649995" width="100%" height="718" frameborder="0" style={{ border : 0 }} allowfullscreen></iframe>
+					{/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6874863.052680733!2d-117.16151799999996!3d32.71616899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d954a7de4514ad%3A0xc23d2f349e970aed!2sTHE+US+GRANT%2C+a+Luxury+Collection+Hotel%2C+San+Diego!5e0!3m2!1sen!2sin!4v1435239649995" width="100%" height="718" frameborder="0" style={{ border : 0 }} allowfullscreen></iframe> */}
+					<Map />
 					{/* Right block */}
 					<div className="map_right">
 						<a href="#" className="map_toggle"><i className="fa fa-bars"></i></a>
@@ -68,7 +69,9 @@ export default React.createClass({
 				<div className="detail_main">
 					{/* Left block */}
 					<div className="left_sec">
-						<div className="start_detail"><img src={sliderImg} alt="" /></div>
+						<div className="start_detail">{/* <img src={sliderImg} alt="" /> */}
+							<TimeSlider />
+						</div>
 						<div className="home_detail">
 							<div className="container">
 								<div id="container">

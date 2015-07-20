@@ -2,6 +2,7 @@
 import React from 'react';
 
 /* Static dependencies */
+import '../stylesheets/components/timeslider.scss';
 
 /* Constants */
 const pointerColor = '#2E7FB1';
@@ -91,8 +92,8 @@ export default class TimeSlider extends React.Component {
 			function drawPlot () {
 				var plotPath = new Path2D();
 				self.state.intervals.forEach(function (height, index) {
-					plotPath.moveTo(intervalNumberToPos(index), 20);
-					plotPath.lineTo(intervalNumberToPos(index), 19 - height / 6);
+					plotPath.moveTo(intervalNumberToPos(index), 40);
+					plotPath.lineTo(intervalNumberToPos(index), 39 - height / 3);
 				});
 				ctx.strokeStyle = '#000000';
 				ctx.stroke(plotPath);
@@ -101,9 +102,9 @@ export default class TimeSlider extends React.Component {
 			function drawPointer () {
 				ctx.fillStyle = 'red';
 				var pointerPath = new Path2D();
-				pointerPath.moveTo(pointerPos,     20);
-				pointerPath.lineTo(pointerPos + 7, 30);
-				pointerPath.lineTo(pointerPos - 7, 30);
+				pointerPath.moveTo(pointerPos,      40);
+				pointerPath.lineTo(pointerPos + 14, 60);
+				pointerPath.lineTo(pointerPos - 14, 60);
 				ctx.fillStyle = pointerColor;
 				ctx.fill(pointerPath);
 			}

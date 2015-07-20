@@ -3,6 +3,7 @@ import React from 'react';
 import jQuery from 'jquery';
 
 /* Static dependencies */
+import '../stylesheets/components/map.scss';
 import tweet_content from '../tweet_content.html';
 
 export default class Map extends React.Component {
@@ -53,7 +54,7 @@ export default class Map extends React.Component {
 
 	render () {
 		return (
-			<div ref="mapCanvas" className="map_canvas" style="width: 100%; height: 718px;"></div>
+			<div ref="mapCanvas" className="map_canvas"></div>
 		);
 	}
 
