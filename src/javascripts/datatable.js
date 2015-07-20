@@ -3,7 +3,43 @@ import React from "react";
 
 /* Stylesheet dependencies */
 
-export default React.createClass({
+export default class DataTable extends React.Component {
+	constructor (...args) {
+		super(...args);
+
+		this.state = {
+			tweets: [
+				{
+					tweet:        "Go Partiots! #Ptriots #Boston",
+					mediaLink:    "Video",
+					email:        "hello@email.com",
+					socialHandle: "@hello_partiots",
+					sentiment:    "positive",
+					follower:     "N",
+					following:    "N"
+				},
+				{
+					tweet:        "Just an example tweet",
+					mediaLink:    "Image",
+					email:        "test@e.com",
+					socialHandle: "@testing",
+					sentiment:    "50",
+					follower:     "Y",
+					following:    "Y"
+				},
+				{
+					tweet:        "Another example of a longer teet message",
+					mediaLink:    "",
+					email:        "mylongemail@testing.com",
+					socialHandle: "@mylongnamehandle",
+					sentiment:    "14",
+					follower:     "N",
+					following:    "N"
+				}
+			]
+		};
+	}
+
 	render () {
 		return (
 			<div className="container">
@@ -24,48 +60,24 @@ export default React.createClass({
 								<span className="lbl"></span> </label>
 							</th>
 						</tr>
-						<tr>
-							<td><a href="#" className="reply_btn"><i className="fa fa-long-arrow-left"></i> Reply</a></td>
-							<td>Go Partiots! #Ptriots #Boston</td>
-							<td>Video</td>
-							<td>hello@email.com</td>
-							<td>@hello_partiots</td>
-							<td>positive</td>
-							<td>N</td>
-							<td>N</td>
-							<td><label id="a">
-								<input type="checkbox" name="man" value="man" />
-								<span className="lbl"></span> </label>
-							</td>
-						</tr>
-						<tr>
-							<td><a href="#" className="reply_btn"><i className="fa fa-long-arrow-left"></i> Reply</a></td>
-							<td>Just an example tweet</td>
-							<td>Image</td>
-							<td>test@e.com</td>
-							<td>@testing</td>
-							<td>50</td>
-							<td>Y</td>
-							<td>Y</td>
-							<td><label id="a">
-								<input type="checkbox" name="man" value="man" />
-								<span className="lbl"></span> </label>
-							</td>
-						</tr>
-						<tr>
-							<td><a href="#" className="reply_btn"><i className="fa fa-long-arrow-left"></i> Reply</a></td>
-							<td>Another example of a longer teet message</td>
-							<td>&nbsp;</td>
-							<td>mylongemail@testing.com</td>
-							<td>@mylongnamehandle</td>
-							<td>14</td>
-							<td>N</td>
-							<td>N</td>
-							<td><label id="a">
-								<input type="checkbox" name="man" value="man" />
-								<span className="lbl"></span> </label>
-							</td>
-						</tr>
+						{ this.state.tweets.map(function (tweetRow) {
+							return (
+								<tr>
+									<td><a href="#" className="reply_btn"><i className="fa fa-long-arrow-left"></i> Reply</a></td>
+									<td>{ tweetRow.tweet }</td>
+									<td>{ tweetRow.mediaLink }</td>
+									<td>{ tweetRow.email }</td>
+									<td>{ tweetRow.socialHandle }</td>
+									<td>{ tweetRow.sentiment }</td>
+									<td>{ tweetRow.follower }</td>
+									<td>{ tweetRow.following }</td>
+									<td><label id="a">
+										<input type="checkbox" name="man" value="man" />
+										<span className="lbl"></span> </label>
+									</td>
+								</tr>
+							);
+						}) }
 					</table>
 				</div>
 				<div className="clearfix">&nbsp;</div>
@@ -96,4 +108,4 @@ export default React.createClass({
 			</div>
 		);
 	}
-});
+};
