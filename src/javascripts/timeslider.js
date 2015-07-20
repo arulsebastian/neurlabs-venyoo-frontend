@@ -5,18 +5,21 @@ import React from 'react';
 import '../stylesheets/components/timeslider.scss';
 
 /* Constants */
-const pointerColor = '#2E7FB1';
+const pointerColor  = '#2E7FB1';
+const sliderHeight  = 60;
+const barHeight     = sliderHeight * 2/3;
+const pointerHeight = sliderHeight - barHeight;
+const pointerLength = pointerHeight / 0.866; // 0.866 is sin(pi/3)
 
 export default class TimeSlider extends React.Component {
 	constructor (props) {
 		super(props);
 
 		var intervalsNum = 72;  // 12 hours of 10min intervals
-		var tweetsMax    = 100; // max amount of tweets per interval
 		var intervals    = [];
 
 		for (var i = 0; i < intervalsNum; i++)
-			intervals.push(Math.floor(Math.random() * tweetsMax));
+			intervals.push(Math.random());
 
 		this.state = {
 			startTime  : '1:00am',
@@ -92,8 +95,8 @@ export default class TimeSlider extends React.Component {
 			function drawPlot () {
 				var plotPath = new Path2D();
 				self.state.intervals.forEach(function (height, index) {
-					plotPath.moveTo(intervalNumberToPos(index), 40);
-					plotPath.lineTo(intervalNumberToPos(index), 39 - height / 3);
+					plotPath.moveTo(intervalNumberToPos(index), barHeight);
+					plotPath.lineTo(intervalNumberToPos(index), (barHeight - 1) - height * (barHeight * 0.90)); // 90% of the bar height
 				});
 				ctx.strokeStyle = '#000000';
 				ctx.stroke(plotPath);
@@ -102,9 +105,9 @@ export default class TimeSlider extends React.Component {
 			function drawPointer () {
 				ctx.fillStyle = 'red';
 				var pointerPath = new Path2D();
-				pointerPath.moveTo(pointerPos,      40);
-				pointerPath.lineTo(pointerPos + 14, 60);
-				pointerPath.lineTo(pointerPos - 14, 60);
+				pointerPath.moveTo(pointerPos,                     barHeight);
+				pointerPath.lineTo(pointerPos + pointerLength / 2, sliderHeight);
+				pointerPath.lineTo(pointerPos - pointerLength / 2, sliderHeight);
 				ctx.fillStyle = pointerColor;
 				ctx.fill(pointerPath);
 			}
