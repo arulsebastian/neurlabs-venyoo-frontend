@@ -8,7 +8,13 @@ export default class DataTable extends React.Component {
 		super(...args);
 
 		this.state = {
-			tweets: [
+			tweets:        generateTweets(35),
+			tweetsPerPage: 20,
+			pageNumber:    1
+		};
+
+		function generateTweets (tweetsNumber) {
+			var exampleTweets = [
 				{
 					tweet:        "Go Partiots! #Ptriots #Boston",
 					mediaLink:    "Video",
@@ -36,8 +42,16 @@ export default class DataTable extends React.Component {
 					follower:     "N",
 					following:    "N"
 				}
-			]
-		};
+			];
+
+			var tweets = [];
+			
+			for (var i = 0; i < tweetsNumber; i++) {
+				tweets.push(exampleTweets[Math.floor(Math.random() * exampleTweets.length)]);
+			}
+
+			return tweets;
+		}
 	}
 
 	render () {
@@ -60,9 +74,9 @@ export default class DataTable extends React.Component {
 								<span className="lbl"></span> </label>
 							</th>
 						</tr>
-						{ this.state.tweets.map(function (tweetRow) {
+						{ this.state.tweets.map(function (tweetRow, index) {
 							return (
-								<tr>
+								<tr key={ index }>
 									<td><a href="#" className="reply_btn"><i className="fa fa-long-arrow-left"></i> Reply</a></td>
 									<td>{ tweetRow.tweet }</td>
 									<td>{ tweetRow.mediaLink }</td>
