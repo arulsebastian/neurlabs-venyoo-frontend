@@ -9,7 +9,9 @@ export default class DataTable extends React.Component {
 
 		this.state = {
 			tweets:        generateTweets(35),
+			tweetsTotal:   35,
 			tweetsPerPage: 20,
+			pagesCount:    2,
 			pageNumber:    1
 		};
 
@@ -55,43 +57,64 @@ export default class DataTable extends React.Component {
 	}
 
 	render () {
+		var self = this;
+
+		var tweetsRows = [];
+		var tweetEndNumber = ((this.state.tweetsPerPage * (this.state.pageNumber + 1)) > this.state.tweetsTotal)
+							 ? this.state.tweetsTotal
+							 : (this.state.tweetsPerPage * (this.state.pageNumber + 1));
+		for (var i = (this.state.tweetsPerPage * this.state.pageNumber); i < tweetEndNumber; i++) {
+			var tweetData = this.state.tweets[i];
+			
+			tweetsRows.push(
+				<tr key={ i }>
+					<td><a href="#" className="reply_btn"><i className="fa fa-long-arrow-left"></i> Reply</a></td>
+					<td>{ tweetData.tweet + " " + this.state.pageNumber }</td>
+					<td>{ tweetData.mediaLink }</td>
+					<td>{ tweetData.email }</td>
+					<td>{ tweetData.socialHandle }</td>
+					<td>{ tweetData.sentiment }</td>
+					<td>{ tweetData.follower }</td>
+					<td>{ tweetData.following }</td>
+					<td><label id="a">
+						<input type="checkbox" name="man" value="man" />
+						<span className="lbl"></span> </label>
+					</td>
+				</tr>
+			);
+		}
+
+		var pagesLabels = [];
+		for (var currPage = 0; currPage < this.state.pagesCount; currPage++) {
+			if (currPage === this.state.pageNumber) {
+				pagesLabels.push(<li className="active" key={ currPage }><a data-page={ currPage } onClick={ this.handlePageChange.bind(self) }>{ currPage + 1 }</a></li>);
+			} else {
+				pagesLabels.push(<li key={ currPage }><a data-page={ currPage } onClick={ this.handlePageChange.bind(self) }>{ currPage + 1 }</a></li>);
+			}
+		}
+
 		return (
 			<div className="container">
 				<div id="container">
-					<h3 className="grey-color">1,000 entries <a className="btn btn-sm grey_bg">12:45pm - 1:00pm </a> <a href="#" className="full_screen"><i className="fa fa-arrows-alt"></i> Full Screen</a> </h3>
+					<h3 className="grey-color">{ this.state.tweetsTotal } entries <a className="btn btn-sm grey_bg">12:45pm - 1:00pm </a> <a href="#" className="full_screen"><i className="fa fa-arrows-alt"></i> Full Screen</a> </h3>
 					<table className="table table-hover table-striped">
-						<tr>
-							<th>Reply</th>
-							<th>Tweet</th>
-							<th>Media Link</th>
-							<th>Email</th>
-							<th>Social Handle</th>
-							<th>Sentiment</th>
-							<th>Follower</th>
-							<th>Following</th>
-							<th> <label id="a">
-								<input type="checkbox" name="man" value="man" />
-								<span className="lbl"></span> </label>
-							</th>
-						</tr>
-						{ this.state.tweets.map(function (tweetRow, index) {
-							return (
-								<tr key={ index }>
-									<td><a href="#" className="reply_btn"><i className="fa fa-long-arrow-left"></i> Reply</a></td>
-									<td>{ tweetRow.tweet }</td>
-									<td>{ tweetRow.mediaLink }</td>
-									<td>{ tweetRow.email }</td>
-									<td>{ tweetRow.socialHandle }</td>
-									<td>{ tweetRow.sentiment }</td>
-									<td>{ tweetRow.follower }</td>
-									<td>{ tweetRow.following }</td>
-									<td><label id="a">
-										<input type="checkbox" name="man" value="man" />
-										<span className="lbl"></span> </label>
-									</td>
-								</tr>
-							);
-						}) }
+						<tbody>
+							<tr>
+								<th>Reply</th>
+								<th>Tweet</th>
+								<th>Media Link</th>
+								<th>Email</th>
+								<th>Social Handle</th>
+								<th>Sentiment</th>
+								<th>Follower</th>
+								<th>Following</th>
+								<th> <label id="a">
+									<input type="checkbox" name="man" value="man" />
+									<span className="lbl"></span> </label>
+								</th>
+							</tr>
+							{ tweetsRows }
+						</tbody>
 					</table>
 				</div>
 				<div className="clearfix">&nbsp;</div>
@@ -111,8 +134,7 @@ export default class DataTable extends React.Component {
 					<div className="col-md-8 paging">
 						<ul className="pagination">
 							<li className="page"><a href="">Page</a></li>
-							<li className="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
+							{ pagesLabels }
 						</ul>
 					</div>
 					<div className="col-md-2">
@@ -121,5 +143,13 @@ export default class DataTable extends React.Component {
 				</div>
 			</div>
 		);
+	}
+
+	handlePageChange (e) {
+		this.setState({ pageNumber : parseInt(e.target.dataset.page) });
+	}
+
+	handleTweetsPerPageChange () {
+
 	}
 };
