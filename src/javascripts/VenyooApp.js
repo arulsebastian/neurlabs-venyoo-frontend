@@ -5,27 +5,14 @@ import TimeSlider from "./timeslider";
 import DataTable from "./datatable";
 import Filters from "./filters";
 import Actions from "./actions";
+import VenyooWebUtils from "./utils/VenyooWebUtils";
 
 /* Static dependencies */
 // import "stylesheets/modules/container";
 import sliderImg from '../images/start_image.jpg';
 import socialImg from '../images/social_1.png';
 
-// My old implementation (replaced by Polina's raw design)
-// <div className="wrapper">
-//  <Map />
-//  <div className="map_right">
-			
-//    <Filters />
-//  </div>
-//  <div className="left_sec">
-//    <TimeSlider />
-//    <DataTable />
-//    <Actions />
-//  </div>
-// </div>
-
-export default React.createClass({
+export default class VenyooApp extends React.Component {
 	render () {
 		return (
 			<div className="wrapper">
@@ -108,4 +95,11 @@ export default React.createClass({
 			</div>
 		);
 	}
-});
+
+	componentWillMount () {
+		var Api = new VenyooWebUtils;
+		Api.getAppMetadata(function (data) {
+			console.log(data);
+		});
+	}
+};

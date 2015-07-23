@@ -1,9 +1,9 @@
 /* JS dependencies */
 import React from "react";
-import Container from "javascripts/container";
+import VenyooApp from "javascripts/VenyooApp";
 
 /* Static dependencies */
 import "./index.html";
 import "stylesheets/base";
 
-React.render(<Container />, document.querySelector("#main"));
+React.render(<VenyooApp />, document.querySelector("#main"));
