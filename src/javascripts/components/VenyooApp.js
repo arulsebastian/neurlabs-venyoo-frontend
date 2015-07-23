@@ -1,18 +1,31 @@
 /* JS dependencies */
 import React from "react";
-import Map from "./map";
-import TimeSlider from "./timeslider";
-import DataTable from "./datatable";
-import Filters from "./filters";
-import Actions from "./actions";
-import VenyooWebUtils from "./utils/VenyooWebUtils";
+import Map from "./Map";
+import TimeSlider from "./TimeSlider";
+import DataTable from "./DataTable";
+import Filters from "./Filters";
+import Actions from "./Actions";
+import VenyooWebUtils from "../utils/VenyooWebUtils";
 
 /* Static dependencies */
 // import "stylesheets/modules/container";
-import sliderImg from '../images/start_image.jpg';
-import socialImg from '../images/social_1.png';
+import sliderImg from '../../images/start_image.jpg';
+import socialImg from '../../images/social_1.png';
 
 export default class VenyooApp extends React.Component {
+	constructor (...args) {
+		super(...args);
+
+		this.state = {
+			filters: {
+				events: [],
+				klout_scores: [],
+				sentiments: [],
+				socials: []
+			}
+		};
+	}
+
 	render () {
 		return (
 			<div className="wrapper">
@@ -31,25 +44,7 @@ export default class VenyooApp extends React.Component {
 									<li><a href="#">LOGOUT</a></li>
 								</ul>
 							</div>
-							{/* Events block */}
-							<div className="event_sec" id="container2">
-								{/* Event Select */}
-								<div className="event_select">
-									<label>Select Event:</label>
-									<div className="select-field">
-										<select className="selectpicker">
-											<option value="">9.10 vs. Pittsburgh</option>
-											<option>9.10 vs. Pittsburgh</option>
-											<option>9.10 vs. Pittsburgh</option>
-											<option>9.10 vs. Pittsburgh</option>
-											<option>9.10 vs. Pittsburgh</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div className="filter_btn">
-								<a href="#">Filter</a>
-							</div>
+							<Filters filters={this.state.filters} />
 						</div>
 					</div>
 				</div>
@@ -97,9 +92,18 @@ export default class VenyooApp extends React.Component {
 	}
 
 	componentWillMount () {
+		var self = this;
 		var Api = new VenyooWebUtils;
+		
 		Api.getAppMetadata(function (data) {
-			console.log(data);
+			self.setState({
+				filters: {
+					events: data.events,
+					klout_scores: data.klout_scores,
+					sentiments: data.sentiments,
+					socials: data.socials
+				}
+			});
 		});
 	}
 };

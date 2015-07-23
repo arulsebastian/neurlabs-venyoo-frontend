@@ -3,8 +3,8 @@ import React from 'react';
 import jQuery from 'jquery';
 
 /* Static dependencies */
-import '../stylesheets/components/map.scss';
-import tweet_content from '../tweet_content.html';
+import '../../stylesheets/components/map.scss';
+import tweet_content from '../../tweet_content.html';
 
 export default class Map extends React.Component {
 	constructor (...args) {

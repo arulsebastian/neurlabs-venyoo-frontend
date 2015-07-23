@@ -2,7 +2,7 @@
 import React from 'react';
 
 /* Static dependencies */
-import '../stylesheets/components/timeslider.scss';
+import '../../stylesheets/components/timeslider.scss';
 
 /* Constants */
 const pointerColor  = '#2E7FB1';

@@ -4,7 +4,7 @@ const path = require("path");
 
 const config = {
 	entry: {
-		app: ["./src/index.js"]
+		app: ["./src/javascripts/app.js"]
 	},
 	module: {
 		loaders: [
@@ -12,6 +12,10 @@ const config = {
 				test: /\.js$/,
 				exclude: /node_modules/,
 				loaders: ["babel"],
+			},
+			{
+				test: /\.json$/,
+				loaders: ["json"]
 			},
 			{
 				test: /\.css$/,
@@ -30,6 +34,12 @@ const config = {
 				loader: "file?name=[name].[ext]"
 			}
 		]
+	},
+	node: {
+		console: true,
+		fs: "empty",
+		net: "empty",
+		tls: "empty"
 	},
 	output: {
 		filename: "[name].js",
