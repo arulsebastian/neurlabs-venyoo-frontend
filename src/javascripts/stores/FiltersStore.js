@@ -1,6 +1,7 @@
 import AppDispatcher from "../AppDispatcher";
 import VenyooConstants from "../constants/VenyooConstants";
 import events from "events";
+import assign from "object-assign";
 
 const CHANGE_EVENT = "change";
 
@@ -14,24 +15,24 @@ var _filters = {
 };
 var _isLoading = false;
 
-var FiltersStore = Object.assign({}, events.EventEmitter.prototype, {
+var FiltersStore = assign({}, events.EventEmitter.prototype, {
 
-	emitChange () {
+	emitChange: function () {
 		this.emit(CHANGE_EVENT);
-	}
+	},
 
-	addChangeListener (callback) {
+	addChangeListener: function (callback) {
 		this.on(CHANGE_EVENT, callback);
-	}
+	},
 
-	removeChangeListener (callback) {
+	removeChangeListener: function (callback) {
 		this.removeListener(callback);
-	}
+	},
 
-	getFilters () {
+	getFilters: function () {
 		return _filters;
-	}
-	getIsLoading () {
+	},
+	getIsLoading: function () {
 		return _isLoading;
 	}
 

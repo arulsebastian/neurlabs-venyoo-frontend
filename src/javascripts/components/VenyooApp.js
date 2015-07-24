@@ -5,26 +5,26 @@ import TimeSlider from "./TimeSlider";
 import DataTable from "./DataTable";
 import Filters from "./Filters";
 import Actions from "./Actions";
+import FiltersStore from "../stores/FiltersStore";
 import FiltersActionCreators from "../actions/FiltersActionCreators";
-import VenyooWebUtils from "../utils/VenyooWebUtils";
 
 /* Static dependencies */
 // import "stylesheets/modules/container";
 import sliderImg from '../../images/start_image.jpg';
 import socialImg from '../../images/social_1.png';
 
+function getStoreState () {
+	return {
+		filters: FiltersStore.getFilters(),
+		isLoading: FiltersStore.getIsLoading()
+	};
+}
+
 export default class VenyooApp extends React.Component {
 	constructor (...args) {
 		super(...args);
 
-		this.state = {
-			filters: {
-				events: [],
-				klout_scores: [],
-				sentiments: [],
-				socials: []
-			}
-		};
+		this.state = getStoreState();
 	}
 
 	render () {
@@ -92,18 +92,16 @@ export default class VenyooApp extends React.Component {
 		);
 	}
 
-	componentWillMount () {
+	componentDidMount () {
+		FiltersStore.addChangeListener(this._onChange.bind(this));
 		FiltersActionCreators.getFilters();
-		
-		// replace me with an action handler! Api.getAppMetadata(function (data) {
-		// 	self.setState({
-		// 		filters: {
-		// 			events: data.events,
-		// 			klout_scores: data.klout_scores,
-		// 			sentiments: data.sentiments,
-		// 			socials: data.socials
-		// 		}
-		// 	});
-		// });
+	}
+
+	componentWillUnmount () {
+		FiltersStore.removeChangeListener(this._onChange.bind(this));
+	}
+
+	_onChange () {
+		this.setState(getStoreState);
 	}
 };
