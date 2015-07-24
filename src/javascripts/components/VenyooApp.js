@@ -5,6 +5,7 @@ import TimeSlider from "./TimeSlider";
 import DataTable from "./DataTable";
 import Filters from "./Filters";
 import Actions from "./Actions";
+import FiltersActionCreators from "../actions/FiltersActionCreators";
 import VenyooWebUtils from "../utils/VenyooWebUtils";
 
 /* Static dependencies */
@@ -92,18 +93,17 @@ export default class VenyooApp extends React.Component {
 	}
 
 	componentWillMount () {
-		var self = this;
-		var Api = new VenyooWebUtils;
+		FiltersActionCreators.getFilters();
 		
-		Api.getAppMetadata(function (data) {
-			self.setState({
-				filters: {
-					events: data.events,
-					klout_scores: data.klout_scores,
-					sentiments: data.sentiments,
-					socials: data.socials
-				}
-			});
-		});
+		// replace me with an action handler! Api.getAppMetadata(function (data) {
+		// 	self.setState({
+		// 		filters: {
+		// 			events: data.events,
+		// 			klout_scores: data.klout_scores,
+		// 			sentiments: data.sentiments,
+		// 			socials: data.socials
+		// 		}
+		// 	});
+		// });
 	}
 };

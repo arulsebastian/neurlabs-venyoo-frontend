@@ -3,7 +3,7 @@ import request from "request";
 const baseUrl = "http://private-23316-venyoo.apiary-mock.com";
 
 export default class VenyooWebUtils {
-	getAppMetadata (cb) {
+	getFilters (cb) {
 		request({
 			url: baseUrl + "/appmetadata",
 			withCredentials: false
