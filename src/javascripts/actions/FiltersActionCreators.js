@@ -8,7 +8,6 @@ export default {
 			type: VenyooConstants.ActionTypes.GET_FILTERS
 		});
 
-		// use VenyooWebUtils.getFilters() instead
-		
+		VenyooWebUtils.getFilters();
 	}
 };
