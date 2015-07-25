@@ -1,11 +1,5 @@
 @import "old-implementation/bootstrap";
-// @import "old-implementation/bootstrap-select";
-@import "old-implementation/custom";
-@import "old-implementation/bootstrap";
+@import "old-implementation/style";
 @import "old-implementation/custom";
 @import "old-implementation/font-awesome.min";
-@import "old-implementation/style";
-
-/* Components */
-// @import "components/map.scss";
-// @import "components/timeslider.scss";
+@import "old-implementation/bootstrap-select";

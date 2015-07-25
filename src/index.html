@@ -15,6 +15,37 @@
 		<script src="https://maps.googleapis.com/maps/api/js"></script>
 		<!-- App js bundle -->
 		<script src="app.js"></script>
-	
+
+<!-- This is Temporary Fix -->
+<!-- Js -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap.min.js"></script>
+<!-- Select Box -->
+<script src="libs/bootstrap-select.min.js"></script>
+<script>
+	$(document).ready(function () {
+		setTimeout(function () {
+			var mySelect = $('#first-disabled2');
+
+			$('#special').on('click', function () {
+				mySelect.find('option:selected').prop('disabled', true);
+				mySelect.selectpicker('refresh');
+			});
+			$('#special2').on('click', function () {
+				mySelect.find('option:disabled').prop('disabled', false);
+				mySelect.selectpicker('refresh');
+			});
+			$('.map_toggle').on('click', function () {
+				$('.inner_block').toggle();
+			});
+
+			var $basic2 = $('#basic2').selectpicker({
+				liveSearch: true,
+				maxOptions: 1
+			});
+		}, 1000);
+	});
+</script>
+
 	</body>
 </html>
