@@ -15,7 +15,7 @@ export default class Filters extends React.Component {
 					</div>
 				</div>
 			);
-			
+
 		} else {
 
 			var events = [];
@@ -63,7 +63,8 @@ export default class Filters extends React.Component {
 						<div className="event_select">
 							<label>Select Event:</label>
 							<div className="select-field">
-								<select className="selectpicker">
+								{/* React approach to change state on onChange event is not applicable cause onChange does not work here */}
+								<select className="selectpicker" ref="eventSelector">
 									{events}
 								</select>
 							</div>
@@ -158,9 +159,17 @@ export default class Filters extends React.Component {
 							</div>
 						</div>
 					</div>
-					<div className="filter_btn"><a href="#">Filter</a></div>
+					<div className="filter_btn">
+						<a href="#" onClick={this.handleFilterClick.bind(this)}>Filter</a>
+					</div>
 				</div>
 			);
 		}
+	}
+
+	handleFilterClick () {
+		this.props.onFilter({
+			eventId: React.findDOMNode(this.refs.eventSelector).value
+		});
 	}
 }
