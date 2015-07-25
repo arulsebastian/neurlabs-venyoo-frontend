@@ -45,7 +45,7 @@ export default class VenyooApp extends React.Component {
 									<li><a href="#">LOGOUT</a></li>
 								</ul>
 							</div>
-							<Filters filters={this.state.filters} />
+							<Filters filters={this.state.filters} isLoading={this.state.isLoading} />
 						</div>
 					</div>
 				</div>
@@ -94,7 +94,6 @@ export default class VenyooApp extends React.Component {
 
 	componentDidMount () {
 		FiltersStore.addChangeListener(this._onChange.bind(this));
-		FiltersActionCreators.getFilters();
 	}
 
 	componentWillUnmount () {
