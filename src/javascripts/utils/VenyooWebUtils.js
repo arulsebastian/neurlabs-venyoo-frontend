@@ -17,5 +17,20 @@ export default {
 				ServerActionCreators.receiveFiltersFailed(error, response, body);
 			}
 		});
+	},
+
+	getEventBucketsMetadata: function () {
+		ServerActionCreators.receiveEventBucketsSending();
+
+		request({
+			url: baseUrl + "/bucketsmetadata",
+			withCredentials: false
+		}, function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				ServerActionCreators.receiveEventBucketsSucceeded(JSON.parse(body), response, body);
+			} else {
+				ServerActionCreators.receiveEventBucketsFailed(error, response, body);
+			}
+		});
 	}
 }

@@ -12,23 +12,33 @@ const pointerHeight = sliderHeight - barHeight;
 const pointerLength = pointerHeight / 0.866; // 0.866 is sin(pi/3)
 
 export default class TimeSlider extends React.Component {
-	constructor (props) {
-		super(props);
 
-		var intervalsNum = 72;  // 12 hours of 10min intervals
-		var intervals    = [];
+	// THE NEXT STEP IS TO
+	// get data from EventBucketsStore through VenyooApp and show it on the Slider,
+	// EventBucketsStore contains mock data that is enough for testing,
+	// use data FROM API after the step described above is implemented
 
-		for (var i = 0; i < intervalsNum; i++)
-			intervals.push(Math.random());
 
-		this.state = {
-			startTime  : '1:00am',
-			finishTime : '1:00pm',
-			intervals  : intervals
-		};
-	}
+	// constructor (props) {
+	// 	super(props);
+
+	// 	var intervalsNum = 72;  // 12 hours of 10min intervals
+	// 	var intervals    = [];
+
+	// 	for (var i = 0; i < intervalsNum; i++)
+	// 		intervals.push(Math.random());
+
+	// 	this.state = {
+	// 		startTime  : '1:00am',
+	// 		finishTime : '1:00pm',
+	// 		intervals  : intervals
+	// 	};
+	// }
 
 	render () {
+		var startTime  = this.props.eventBuckets[0].bucketTime;
+		var finishTime = this.props.eventBuckets[this.props.eventBuckets.length - 1].bucketTime;
+
 		return (
 			<div className='start_detail'>
 				
@@ -39,8 +49,8 @@ export default class TimeSlider extends React.Component {
 					<div>Finish</div>
 				</div>
 				<div className='slider_timescale' ref='sliderTimescale'>
-					<span className='slider_start_time'>{this.state.startTime}</span>
-					<span className='slider_finish_time'>{this.state.finishTime}</span>
+					<span className='slider_start_time'>{startTime}</span>
+					<span className='slider_finish_time'>{finishTime}</span>
 					<canvas ref='sliderCanvas'/>
 				</div>
 
@@ -51,9 +61,9 @@ export default class TimeSlider extends React.Component {
 	componentDidMount () {
 		/* Initialization */
 		var self = this;
-		var timeScale = React.findDOMNode(self.refs.sliderTimescale);
+		var timeScale    = React.findDOMNode(self.refs.sliderTimescale);
 		var sliderCanvas = React.findDOMNode(self.refs.sliderCanvas);
-		var ctx = sliderCanvas.getContext('2d');
+		var ctx          = sliderCanvas.getContext('2d');
 		var canvasDim = {
 			x : 0,
 			y : 0,
@@ -69,12 +79,18 @@ export default class TimeSlider extends React.Component {
 		function drawCanvas () {
 			var leftSpace  = 0; // px
 			var rightSpace = 0; // px
-			var intervalWidth = (canvasDim.width - (leftSpace + rightSpace)) / self.state.intervals.length;
-			var currInterval = 0;
+			var bucketsNumber = self.props.eventBuckets.length;
+			var bucketWidth   = (canvasDim.width - (leftSpace + rightSpace)) / bucketsNumber;
+			var currBucket    = 0;
 
 			// Clear the canvas
 			ctx.clearRect(0, 0, canvasDim.width, canvasDim.height);
 			
+			/* Find max number of tweets for normalization */
+			var maxTweetsNumber = self.props.eventBuckets.reduce(function (prevValue, currValue, index, array) {
+				return Math.max(prevValue, currValue.tweetsNumber);
+			}, self.props.eventBuckets[0].tweetsNumber);
+
 			checkAndNormalizePointerPos();
 			drawPlot();
 			drawPointer();
@@ -84,19 +100,20 @@ export default class TimeSlider extends React.Component {
 				if (pointerPos === null)
 					pointerPos = canvasDim.width / 2;
 				/* Make it stepwise and check boundaries */
-				currInterval = posToIntervalNumber(pointerPos);
-				if (currInterval < 0)
-					currInterval = 0;
-				if (currInterval >= self.state.intervals.length)
-					currInterval =  self.state.intervals.length - 1;
-				pointerPos = intervalNumberToPos(currInterval);
+				currBucket = posToBucketNumber(pointerPos);
+				if (currBucket < 0)
+					currBucket = 0;
+				if (currBucket >= bucketsNumber)
+					currBucket =  bucketsNumber - 1;
+				pointerPos = bucketNumberToPos(currBucket);
 			}
 
 			function drawPlot () {
 				var plotPath = new Path2D();
-				self.state.intervals.forEach(function (height, index) {
-					plotPath.moveTo(intervalNumberToPos(index), barHeight);
-					plotPath.lineTo(intervalNumberToPos(index), (barHeight - 1) - height * (barHeight * 0.90)); // 90% of the bar height
+
+				self.props.eventBuckets.forEach(function (bucket, index) {
+					plotPath.moveTo(bucketNumberToPos(index), barHeight);
+					plotPath.lineTo(bucketNumberToPos(index), (barHeight - 1) - bucket.tweetsNumber / maxTweetsNumber * (barHeight * 0.90)); // 90% of the bar height
 				});
 				ctx.strokeStyle = '#000000';
 				ctx.stroke(plotPath);
@@ -112,12 +129,12 @@ export default class TimeSlider extends React.Component {
 				ctx.fill(pointerPath);
 			}
 
-			function posToIntervalNumber (pos) {
-				return Math.round((pos - leftSpace - intervalWidth / 2) / intervalWidth);
+			function posToBucketNumber (pos) {
+				return Math.round((pos - leftSpace - bucketWidth / 2) / bucketWidth);
 			}
 
-			function intervalNumberToPos (intervalNum) {
-				return (leftSpace + intervalWidth * (intervalNum + 0.5));
+			function bucketNumberToPos (bucketNum) {
+				return (leftSpace + bucketWidth * (bucketNum + 0.5));
 			}
 		}		
 
@@ -164,3 +181,6 @@ export default class TimeSlider extends React.Component {
 		};
 	}
 }
+TimeSlider.propTypes = {
+	eventBuckets:  React.PropTypes.array
+};

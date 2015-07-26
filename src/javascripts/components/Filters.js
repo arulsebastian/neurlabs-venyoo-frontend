@@ -183,3 +183,7 @@ export default class Filters extends React.Component {
 		});
 	}
 }
+Filters.propTypes = {
+	activeEventId: React.PropTypes.number,
+	eventBuckets:  React.PropTypes.array
+};

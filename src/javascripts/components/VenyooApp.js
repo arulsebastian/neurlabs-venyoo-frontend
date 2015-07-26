@@ -6,6 +6,7 @@ import DataTable from "./DataTable";
 import Filters from "./Filters";
 import Actions from "./Actions";
 import FiltersStore from "../stores/FiltersStore";
+import EventBucketsStore from "../stores/EventBucketsStore";
 import FiltersActionCreators from "../actions/FiltersActionCreators";
 
 /* Static dependencies */
@@ -13,9 +14,11 @@ import FiltersActionCreators from "../actions/FiltersActionCreators";
 import sliderImg from '../../images/start_image.jpg';
 import socialImg from '../../images/social_1.png';
 
-function getStoresState () {
+function getStoresState (VenyooAppObj) {
 	return {
-		filters: FiltersStore.getState()
+		activeEventId: (VenyooAppObj.state) ? VenyooAppObj.state.activeEventId : undefined, // Preserve the value
+		filters:       FiltersStore.getState(),
+		eventBuckets:  EventBucketsStore.getState()
 	};
 }
 
@@ -23,7 +26,7 @@ export default class VenyooApp extends React.Component {
 	constructor (...args) {
 		super(...args);
 
-		this.state = getStoresState();
+		this.state = getStoresState(this);
 	}
 
 	render () {
@@ -52,7 +55,7 @@ export default class VenyooApp extends React.Component {
 					{/* Left block */}
 					<div className="left_sec">
 						<div className="start_detail">{/* <img src={sliderImg} alt="" /> */}
-							<TimeSlider />
+							<TimeSlider eventBuckets={this.state.eventBuckets} />
 						</div>
 						<div className="home_detail">
 							<DataTable />
@@ -106,6 +109,6 @@ export default class VenyooApp extends React.Component {
 	}
 
 	_onChange () {
-		this.setState(getStoresState);
+		this.setState(getStoresState(this));
 	}
 };
