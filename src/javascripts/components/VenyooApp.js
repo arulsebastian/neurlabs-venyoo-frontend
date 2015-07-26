@@ -47,7 +47,7 @@ export default class VenyooApp extends React.Component {
 									<li><a href="#">LOGOUT</a></li>
 								</ul>
 							</div>
-							<Filters filters={this.state.filters} onFilter={this.handleFilterChanged.bind(this)} />
+							<Filters filters={this.state.filters} onFilterClick={this.handleFilterClicked.bind(this)} />
 						</div>
 					</div>
 				</div>
@@ -55,7 +55,7 @@ export default class VenyooApp extends React.Component {
 					{/* Left block */}
 					<div className="left_sec">
 						<div className="start_detail">{/* <img src={sliderImg} alt="" /> */}
-							<TimeSlider eventBuckets={this.state.eventBuckets} />
+							<TimeSlider eventBuckets={this.state.eventBuckets} onBucketChange={this.handleBucketChanged.bind(this)} />
 						</div>
 						<div className="home_detail">
 							<DataTable />
@@ -104,8 +104,11 @@ export default class VenyooApp extends React.Component {
 
 	/* Event handlers */
 
-	handleFilterChanged (nextFilters) {
-		console.log("VenyooApp.handleFilterChanged, nextFilters: ", nextFilters);
+	handleFilterClicked (nextFilters) {
+		console.log("VenyooApp.handleFilterClicked, nextFilters: ", nextFilters);
+	}
+	handleBucketChanged (nextBucketId) {
+		console.log("VenyooApp.handleBucketChanged, nextBucketId: ", nextBucketId);
 	}
 
 	_onChange () {

@@ -16,54 +16,59 @@ var ActionTypes = VenyooConstants.ActionTypes;
 
 var _eventBuckets = [
 	{
-		"bucketId": 0,
+		"bucketId": 10,
 		"bucketTime": "1pm",
 		"tweetsNumber": 10
 	},
 	{
-		"bucketId": 1,
+		"bucketId": 11,
 		"bucketTime": "2pm",
 		"tweetsNumber": 40
 	},
 	{
-		"bucketId": 2,
+		"bucketId": 12,
 		"bucketTime": "3pm",
 		"tweetsNumber": 30
 	},
 	{
-		"bucketId": 3,
+		"bucketId": 13,
 		"bucketTime": "4pm",
 		"tweetsNumber": 60
 	},
 	{
-		"bucketId": 4,
+		"bucketId": 14,
 		"bucketTime": "5pm",
 		"tweetsNumber": 80
 	},
 	{
-		"bucketId": 5,
+		"bucketId": 15,
 		"bucketTime": "6pm",
 		"tweetsNumber": 50
 	},
 	{
-		"bucketId": 6,
+		"bucketId": 16,
 		"bucketTime": "7pm",
 		"tweetsNumber": 60
 	},
 	{
-		"bucketId": 7,
+		"bucketId": 17,
 		"bucketTime": "8pm",
 		"tweetsNumber": 30
 	},
 	{
-		"bucketId": 8,
+		"bucketId": 18,
 		"bucketTime": "9pm",
 		"tweetsNumber": 80
 	},
 	{
-		"bucketId": 9,
+		"bucketId": 19,
 		"bucketTime": "10pm",
 		"tweetsNumber": 10
+	},
+	{
+		"bucketId": 20,
+		"bucketTime": "11pm",
+		"tweetsNumber": 5
 	}
 ];
 var _isLoading = false;

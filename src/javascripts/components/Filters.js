@@ -178,12 +178,14 @@ export default class Filters extends React.Component {
 	}
 
 	handleFilterClick () {
-		this.props.onFilter({
-			eventId: React.findDOMNode(this.refs.eventSelector).value
-		});
+		if (this.props.onFilterClick) {
+			this.props.onFilterClick({
+				eventId: React.findDOMNode(this.refs.eventSelector).value
+			});
+		}
 	}
 }
 Filters.propTypes = {
-	activeEventId: React.PropTypes.number,
-	eventBuckets:  React.PropTypes.array
+	filters:       React.PropTypes.object.isRequired,
+	onFilterClick: React.PropTypes.func
 };

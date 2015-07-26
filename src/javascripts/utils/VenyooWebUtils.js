@@ -8,7 +8,7 @@ export default {
 		ServerActionCreators.receiveFiltersSending();
 
 		request({
-			url: baseUrl + "/appmetadata",
+			url: baseUrl + "/appmetadata", // Should be changed to /filters
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
@@ -23,7 +23,7 @@ export default {
 		ServerActionCreators.receiveEventBucketsSending();
 
 		request({
-			url: baseUrl + "/bucketsmetadata",
+			url: baseUrl + "/bucketsmetadata", // Should be changed to /buckets
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {

@@ -71,6 +71,7 @@ export default class TimeSlider extends React.Component {
 			height : 0
 		};
 		var pointerPos = null; // current position of time pointer
+		var currBucket = Math.ceil(self.props.eventBuckets.length / 2);
 
 		/* Event handlers */
 		attachMouseHandler();
@@ -81,7 +82,6 @@ export default class TimeSlider extends React.Component {
 			var rightSpace = 0; // px
 			var bucketsNumber = self.props.eventBuckets.length;
 			var bucketWidth   = (canvasDim.width - (leftSpace + rightSpace)) / bucketsNumber;
-			var currBucket    = 0;
 
 			// Clear the canvas
 			ctx.clearRect(0, 0, canvasDim.width, canvasDim.height);
@@ -98,7 +98,7 @@ export default class TimeSlider extends React.Component {
 			function checkAndNormalizePointerPos () {
 				/* Default value is in the middle */
 				if (pointerPos === null)
-					pointerPos = canvasDim.width / 2;
+					pointerPos = bucketNumberToPos(currBucket);
 				/* Make it stepwise and check boundaries */
 				currBucket = posToBucketNumber(pointerPos);
 				if (currBucket < 0)
@@ -140,14 +140,21 @@ export default class TimeSlider extends React.Component {
 
 		function attachMouseHandler () {
 			var isMouseDown = false;
+			var mousedownBucketNumber = currBucket; // value of currBucket when user clicked mouse down
 
 			timeScale.addEventListener('mousedown', function () {
 				isMouseDown = true;
+				mousedownBucketNumber = currBucket;
 				drawCanvas();
 			});
 			// use window to allow mouse to go out of the element's boundaries
 			window.addEventListener('mouseup', function () {
 				isMouseDown = false;
+				// Fire event only 
+				if (mousedownBucketNumber !== currBucket) {
+					self.handleBucketChangeOnMouseup.bind(self)(currBucket);
+				}
+				mousedownBucketNumber = currBucket;
 			});
 			window.addEventListener('mousemove', function (event) {
 				pointerPos = event.pageX - canvasDim.x;
@@ -180,7 +187,14 @@ export default class TimeSlider extends React.Component {
 			drawCanvas();
 		};
 	}
+
+	handleBucketChangeOnMouseup (currBucketNumber) {
+		if (this.props.onBucketChange) {
+			this.props.onBucketChange(this.props.eventBuckets[currBucketNumber].bucketId);
+		}
+	}
 }
 TimeSlider.propTypes = {
-	eventBuckets:  React.PropTypes.array
+	eventBuckets:   React.PropTypes.array.isRequired,
+	onBucketChange: React.PropTypes.func
 };
