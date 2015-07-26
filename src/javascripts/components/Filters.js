@@ -9,7 +9,7 @@ export default class Filters extends React.Component {
 
 			return (
 				<div>
-					{/* Event Sec */}
+					{/* Loading bar */}
 					<div className="event_sec" id="container2">
 						<img src="http://sierrafire.cr.usgs.gov/images/loading.gif" />
 					</div>
@@ -19,41 +19,51 @@ export default class Filters extends React.Component {
 		} else {
 
 			var events = [];
-			this.props.filters.events.forEach(function (event, index) {
-				events.push(
-					<option value={event.id} key={index}>{event.team_home + " vs " + event.team_away}</option>
-				);
-			});
+			if (this.props.filters.events) {
+				this.props.filters.events.forEach(function (event, index) {
+					events.push(
+						<option value={event.id} key={index}>{event.team_home + " vs " + event.team_away}</option>
+					);
+				});
+			}
 
 			var socialChannels = [];
-			this.props.filters.socials.forEach(function (socialChannel, index) {
-				socialChannels.push(
-					<label id={socialChannel.id} key={index}>
-						<input type="checkbox" name="man" value="man" />
-						<span className="lbl">{socialChannel.caption}</span>
-					</label>
-				);
-			});
+			if (this.props.filters.socials) {
+				this.props.filters.socials.forEach(function (socialChannel, index) {
+					socialChannels.push(
+						<label id={socialChannel.id} key={index}>
+							<input type="checkbox" name="man" value="man" />
+							<span className="lbl">{socialChannel.caption}</span>
+						</label>
+					);
+				});
+			}
 
 			var kloutScores = [];
-			this.props.filters.klout_scores.forEach(function (kloutScore, index) {
-				kloutScores.push(
-					<label id={kloutScore.id} key={index}>
-						<input type="checkbox" name="man" value="man" />
-						<span className="lbl">{kloutScore.caption}</span>
-					</label>
-				);
-			});
+			if (this.props.filters.klout_scores) {
+				this.props.filters.klout_scores.forEach(function (kloutScore, index) {
+					kloutScores.push(
+						<label id={kloutScore.id} key={index}>
+							<input type="checkbox" name="man" value="man" />
+							<span className="lbl">{kloutScore.caption}</span>
+						</label>
+					);
+				});
+			}
 
 			var sentiments = [];
-			this.props.filters.sentiments.forEach(function (sentiment, index) {
-				sentiments.push(
-					<label id={sentiment.id} key={index}>
-						<input type="checkbox" name="man" value="man" />
-						<span className="lbl">{sentiment.caption}</span>
-					</label>
-				);
-			});
+			if (this.props.filters.sentiments) {
+				this.props.filters.sentiments.forEach(function (sentiment, index) {
+					sentiments.push(
+						<label id={sentiment.id} key={index}>
+							<input type="checkbox" name="man" value="man" />
+							<span className="lbl">{sentiment.caption}</span>
+						</label>
+					);
+				});
+			}
+
+			// 
 
 			return (
 				<div>
