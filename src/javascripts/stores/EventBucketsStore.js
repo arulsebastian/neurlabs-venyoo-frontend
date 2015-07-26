@@ -71,7 +71,7 @@ var _eventBuckets = [
 		"tweetsNumber": 5
 	}
 ];
-var _isLoading = false;
+var _isLoading = true;
 
 var EventBucketsStore = assign({}, events.EventEmitter.prototype, {
 
@@ -88,7 +88,9 @@ var EventBucketsStore = assign({}, events.EventEmitter.prototype, {
 	},
 
 	getState: function () {
-		var state = _.cloneDeep(_eventBuckets);
+		var state = {
+			buckets: _.cloneDeep(_eventBuckets)
+		};
 		state.isLoading = _isLoading;
 		return state;
 	}

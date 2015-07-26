@@ -96,10 +96,12 @@ export default class VenyooApp extends React.Component {
 
 	componentDidMount () {
 		FiltersStore.addChangeListener(this._onChange.bind(this));
+		EventBucketsStore.addChangeListener(this._onChange.bind(this));
 	}
 
 	componentWillUnmount () {
 		FiltersStore.removeChangeListener(this._onChange.bind(this));
+		EventBucketsStore.removeChangeListener(this._onChange.bind(this));
 	}
 
 	/* Event handlers */

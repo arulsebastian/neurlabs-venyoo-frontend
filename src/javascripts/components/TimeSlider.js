@@ -36,19 +36,23 @@ export default class TimeSlider extends React.Component {
 	// }
 
 	render () {
-		var startTime  = this.props.eventBuckets[0].bucketTime;
-		var finishTime = this.props.eventBuckets[this.props.eventBuckets.length - 1].bucketTime;
+		var startTime      = this.props.eventBuckets.buckets[0].bucketTime;
+		var finishTime     = this.props.eventBuckets.buckets[this.props.eventBuckets.buckets.length - 1].bucketTime;
+		var sliderVisibility = (!this.props.eventBuckets.isLoading) ? "visible" : "hidden";
+		var loadingDisplay   = (this.props.eventBuckets.isLoading)  ? "block"   : "none";
 
 		return (
-			<div className='start_detail'>
+			<div className='start_detail' style={{ position: "relative" }}>
 				
-				<div className='slider_start_label'>
+				<img src="http://sierrafire.cr.usgs.gov/images/loading.gif" style={{ display: loadingDisplay, height: "100px", left: "50%", position: "absolute" }}/>
+
+				<div className='slider_start_label' style={{ visibility: sliderVisibility }}>
 					<div>Start</div>
 				</div>
-				<div className='slider_finish_label'>
+				<div className='slider_finish_label' style={{ visibility: sliderVisibility }}>
 					<div>Finish</div>
 				</div>
-				<div className='slider_timescale' ref='sliderTimescale'>
+				<div className='slider_timescale' ref='sliderTimescale' style={{ visibility: sliderVisibility }}>
 					<span className='slider_start_time'>{startTime}</span>
 					<span className='slider_finish_time'>{finishTime}</span>
 					<canvas ref='sliderCanvas'/>
@@ -71,7 +75,7 @@ export default class TimeSlider extends React.Component {
 			height : 0
 		};
 		var pointerPos = null; // current position of time pointer
-		var currBucket = Math.ceil(self.props.eventBuckets.length / 2);
+		var currBucket = Math.ceil(self.props.eventBuckets.buckets.length / 2);
 
 		/* Event handlers */
 		attachMouseHandler();
@@ -80,16 +84,16 @@ export default class TimeSlider extends React.Component {
 		function drawCanvas () {
 			var leftSpace  = 0; // px
 			var rightSpace = 0; // px
-			var bucketsNumber = self.props.eventBuckets.length;
+			var bucketsNumber = self.props.eventBuckets.buckets.length;
 			var bucketWidth   = (canvasDim.width - (leftSpace + rightSpace)) / bucketsNumber;
 
 			// Clear the canvas
 			ctx.clearRect(0, 0, canvasDim.width, canvasDim.height);
 			
 			/* Find max number of tweets for normalization */
-			var maxTweetsNumber = self.props.eventBuckets.reduce(function (prevValue, currValue, index, array) {
+			var maxTweetsNumber = self.props.eventBuckets.buckets.reduce(function (prevValue, currValue, index, array) {
 				return Math.max(prevValue, currValue.tweetsNumber);
-			}, self.props.eventBuckets[0].tweetsNumber);
+			}, self.props.eventBuckets.buckets[0].tweetsNumber);
 
 			checkAndNormalizePointerPos();
 			drawPlot();
@@ -111,7 +115,7 @@ export default class TimeSlider extends React.Component {
 			function drawPlot () {
 				var plotPath = new Path2D();
 
-				self.props.eventBuckets.forEach(function (bucket, index) {
+				self.props.eventBuckets.buckets.forEach(function (bucket, index) {
 					plotPath.moveTo(bucketNumberToPos(index), barHeight);
 					plotPath.lineTo(bucketNumberToPos(index), (barHeight - 1) - bucket.tweetsNumber / maxTweetsNumber * (barHeight * 0.90)); // 90% of the bar height
 				});
@@ -190,11 +194,11 @@ export default class TimeSlider extends React.Component {
 
 	handleBucketChangeOnMouseup (currBucketNumber) {
 		if (this.props.onBucketChange) {
-			this.props.onBucketChange(this.props.eventBuckets[currBucketNumber].bucketId);
+			this.props.onBucketChange(this.props.eventBuckets.buckets[currBucketNumber].bucketId);
 		}
 	}
 }
 TimeSlider.propTypes = {
-	eventBuckets:   React.PropTypes.array.isRequired,
+	eventBuckets:   React.PropTypes.object.isRequired,
 	onBucketChange: React.PropTypes.func
 };
