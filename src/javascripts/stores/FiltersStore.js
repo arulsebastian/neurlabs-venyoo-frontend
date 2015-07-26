@@ -1,5 +1,6 @@
 import events from "events";
 import assign from "object-assign";
+import _ from "lodash";
 import AppDispatcher from "../AppDispatcher";
 import VenyooConstants from "../constants/VenyooConstants";
 import VenyooWebUtils from "../utils/VenyooWebUtils";
@@ -101,11 +102,10 @@ var FiltersStore = assign({}, events.EventEmitter.prototype, {
 		this.removeListener(callback);
 	},
 
-	getFilters: function () {
-		return _filters;
-	},
-	getIsLoading: function () {
-		return _isLoading;
+	getState: function () {
+		var state = _.cloneDeep(_filters);
+		state.isLoading = _isLoading;
+		return state;
 	}
 
 });
@@ -119,7 +119,12 @@ FiltersStore.dispatchToken = AppDispatcher.register(function (action) {
 
 		case ActionTypes.RECEIVE_FILTERS_SUCCEEDED:
 			_isLoading = false;
-			_filters = action.filters;
+			_filters = {
+				events:         action.filters.events,
+				socialChannels: action.filters.socials,
+				kloutScores:    action.filters.klout_scores,
+				sentiments:     action.filters.sentiments
+			}
 			FiltersStore.emitChange();
 			break;
 

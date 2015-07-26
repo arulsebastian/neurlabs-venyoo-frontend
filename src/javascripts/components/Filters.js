@@ -5,7 +5,7 @@ import React from "react"
 
 export default class Filters extends React.Component {
 	render () {
-		if (this.props.isLoading) {
+		if (this.props.filters.isLoading) {
 
 			return (
 				<div>
@@ -28,8 +28,8 @@ export default class Filters extends React.Component {
 			}
 
 			var socialChannels = [];
-			if (this.props.filters.socials) {
-				this.props.filters.socials.forEach(function (socialChannel, index) {
+			if (this.props.filters.socialChannels) {
+				this.props.filters.socialChannels.forEach(function (socialChannel, index) {
 					socialChannels.push(
 						<label id={socialChannel.id} key={index}>
 							<input type="checkbox" name="man" value="man" />
@@ -40,8 +40,8 @@ export default class Filters extends React.Component {
 			}
 
 			var kloutScores = [];
-			if (this.props.filters.klout_scores) {
-				this.props.filters.klout_scores.forEach(function (kloutScore, index) {
+			if (this.props.filters.kloutScores) {
+				this.props.filters.kloutScores.forEach(function (kloutScore, index) {
 					kloutScores.push(
 						<label id={kloutScore.id} key={index}>
 							<input type="checkbox" name="man" value="man" />

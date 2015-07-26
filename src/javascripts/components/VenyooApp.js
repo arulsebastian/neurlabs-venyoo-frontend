@@ -13,10 +13,9 @@ import FiltersActionCreators from "../actions/FiltersActionCreators";
 import sliderImg from '../../images/start_image.jpg';
 import socialImg from '../../images/social_1.png';
 
-function getStoreState () {
+function getStoresState () {
 	return {
-		filters: FiltersStore.getFilters(),
-		isLoading: FiltersStore.getIsLoading()
+		filters: FiltersStore.getState()
 	};
 }
 
@@ -24,7 +23,7 @@ export default class VenyooApp extends React.Component {
 	constructor (...args) {
 		super(...args);
 
-		this.state = getStoreState();
+		this.state = getStoresState();
 	}
 
 	render () {
@@ -45,7 +44,7 @@ export default class VenyooApp extends React.Component {
 									<li><a href="#">LOGOUT</a></li>
 								</ul>
 							</div>
-							<Filters filters={this.state.filters} isLoading={this.state.isLoading} onFilter={this.handleFilterChanged.bind(this)} />
+							<Filters filters={this.state.filters} onFilter={this.handleFilterChanged.bind(this)} />
 						</div>
 					</div>
 				</div>
@@ -107,6 +106,6 @@ export default class VenyooApp extends React.Component {
 	}
 
 	_onChange () {
-		this.setState(getStoreState);
+		this.setState(getStoresState);
 	}
 };
