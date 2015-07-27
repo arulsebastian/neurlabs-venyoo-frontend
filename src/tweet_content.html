@@ -3,9 +3,10 @@
 
 .tweet_info {
 	position: relative;
-	width: 150px;
+	width: 300px;
 	/* padding: 10px; /* $padding; */
-	margin-top: 5px;
+	margin-top: 20px;
+	margin-bottom: 7px;
 	/* border: black solid 1px; */
 }
 
@@ -22,23 +23,23 @@
 
 .user_pic {
 	float: left;
-	padding-right: 5px; /* $padding/2; */
-	padding-bottom: 5px; /* $padding/2; */
-	width: 30px;
-	height: 30px;
+	padding-right: 10px; /* $padding/2; */
+	padding-bottom: 10px; /* $padding/2; */
+	width: 60px;
+	height: 60px;
 }
 .user_name {
-	padding-top: 2px;
+	padding-top: 4px;
 	font-weight: bold;
-	font-size: 0.7em;
+	font-size: 1.4em;
 }
 .user_handle {
 	color: #ccc;
-	font-size: 0.6em;
+	font-size: 1.2em;
 }
 
 .twitter_message {
-	font-size: 0.7em;
+	font-size: 1.4em;
 }
 .twitter_message_link {
 	color: blue;
@@ -50,12 +51,12 @@
 
 .twitter_public_controls > img {
 	float: left;
-	padding: 5px 5px 0 0; /* $padding/2 $padding/2 0 0; */
+	padding: 10px 10px 0 0; /* $padding/2 $padding/2 0 0; */
 }
 
 .twitter_private_controls > img {
 	float: left;
-	padding: 5px 0 0 5px; /* $padding/2 0 0 $padding/2; */
+	padding: 10px 0 0 10px; /* $padding/2 0 0 $padding/2; */
 }
 
 .twitter_private_controls {
@@ -64,7 +65,7 @@
 </style>
 
 <div class="tweet_info">
-	<img class="twitter_pic" src="http://placehold.it/25x25"/>
+	<img class="twitter_pic" src="http://placehold.it/50x50"/>
 	<div class="user_info">
 		<img class="user_pic" src="{{ infowin_picUrl }}"/>
 		<div class="user_name">{{ infowin_username }}</div>
@@ -74,15 +75,15 @@
 		{{ infowin_tweet }} <span class="twitter_message_link">#today</span></div>
 	<div class="twitter_controls">
 		<div class="twitter_private_controls">
-			<img class="twitter_direct_message" src="http://placehold.it/10x10"/>
-			<img class="twitter_quote" src="http://placehold.it/10x10"/>
+			<img class="twitter_direct_message" src="http://placehold.it/20x20"/>
+			<img class="twitter_quote" src="http://placehold.it/20x20"/>
 		</div>    
 		
 		<div class="twitter_public_controls">
-			<img class="twitter_back" src="http://placehold.it/10x10"/>
-			<img class="twitter_add_contact" src="http://placehold.it/10x10"/>
-			<img class="twitter_favorite" src="http://placehold.it/10x10"/>
-			<img class="twitter_retweet" src="http://placehold.it/10x10"/>
+			<img class="twitter_back" src="http://placehold.it/20x20"/>
+			<img class="twitter_add_contact" src="http://placehold.it/20x20"/>
+			<img class="twitter_favorite" src="http://placehold.it/20x20"/>
+			<img class="twitter_retweet" src="http://placehold.it/20x20"/>
 		</div>
 	</div>
 </div>

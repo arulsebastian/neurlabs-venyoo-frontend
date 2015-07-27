@@ -13,12 +13,6 @@ const pointerLength = pointerHeight / 0.866; // 0.866 is sin(pi/3)
 
 export default class TimeSlider extends React.Component {
 
-	// THE NEXT STEP IS TO
-	// get data from EventBucketsStore through VenyooApp and show it on the Slider,
-	// EventBucketsStore contains mock data that is enough for testing,
-	// use data FROM API after the step described above is implemented
-
-
 	constructor (props) {
 		super(props);
 

@@ -1,6 +1,6 @@
 /*
  * STORE DESCRIPTION:
- * Business logic for event buckets metadata
+ * Business logic for managing buckets data for a specific event
  */
 
 import events from "events";

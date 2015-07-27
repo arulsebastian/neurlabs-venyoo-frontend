@@ -10,7 +10,7 @@ class VenyooWebUtils {
 		ServerActionCreators.receiveFiltersSending();
 
 		request({
-			url: baseUrl + "/appmetadata", // Should be changed to /filters
+			url: baseUrl + "/metadata",
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
@@ -22,10 +22,12 @@ class VenyooWebUtils {
 	}
 
 	getEventBucketsMetadata (eventId) {
+		var self = this;
+
 		ServerActionCreators.receiveEventBucketsMetadataSending();
 
 		request({
-			url: baseUrl + "/bucketsmetadata", // Should be changed to /buckets
+			url: baseUrl + "/buckets/" + eventId,
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {

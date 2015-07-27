@@ -8,71 +8,34 @@ export default class DataTable extends React.Component {
 		super(...args);
 
 		this.state = {
-			tweets:        generateTweets(35),
-			tweetsTotal:   35,
+			tweets:        [],
+			tweetsTotal:   0,
 			tweetsPerPage: 20,
-			pagesCount:    2,
-			pageNumber:    1
+			pagesCount:    1,
+			pageNumber:    0    // starts from 0
 		};
 
-		function generateTweets (tweetsNumber) {
-			var exampleTweets = [
-				{
-					tweet:        "Go Partiots! #Ptriots #Boston",
-					mediaLink:    "Video",
-					email:        "hello@email.com",
-					socialHandle: "@hello_partiots",
-					sentiment:    "positive",
-					follower:     "N",
-					following:    "N"
-				},
-				{
-					tweet:        "Just an example tweet",
-					mediaLink:    "Image",
-					email:        "test@e.com",
-					socialHandle: "@testing",
-					sentiment:    "50",
-					follower:     "Y",
-					following:    "Y"
-				},
-				{
-					tweet:        "Another example of a longer teet message",
-					mediaLink:    "",
-					email:        "mylongemail@testing.com",
-					socialHandle: "@mylongnamehandle",
-					sentiment:    "14",
-					follower:     "N",
-					following:    "N"
-				}
-			];
-
-			var tweets = [];
-			
-			for (var i = 0; i < tweetsNumber; i++) {
-				tweets.push(exampleTweets[Math.floor(Math.random() * exampleTweets.length)]);
-			}
-
-			return tweets;
-		}
 	}
 
 	render () {
 		var self = this;
+
+		console.log("DataTable.render props = ", this.props, ", state = ", this.state);
 
 		var tweetsRows = [];
 		var tweetEndNumber = ((this.state.tweetsPerPage * (this.state.pageNumber + 1)) > this.state.tweetsTotal)
 							 ? this.state.tweetsTotal
 							 : (this.state.tweetsPerPage * (this.state.pageNumber + 1));
 		for (var i = (this.state.tweetsPerPage * this.state.pageNumber); i < tweetEndNumber; i++) {
-			var tweetData = this.state.tweets[i];
+			var tweetData = this.props.bucketData.tweets[i];
 			
 			tweetsRows.push(
 				<tr key={ i }>
 					<td><a href="#" className="reply_btn"><i className="fa fa-long-arrow-left"></i> Reply</a></td>
-					<td>{ tweetData.tweet + " " + this.state.pageNumber }</td>
-					<td>{ tweetData.mediaLink }</td>
+					<td>{ tweetData.tweet_tweet }</td>
+					<td>{ tweetData.media_link }</td>
 					<td>{ tweetData.email }</td>
-					<td>{ tweetData.socialHandle }</td>
+					<td>{ tweetData.social_handle }</td>
 					<td>{ tweetData.sentiment }</td>
 					<td>{ tweetData.follower }</td>
 					<td>{ tweetData.following }</td>
@@ -144,6 +107,16 @@ export default class DataTable extends React.Component {
 			</div>
 		);
 	}
+
+	componentWillReceiveProps (nextProps) {
+		console.log("DataTable.componentWillReceiveProps nextProps = ", nextProps);
+
+		this.state.tweetsTotal = nextProps.bucketData.tweets.length;
+		this.state.pageNumber  = 0;
+		this.state.pagesCount  = Math.ceil(this.state.tweetsTotal / this.state.tweetsPerPage);
+	}
+
+	/* Events Handlers */
 
 	handlePageChange (e) {
 		this.setState({ pageNumber : parseInt(e.target.dataset.page) });

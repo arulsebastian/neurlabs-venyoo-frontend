@@ -182,6 +182,10 @@ export default class Filters extends React.Component {
 		FiltersActionCreators.getFilters();
 	}
 
+	componentWillReceiveProps (nextProps) {
+		console.log("Filters.componentWillReceiveProps nextProps = ", nextProps);
+	}
+
 	/* Event Handlers */
 
 	handleFilterClick () {
