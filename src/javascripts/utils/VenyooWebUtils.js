@@ -3,8 +3,10 @@ import ServerActionCreators from "../actions/ServerActionCreators";
 
 const baseUrl = "http://private-23316-venyoo.apiary-mock.com";
 
-export default {
-	getFilters: function () {
+class VenyooWebUtils {
+	getFilters () {
+		var self = this;
+
 		ServerActionCreators.receiveFiltersSending();
 
 		request({
@@ -13,13 +15,15 @@ export default {
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				ServerActionCreators.receiveFiltersSucceeded(JSON.parse(body), response, body);
+				// Retrieve event buckets now
+				self.getEventBucketsMetadata(JSON.parse(body).events[0].id);
 			} else {
 				ServerActionCreators.receiveFiltersFailed(error, response, body);
 			}
 		});
-	},
+	}
 
-	getEventBucketsMetadata: function () {
+	getEventBucketsMetadata () {
 		ServerActionCreators.receiveEventBucketsMetadataSending();
 
 		request({
@@ -34,3 +38,5 @@ export default {
 		});
 	}
 }
+
+export default new VenyooWebUtils();

@@ -128,7 +128,4 @@ EventBucketsStore.dispatchToken = AppDispatcher.register(function (action) {
 	}
 });
 
-// Get Data
-VenyooWebUtils.getEventBucketsMetadata();
-
 export default EventBucketsStore;
