@@ -156,37 +156,48 @@ export default class TimeSlider extends React.Component {
 
 		if (props.eventBuckets.buckets && props.eventBuckets.buckets.length > 0) {
 
-
 			var ctx        = self.state.ctx;
-			var currBucket = self.state.currBucket;
 			var leftSpace  = 0; // px
 			var rightSpace = 0; // px
 			var bucketsNumber = props.eventBuckets.buckets.length;
 			var bucketWidth   = (self.state.canvasDim.width - (leftSpace + rightSpace)) / bucketsNumber;
 
-			// Clear the canvas
-			ctx.clearRect(0, 0, self.state.canvasDim.width, self.state.canvasDim.height);
-			
-			/* Find max number of tweets for normalization */
-			var maxTweetsNumber = props.eventBuckets.buckets.reduce(function (prevValue, currValue, index, array) {
-				return Math.max(prevValue, currValue.tweetsNumber);
-			}, props.eventBuckets.buckets[0].tweetsNumber);
+			if (normalizePointerPosAndCheckUpdates()) {
 
-			checkAndNormalizePointerPos();
-			drawPlot();
-			drawPointer();
+				// Clear the canvas
+				ctx.clearRect(0, 0, self.state.canvasDim.width, self.state.canvasDim.height);
+				
+				/* Find max number of tweets for normalization */
+				var maxTweetsNumber = props.eventBuckets.buckets.reduce(function (prevValue, currValue, index, array) {
+					return Math.max(prevValue, currValue.tweetsNumber);
+				}, props.eventBuckets.buckets[0].tweetsNumber);
+
+				drawPlot();
+				drawPointer();
+
+			}
 			
-			function checkAndNormalizePointerPos () {
-				/* Default value is in the middle */
-				if (self.state.pointerPos === null)
-					self.state.pointerPos = bucketNumberToPos(currBucket);
-				/* Make it stepwise and check boundaries */
-				currBucket = posToBucketNumber(self.state.pointerPos);
-				if (currBucket < 0)
-					currBucket = 0;
-				if (currBucket >= bucketsNumber)
-					currBucket =  bucketsNumber - 1;
-				self.state.pointerPos = bucketNumberToPos(currBucket);
+			function normalizePointerPosAndCheckUpdates () {
+				var isUpdated = false;     // Has bucket number been changed due to mouse move
+				var newBucket = undefined; // New bucket number
+
+				/* Properties are brand new, use default position */
+				if (self.state.pointerPos === null) {
+					isUpdated = true;
+					self.state.pointerPos = bucketNumberToPos(self.state.currBucket);
+				}
+				/* Make pointer movement stepwise (by converting mouse pos to bucket number and then back) and check boundaries */
+				newBucket = posToBucketNumber(self.state.pointerPos);
+				if (newBucket < 0)
+					newBucket = 0;
+				if (newBucket >= bucketsNumber)
+					newBucket =  bucketsNumber - 1;
+				self.state.pointerPos = bucketNumberToPos(newBucket);
+
+				isUpdated = (isUpdated || newBucket !== self.state.currBucket);
+				self.state.currBucket = newBucket;
+
+				return isUpdated;
 			}
 
 			function drawPlot () {
