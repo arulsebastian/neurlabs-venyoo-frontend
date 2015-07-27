@@ -15,15 +15,13 @@ class VenyooWebUtils {
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				ServerActionCreators.receiveFiltersSucceeded(JSON.parse(body), response, body);
-				// Retrieve event buckets now
-				self.getEventBucketsMetadata(JSON.parse(body).events[0].id);
 			} else {
 				ServerActionCreators.receiveFiltersFailed(error, response, body);
 			}
 		});
 	}
 
-	getEventBucketsMetadata () {
+	getEventBucketsMetadata (eventId) {
 		ServerActionCreators.receiveEventBucketsMetadataSending();
 
 		request({

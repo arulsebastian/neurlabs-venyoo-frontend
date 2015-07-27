@@ -1,5 +1,6 @@
 import AppDispatcher from "../AppDispatcher";
 import VenyooConstants from "../constants/VenyooConstants";
+import EventBucketsActionCreators from "./EventBucketsActionCreators";
 
 var ActionTypes = VenyooConstants.ActionTypes;
 
@@ -18,6 +19,8 @@ export default {
 			type:    ActionTypes.RECEIVE_FILTERS_SUCCEEDED,
 			filters: filters
 		});
+
+		EventBucketsActionCreators.getEventBuckets(filters.events[0].id);
 	},
 
 	receiveFiltersFailed: function (error, response, body) {

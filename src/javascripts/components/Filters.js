@@ -1,5 +1,6 @@
 /* JS dependencies */
 import React from "react"
+import FiltersActionCreators from "../actions/FiltersActionCreators";
 
 /* Stylesheet dependencies */
 
@@ -176,6 +177,12 @@ export default class Filters extends React.Component {
 			);
 		}
 	}
+
+	componentDidMount () {
+		FiltersActionCreators.getFilters();
+	}
+
+	/* Event Handlers */
 
 	handleFilterClick () {
 		if (this.props.onFilterClick) {

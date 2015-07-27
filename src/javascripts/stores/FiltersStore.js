@@ -138,7 +138,4 @@ FiltersStore.dispatchToken = AppDispatcher.register(function (action) {
 	}
 });
 
-// Get Data
-VenyooWebUtils.getFilters();
-
 export default FiltersStore;
