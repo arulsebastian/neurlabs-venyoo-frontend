@@ -20,16 +20,16 @@ export default {
 	},
 
 	getEventBucketsMetadata: function () {
-		ServerActionCreators.receiveEventBucketsSending();
+		ServerActionCreators.receiveEventBucketsMetadataSending();
 
 		request({
 			url: baseUrl + "/bucketsmetadata", // Should be changed to /buckets
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
-				ServerActionCreators.receiveEventBucketsSucceeded(JSON.parse(body), response, body);
+				ServerActionCreators.receiveEventBucketsMetadataSucceeded(JSON.parse(body), response, body);
 			} else {
-				ServerActionCreators.receiveEventBucketsFailed(error, response, body);
+				ServerActionCreators.receiveEventBucketsMetadataFailed(error, response, body);
 			}
 		});
 	}

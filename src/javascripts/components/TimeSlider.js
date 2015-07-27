@@ -19,27 +19,32 @@ export default class TimeSlider extends React.Component {
 	// use data FROM API after the step described above is implemented
 
 
-	// constructor (props) {
-	// 	super(props);
+	constructor (props) {
+		super(props);
 
-	// 	var intervalsNum = 72;  // 12 hours of 10min intervals
-	// 	var intervals    = [];
-
-	// 	for (var i = 0; i < intervalsNum; i++)
-	// 		intervals.push(Math.random());
-
-	// 	this.state = {
-	// 		startTime  : '1:00am',
-	// 		finishTime : '1:00pm',
-	// 		intervals  : intervals
-	// 	};
-	// }
+		this.state = {
+			ctx: null,        // canvas context for 2D drawing
+			canvasDim: {      // position and size of the canvas
+				x : 0,
+				y : 0,
+				width  : 0,
+				height : 0
+			},
+			pointerPos: null, // current position of time pointer in pixels
+			currBucket: 0     // current bucket number 
+		};
+	}
 
 	render () {
-		var startTime      = this.props.eventBuckets.buckets[0].bucketTime;
-		var finishTime     = this.props.eventBuckets.buckets[this.props.eventBuckets.buckets.length - 1].bucketTime;
 		var sliderVisibility = (!this.props.eventBuckets.isLoading) ? "visible" : "hidden";
 		var loadingDisplay   = (this.props.eventBuckets.isLoading)  ? "block"   : "none";
+		var startTime        = null;
+		var finishTime       = null;
+
+		if (this.props.eventBuckets.buckets && this.props.eventBuckets.buckets.length > 0) {
+			var startTime  = this.props.eventBuckets.buckets[0].bucketTime;
+			var finishTime = this.props.eventBuckets.buckets[this.props.eventBuckets.buckets.length - 1].bucketTime;
+		}
 
 		return (
 			<div className='start_detail' style={{ position: "relative" }}>
@@ -62,109 +67,45 @@ export default class TimeSlider extends React.Component {
 		);
 	}
 
+	/*
+	 * When component has been mounted
+	 * Resizes canvas to fill the whole place
+	 * and assigns event handlers
+	 */
 	componentDidMount () {
 		/* Initialization */
 		var self = this;
 		var timeScale    = React.findDOMNode(self.refs.sliderTimescale);
 		var sliderCanvas = React.findDOMNode(self.refs.sliderCanvas);
-		var ctx          = sliderCanvas.getContext('2d');
-		var canvasDim = {
-			x : 0,
-			y : 0,
-			width  : 0,
-			height : 0
-		};
-		var pointerPos = null; // current position of time pointer
-		var currBucket = Math.ceil(self.props.eventBuckets.buckets.length / 2);
+		self.state.ctx   = sliderCanvas.getContext('2d');
 
 		/* Event handlers */
 		attachMouseHandler();
 		attachResizeHandler();
 
-		function drawCanvas () {
-			var leftSpace  = 0; // px
-			var rightSpace = 0; // px
-			var bucketsNumber = self.props.eventBuckets.buckets.length;
-			var bucketWidth   = (canvasDim.width - (leftSpace + rightSpace)) / bucketsNumber;
-
-			// Clear the canvas
-			ctx.clearRect(0, 0, canvasDim.width, canvasDim.height);
-			
-			/* Find max number of tweets for normalization */
-			var maxTweetsNumber = self.props.eventBuckets.buckets.reduce(function (prevValue, currValue, index, array) {
-				return Math.max(prevValue, currValue.tweetsNumber);
-			}, self.props.eventBuckets.buckets[0].tweetsNumber);
-
-			checkAndNormalizePointerPos();
-			drawPlot();
-			drawPointer();
-			
-			function checkAndNormalizePointerPos () {
-				/* Default value is in the middle */
-				if (pointerPos === null)
-					pointerPos = bucketNumberToPos(currBucket);
-				/* Make it stepwise and check boundaries */
-				currBucket = posToBucketNumber(pointerPos);
-				if (currBucket < 0)
-					currBucket = 0;
-				if (currBucket >= bucketsNumber)
-					currBucket =  bucketsNumber - 1;
-				pointerPos = bucketNumberToPos(currBucket);
-			}
-
-			function drawPlot () {
-				var plotPath = new Path2D();
-
-				self.props.eventBuckets.buckets.forEach(function (bucket, index) {
-					plotPath.moveTo(bucketNumberToPos(index), barHeight);
-					plotPath.lineTo(bucketNumberToPos(index), (barHeight - 1) - bucket.tweetsNumber / maxTweetsNumber * (barHeight * 0.90)); // 90% of the bar height
-				});
-				ctx.strokeStyle = '#000000';
-				ctx.stroke(plotPath);
-			}
-
-			function drawPointer () {
-				ctx.fillStyle = 'red';
-				var pointerPath = new Path2D();
-				pointerPath.moveTo(pointerPos,                     barHeight);
-				pointerPath.lineTo(pointerPos + pointerLength / 2, sliderHeight);
-				pointerPath.lineTo(pointerPos - pointerLength / 2, sliderHeight);
-				ctx.fillStyle = pointerColor;
-				ctx.fill(pointerPath);
-			}
-
-			function posToBucketNumber (pos) {
-				return Math.round((pos - leftSpace - bucketWidth / 2) / bucketWidth);
-			}
-
-			function bucketNumberToPos (bucketNum) {
-				return (leftSpace + bucketWidth * (bucketNum + 0.5));
-			}
-		}		
-
 		function attachMouseHandler () {
 			var isMouseDown = false;
-			var mousedownBucketNumber = currBucket; // value of currBucket when user clicked mouse down
+			var mousedownBucketNumber = self.state.currBucket; // value of currBucket when user clicked mouse down
 
 			timeScale.addEventListener('mousedown', function () {
 				isMouseDown = true;
-				mousedownBucketNumber = currBucket;
-				drawCanvas();
+				mousedownBucketNumber = self.state.currBucket;
+				self.fillCanvas.bind(self)();
 			});
 			// use window to allow mouse to go out of the element's boundaries
 			window.addEventListener('mouseup', function () {
 				isMouseDown = false;
-				// Fire event only 
-				if (mousedownBucketNumber !== currBucket) {
-					self.handleBucketChangeOnMouseup.bind(self)(currBucket);
+				// Fire event only if position of pointer changed after the previous mouse down
+				if (mousedownBucketNumber !== self.state.currBucket) {
+					self.handleBucketChangeOnMouseup.bind(self)(self.state.currBucket);
 				}
-				mousedownBucketNumber = currBucket;
+				mousedownBucketNumber = self.state.currBucket;
 			});
 			window.addEventListener('mousemove', function (event) {
-				pointerPos = event.pageX - canvasDim.x;
+				self.state.pointerPos = event.pageX - self.state.canvasDim.x;
 
 				if (isMouseDown) {
-					drawCanvas();
+					self.fillCanvas.bind(self)();
 				}
 			});
 		}
@@ -178,18 +119,106 @@ export default class TimeSlider extends React.Component {
 			var timeScaleRect = timeScale.getBoundingClientRect();
 
 			/* Adjust canvas size */
-			canvasDim.width  = sliderCanvas.width  = timeScaleRect.width;
-			canvasDim.height = sliderCanvas.height = timeScaleRect.height;
+			self.state.canvasDim.width  = sliderCanvas.width  = timeScaleRect.width;
+			self.state.canvasDim.height = sliderCanvas.height = timeScaleRect.height;
 
-			/* Save canvas position in 500ms */
+			/* Save canvas position in some time to let it be refreshed */
 			setTimeout(function () {
 				var canvasRect = sliderCanvas.getBoundingClientRect();
-				canvasDim.x = canvasRect.left;
-				canvasDim.y = canvasRect.top;
+				self.state.canvasDim.x = canvasRect.left;
+				self.state.canvasDim.y = canvasRect.top;
 			}, 100);
 
-			drawCanvas();
+			self.fillCanvas.bind(self)();
 		};
+	}
+
+	/*
+	 * When new properties come
+	 * Resets pointer to the middle and refreshes the canvas
+	 */
+	componentWillReceiveProps (nextProps) {
+
+		if (nextProps.eventBuckets.buckets && nextProps.eventBuckets.buckets.length > 0) {
+			this.state.pointerPos = null;
+			this.state.currBucket = Math.ceil(nextProps.eventBuckets.buckets.length / 2);
+
+			this.fillCanvas.bind(this)(nextProps);
+		}
+	}
+
+	/*
+	 * Refreshes the full canvas with the latest data from newProps argument or from React this.props
+	 */
+	fillCanvas (newProps) {
+		var self  = this;
+		var props = newProps || self.props; // Use new properties if they are provided or fall back to current ones
+
+		if (props.eventBuckets.buckets && props.eventBuckets.buckets.length > 0) {
+
+
+			var ctx        = self.state.ctx;
+			var currBucket = self.state.currBucket;
+			var leftSpace  = 0; // px
+			var rightSpace = 0; // px
+			var bucketsNumber = props.eventBuckets.buckets.length;
+			var bucketWidth   = (self.state.canvasDim.width - (leftSpace + rightSpace)) / bucketsNumber;
+
+			// Clear the canvas
+			ctx.clearRect(0, 0, self.state.canvasDim.width, self.state.canvasDim.height);
+			
+			/* Find max number of tweets for normalization */
+			var maxTweetsNumber = props.eventBuckets.buckets.reduce(function (prevValue, currValue, index, array) {
+				return Math.max(prevValue, currValue.tweetsNumber);
+			}, props.eventBuckets.buckets[0].tweetsNumber);
+
+			checkAndNormalizePointerPos();
+			drawPlot();
+			drawPointer();
+			
+			function checkAndNormalizePointerPos () {
+				/* Default value is in the middle */
+				if (self.state.pointerPos === null)
+					self.state.pointerPos = bucketNumberToPos(currBucket);
+				/* Make it stepwise and check boundaries */
+				currBucket = posToBucketNumber(self.state.pointerPos);
+				if (currBucket < 0)
+					currBucket = 0;
+				if (currBucket >= bucketsNumber)
+					currBucket =  bucketsNumber - 1;
+				self.state.pointerPos = bucketNumberToPos(currBucket);
+			}
+
+			function drawPlot () {
+				var plotPath = new Path2D();
+
+				props.eventBuckets.buckets.forEach(function (bucket, index) {
+					plotPath.moveTo(bucketNumberToPos(index), barHeight);
+					plotPath.lineTo(bucketNumberToPos(index), (barHeight - 1) - bucket.tweetsNumber / maxTweetsNumber * (barHeight * 0.90)); // 90% of the bar height
+				});
+				ctx.strokeStyle = '#000000';
+				ctx.stroke(plotPath);
+			}
+
+			function drawPointer () {
+				ctx.fillStyle = 'red';
+				var pointerPath = new Path2D();
+				pointerPath.moveTo(self.state.pointerPos,                     barHeight);
+				pointerPath.lineTo(self.state.pointerPos + pointerLength / 2, sliderHeight);
+				pointerPath.lineTo(self.state.pointerPos - pointerLength / 2, sliderHeight);
+				ctx.fillStyle = pointerColor;
+				ctx.fill(pointerPath);
+			}
+
+			function posToBucketNumber (pos) {
+				return Math.round((pos - leftSpace - bucketWidth / 2) / bucketWidth);
+			}
+
+			function bucketNumberToPos (bucketNum) {
+				return (leftSpace + bucketWidth * (bucketNum + 0.5));
+			}
+
+		}
 	}
 
 	handleBucketChangeOnMouseup (currBucketNumber) {
