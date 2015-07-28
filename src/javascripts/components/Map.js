@@ -1,6 +1,7 @@
 /* JS dependencies */
 import React from 'react';
 import jQuery from 'jquery';
+import _ from "lodash";
 
 /* Static dependencies */
 import '../../stylesheets/components/map.scss';
@@ -113,44 +114,59 @@ export default class Map extends React.Component {
 	componentWillReceiveProps (nextProps) {
 		var self = this;
 
-		/* Remove old markers and infowins */
+		if (!_.isEqual(nextProps.bucketData.tweets, this.props.bucketData.tweets)) {
 
-		if (self.state.infowinLayout) {
-			placeMarkersAndInfoWins(nextProps.bucketData.tweets, self.state.infowinLayout);
-		} else {
-			// Load info window content if it's not yet loaded
-			jQuery.get('/tweet_content.html', function (data) {
-				if (data) {
-					self.state.infowinLayout = data;
-					placeMarkersAndInfoWins(nextProps.bucketData.tweets, self.state.infowinLayout);
-				}
+			/* Remove old markers and infowins */
+			console.log("Map.componentWillReceiveProps state=", self.state);
+			self.state.markers.forEach(function (marker) {
+				marker.infowin.setMap(null);
+				marker.setMap(null);
 			});
-		}
+			self.state.markers = [];
 
-		function placeMarkersAndInfoWins (tweets, contentLayout) {
-			var infoWins = self.state.infowins;
-			tweets.forEach(function(tweet) {
-				var content = contentLayout;
-				content = content.replace('{{ infowin_username }}', tweet.username);
-				content = content.replace('{{ infowin_handle }}',   tweet.socialHandle);
-				content = content.replace('{{ infowin_picUrl }}',   tweet.picUrl);
-				content = content.replace('{{ infowin_tweet }}',    tweet.message);
+			/* Load layout for infowindow and place markers and infowins upon completion */
+			if (self.state.infowinLayout) {
+				placeMarkersAndInfoWins(nextProps.bucketData.tweets, self.state.infowinLayout);
+			} else {
+				// Load info window content if it's not yet loaded
+				jQuery.get('/tweet_content.html', function (data) {
+					if (data) {
+						self.state.infowinLayout = data;
+						placeMarkersAndInfoWins(nextProps.bucketData.tweets, self.state.infowinLayout);
+					}
+				});
+			}
 
-				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(tweet.lat, tweet.lng),
-					map:      self.state.map
-				});
-				var infoWin = new google.maps.InfoWindow({
-					content: content
-				});
-				infoWins.push(infoWin);
-				google.maps.event.addListener(marker, 'click', function() {
-					infoWins.forEach(function(infoWin) {
-						infoWin.close();
+			function placeMarkersAndInfoWins (tweets, contentLayout) {
+				tweets.forEach(function(tweet) {
+					/* Prepare infowindow content */
+					var content = contentLayout;
+					content = content.replace('{{ infowin_username }}', tweet.username);
+					content = content.replace('{{ infowin_handle }}',   tweet.socialHandle);
+					content = content.replace('{{ infowin_picUrl }}',   tweet.picUrl);
+					content = content.replace('{{ infowin_tweet }}',    tweet.message);
+
+					/* Place marker */
+					var marker = new google.maps.Marker({
+						position: new google.maps.LatLng(tweet.lat, tweet.lng),
+						map:      self.state.map
 					});
-					infoWin.open(self.state.map, marker);
-				});
-			});			
+					self.state.markers.push(marker);
+					/* Create infowindow */
+					var infowin = new google.maps.InfoWindow({
+						content: content
+					});
+					self.state.infowins.push(infowin);
+					marker.infowin = infowin;
+					/* When user clicks on a marker close all the infowindows and open only one */
+					google.maps.event.addListener(marker, 'click', function() {
+						self.state.infowins.forEach(function(infowin) {
+							infowin.close();
+						});
+						infowin.open(self.state.map, marker);
+					});
+				});			
+			}
 		}
 	}
 
