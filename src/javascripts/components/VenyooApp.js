@@ -12,6 +12,8 @@ import EventBucketsStore from "../stores/EventBucketsStore";
 import BucketStore from "../stores/BucketStore";
 /** Action creators **/
 import FiltersActionCreators from "../actions/FiltersActionCreators";
+import EventBucketsActionCreators from "../actions/EventBucketsActionCreators";
+import BucketActionCreators from "../actions/BucketActionCreators";
 
 /* Static dependencies */
 // import "stylesheets/modules/container";
@@ -115,9 +117,11 @@ export default class VenyooApp extends React.Component {
 
 	handleFilterClicked (nextFilters) {
 		console.log("VenyooApp.handleFilterClicked, nextFilters: ", nextFilters);
+		EventBucketsActionCreators.getEventBuckets(nextFilters.eventId);
 	}
 	handleBucketChanged (nextBucketId) {
 		console.log("VenyooApp.handleBucketChanged, nextBucketId: ", nextBucketId);
+		BucketActionCreators.getBucket(nextBucketId);
 	}
 
 	_onChange () {

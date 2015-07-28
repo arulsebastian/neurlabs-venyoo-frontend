@@ -88,12 +88,14 @@ export default class TimeSlider extends React.Component {
 			});
 			// use window to allow mouse to go out of the element's boundaries
 			window.addEventListener('mouseup', function () {
-				isMouseDown = false;
 				// Fire event only if position of pointer changed after the previous mouse down
-				if (mousedownBucketNumber !== self.state.currBucket) {
+				if (isMouseDown && mousedownBucketNumber !== self.state.currBucket) {
+					isMouseDown = false;
+
 					self.handleBucketChangeOnMouseup.bind(self)(self.state.currBucket);
+
+					mousedownBucketNumber = self.state.currBucket;
 				}
-				mousedownBucketNumber = self.state.currBucket;
 			});
 			window.addEventListener('mousemove', function (event) {
 				self.state.pointerPos = event.pageX - self.state.canvasDim.x;
@@ -123,6 +125,7 @@ export default class TimeSlider extends React.Component {
 				self.state.canvasDim.y = canvasRect.top;
 			}, 100);
 
+			self.state.pointerPos = null;  // To prevent pointer move due to scale change
 			self.fillCanvas.bind(self)();
 		};
 	}

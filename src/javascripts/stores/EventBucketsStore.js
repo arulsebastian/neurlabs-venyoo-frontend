@@ -107,6 +107,7 @@ EventBucketsStore.dispatchToken = AppDispatcher.register(function (action) {
 
 		case ActionTypes.RECEIVE_EVENTBUCKETS_SUCCEEDED:
 			_isLoading = false;
+			_eventBuckets = [];
 			action.eventBuckets.buckets.forEach(function (bucket) {
 				_eventBuckets.push({
 					bucketId:     bucket.bucket_id,
