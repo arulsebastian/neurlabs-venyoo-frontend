@@ -47,7 +47,7 @@ var _tweets = [
 		"user_number_of_tweets": 44264
 	},
 ];
-var _isLoading = false;
+var _isLoading = true;
 
 var BucketStore = assign({}, events.EventEmitter.prototype, {
 
