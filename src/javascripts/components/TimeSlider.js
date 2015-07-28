@@ -1,5 +1,6 @@
 /* JS dependencies */
 import React from 'react';
+import _ from "lodash";
 
 /* Static dependencies */
 import '../../stylesheets/components/timeslider.scss';
@@ -91,10 +92,9 @@ export default class TimeSlider extends React.Component {
 				// Fire event only if position of pointer changed after the previous mouse down
 				if (isMouseDown && mousedownBucketNumber !== self.state.currBucket) {
 					isMouseDown = false;
+					mousedownBucketNumber = self.state.currBucket;
 
 					self.handleBucketChangeOnMouseup.bind(self)(self.state.currBucket);
-
-					mousedownBucketNumber = self.state.currBucket;
 				}
 			});
 			window.addEventListener('mousemove', function (event) {
@@ -136,7 +136,9 @@ export default class TimeSlider extends React.Component {
 	 */
 	componentWillReceiveProps (nextProps) {
 
-		if (nextProps.eventBuckets.buckets && nextProps.eventBuckets.buckets.length > 0) {
+		// Reset pointer only if we've got buckets and those buckets are different from what we have already
+		if (nextProps.eventBuckets.buckets && nextProps.eventBuckets.buckets.length > 0
+			&& !_.isEqual(nextProps.eventBuckets.buckets, this.props.eventBuckets.buckets)) {
 			this.state.pointerPos = null;
 			this.state.currBucket = Math.ceil(nextProps.eventBuckets.buckets.length / 2);
 
