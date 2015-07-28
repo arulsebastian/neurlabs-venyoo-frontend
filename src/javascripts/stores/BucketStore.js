@@ -81,8 +81,16 @@ BucketStore.dispatchToken = AppDispatcher.register(function (action) {
 			BucketStore.emitChange();
 			break;
 
-		// case ActionTypes.RECEIVE_BUCKET_SUCCEEDED:
-		// 	_isLoading = false;
+		case ActionTypes.RECEIVE_BUCKET_SUCCEEDED:
+		 	_isLoading = false;
+		 	_tweets = action.bucket.tweets;
+		 	BucketStore.emitChange();
+		 	break;
+
+		case ActionTypes.RECEIVE_BUCKET_FAILED:
+			_isLoading = false;
+			BucketStore.emitChange();
+			break;
 
 		default:
 			// do nothing
