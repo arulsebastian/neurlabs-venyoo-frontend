@@ -32,10 +32,10 @@ export default class DataTable extends React.Component {
 			tweetsRows.push(
 				<tr key={ i }>
 					<td><a href="#" className="reply_btn"><i className="fa fa-long-arrow-left"></i> Reply</a></td>
-					<td>{ tweetData.tweet_tweet }</td>
-					<td>{ tweetData.media_link }</td>
+					<td>{ tweetData.message }</td>
+					<td>{ tweetData.mediaLink }</td>
 					<td>{ tweetData.email }</td>
-					<td>{ tweetData.social_handle }</td>
+					<td>{ tweetData.socialHandle }</td>
 					<td>{ tweetData.sentiment }</td>
 					<td>{ tweetData.follower }</td>
 					<td>{ tweetData.following }</td>
