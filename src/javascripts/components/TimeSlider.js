@@ -140,7 +140,7 @@ export default class TimeSlider extends React.Component {
 		if (nextProps.eventBuckets.buckets && nextProps.eventBuckets.buckets.length > 0
 			&& !_.isEqual(nextProps.eventBuckets.buckets, this.props.eventBuckets.buckets)) {
 			this.state.pointerPos = null;
-			this.state.currBucket = Math.ceil(nextProps.eventBuckets.buckets.length / 2);
+			this.state.currBucket = 0;
 
 			this.fillCanvas.bind(this)(nextProps);
 		}
