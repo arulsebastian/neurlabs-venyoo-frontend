@@ -22,6 +22,8 @@ export default class DataTable extends React.Component {
 
 		console.log("DataTable.render props = ", this.props, ", state = ", this.state);
 
+		this.calcPagesCount.bind(this)();
+
 		var tweetsRows = [];
 		var tweetEndNumber = ((this.state.tweetsPerPage * (this.state.pageNumber + 1)) > this.state.tweetsTotal)
 							 ? this.state.tweetsTotal
@@ -85,11 +87,11 @@ export default class DataTable extends React.Component {
 					<div className="col-md-2">
 						<div className="select_detail">
 							<div className="select-field">
-								<select className="selectpicker">
-									<option value="">20 per page</option>
-									<option value="">50 per page</option>
-									<option value="">150 per page</option>
-									<option value="">500 per page</option>
+								<select value={this.state.tweetsPerPage} onChange={this.handleTweetsPerPageChange.bind(this)}>
+									<option value="20">20 per page</option>
+									<option value="50">50 per page</option>
+									<option value="150">150 per page</option>
+									<option value="500">500 per page</option>
 								</select>
 							</div>
 						</div>
@@ -113,16 +115,32 @@ export default class DataTable extends React.Component {
 
 		this.state.tweetsTotal = nextProps.bucketData.tweets.length;
 		this.state.pageNumber  = 0;
-		this.state.pagesCount  = Math.ceil(this.state.tweetsTotal / this.state.tweetsPerPage);
 	}
 
 	/* Events Handlers */
 
 	handlePageChange (e) {
-		this.setState({ pageNumber : parseInt(e.target.dataset.page) });
+		this.setState({
+			pageNumber : parseInt(e.target.dataset.page)
+		});
 	}
 
-	handleTweetsPerPageChange () {
+	handleTweetsPerPageChange (e) {
+		this.setState({
+			tweetsPerPage: e.target.value
+		});
+	}
 
+	/* Helper routines */
+
+	calcPagesCount () {
+		this.state.pagesCount = Math.ceil(this.state.tweetsTotal / this.state.tweetsPerPage);
+		if (this.state.tweetsTotal > 0) {
+			if (this.state.pageNumber >= this.state.pagesCount) {
+				this.state.pageNumber = this.state.pagesCount - 1;
+			}
+		} else {
+			this.state.pageNumber = 0;
+		}
 	}
 };
