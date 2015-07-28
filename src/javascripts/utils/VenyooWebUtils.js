@@ -13,7 +13,7 @@ class VenyooWebUtils {
 			url: baseUrl + "/metadata",
 			withCredentials: false
 		}, function (error, response, body) {
-			if (!error && response.statusCode == 200) {
+			if (!error && response.statusCode === 200) {
 				ServerActionCreators.receiveFiltersSucceeded(JSON.parse(body), response, body);
 			} else {
 				ServerActionCreators.receiveFiltersFailed(error, response, body);
@@ -30,10 +30,27 @@ class VenyooWebUtils {
 			url: baseUrl + "/buckets/" + eventId,
 			withCredentials: false
 		}, function (error, response, body) {
-			if (!error && response.statusCode == 200) {
+			if (!error && response.statusCode === 200) {
 				ServerActionCreators.receiveEventBucketsMetadataSucceeded(JSON.parse(body), response, body);
 			} else {
 				ServerActionCreators.receiveEventBucketsMetadataFailed(error, response, body);
+			}
+		});
+	}
+
+	getBucketData (bucketId) {
+		var self = this;
+
+		ServerActionCreators.receiveBucketDataSending();
+
+		request({
+			url: baseUrl + "/bucket/" + bucketId,
+			withCredentials: false
+		}, function (error, response, body) {
+			if (!error && response.statusCode === 200) {
+				ServerActionCreators.receiveBucketDataSucceeded(JSON.parse(body), response, body);
+			} else {
+				ServerActionCreators.receiveBucketDataFailed(error, response, body);
 			}
 		});
 	}
