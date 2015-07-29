@@ -41,7 +41,8 @@ export default class SivaramDataFormatAdapter extends PassThroughDataFormatAdapt
 				mediaLink:    "",
 				sentiment:    tweet.sentiment,
 				follower:     "N",
-				following:    "N"
+				following:    "N",
+				timeStamp:    tweet.time_stamp
 			});
 		});
 		return result;

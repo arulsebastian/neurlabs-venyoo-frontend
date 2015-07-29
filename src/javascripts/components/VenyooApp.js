@@ -72,7 +72,7 @@ export default class VenyooApp extends React.Component {
 					<div className="right_sec">
 						<div className="duration_sec">
 							<div className="title">
-								<h3><i className="fa fa-bars"></i> Event Duration <span>12 hours / 10 min intervals</span></h3>
+								<h3><i className="fa fa-bars"></i>{/**} Event Duration <span>12 hours / 10 min intervals</span>{**/}</h3>
 							</div>
 							<div className="duration_inner">
 								<h2>Actions:</h2>
