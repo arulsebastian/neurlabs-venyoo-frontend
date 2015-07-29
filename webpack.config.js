@@ -44,7 +44,7 @@ const config = {
 	output: {
 		filename: "[name].js",
 		path: path.join(__dirname, "./build"),
-		publicPath: "/",
+		publicPath: "",
 	},
 	plugins: [
 		new ExtractTextPlugin("[name].css"),

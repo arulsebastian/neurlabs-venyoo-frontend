@@ -5,7 +5,7 @@ import _ from "lodash";
 
 /* Static dependencies */
 import '../../stylesheets/components/map.scss';
-import tweet_content from '../../tweet_content.html';
+// import tweet_content from '../../tweet_content.html';
 
 export default class Map extends React.Component {
 	constructor (...args) {
@@ -129,7 +129,7 @@ export default class Map extends React.Component {
 				placeMarkersAndInfoWins(nextProps.bucketData.tweets, self.state.infowinLayout);
 			} else {
 				// Load info window content if it's not yet loaded
-				jQuery.get('/tweet_content.html', function (data) {
+				jQuery.get('tweet_content.html', function (data) {
 					if (data) {
 						self.state.infowinLayout = data;
 						placeMarkersAndInfoWins(nextProps.bucketData.tweets, self.state.infowinLayout);
