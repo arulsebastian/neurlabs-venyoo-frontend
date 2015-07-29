@@ -16,9 +16,9 @@ export default class SivaramDataFormatAdapter extends PassThroughDataFormatAdapt
 	}
 
 	adjustEventBuckets (originalEventBuckets) {
-		var result = [];
+		var result = { buckets: [] };
 		originalEventBuckets.bucket.forEach(function (bucket) {
-			result.push({
+			result.buckets.push({
 				bucketId:     bucket.id,
 				bucketTime:   bucket.start_time,
 				tweetsNumber: bucket.number_of_tweets
@@ -28,7 +28,23 @@ export default class SivaramDataFormatAdapter extends PassThroughDataFormatAdapt
 	}
 
 	adjustBucket (originalBucket) {
-
+		var result = { tweets: [] };
+		originalBucket.tweet_metadata.forEach(function (tweet) {
+			result.tweets.push({
+				lat:          tweet.latitude,
+				lng:          tweet.longitude,
+				email:        "",
+				message:      tweet.tweet,
+				username:     tweet.user,
+				socialHandle: "@" + tweet.user,
+				picUrl:       "http://placehold.it/100x100",
+				mediaLink:    "",
+				sentiment:    tweet.sentiment,
+				follower:     "N",
+				following:    "N"
+			});
+		});
+		return result;
 	}
 
 }

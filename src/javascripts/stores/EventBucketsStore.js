@@ -51,7 +51,7 @@ EventBucketsStore.dispatchToken = AppDispatcher.register(function (action) {
 
 		case ActionTypes.RECEIVE_EVENTBUCKETS_SUCCEEDED:
 			_isLoading = false;
-			_eventBuckets.buckets = DataFormatAdapter.adjustEventBuckets(action.eventBuckets).buckets;
+			_eventBuckets.buckets = action.eventBuckets.buckets;
 			EventBucketsStore.emitChange();
 			break;
 
