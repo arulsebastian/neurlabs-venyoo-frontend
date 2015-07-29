@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/";
+/******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -66,9 +66,9 @@
 
 	/* Static dependencies */
 
-	__webpack_require__(359);
+	__webpack_require__(358);
 
-	__webpack_require__(360);
+	__webpack_require__(359);
 
 	_react2["default"].render(_react2["default"].createElement(_componentsVenyooApp2["default"], null), document.querySelector("#main"));
 
@@ -21580,25 +21580,25 @@
 
 	var _Map2 = _interopRequireDefault(_Map);
 
-	var _TimeSlider = __webpack_require__(348);
+	var _TimeSlider = __webpack_require__(347);
 
 	var _TimeSlider2 = _interopRequireDefault(_TimeSlider);
 
-	var _DataTable = __webpack_require__(351);
+	var _DataTable = __webpack_require__(350);
 
 	var _DataTable2 = _interopRequireDefault(_DataTable);
 
-	var _Filters = __webpack_require__(352);
+	var _Filters = __webpack_require__(351);
 
 	var _Filters2 = _interopRequireDefault(_Filters);
 
-	var _Actions = __webpack_require__(354);
+	var _Actions = __webpack_require__(353);
 
 	var _Actions2 = _interopRequireDefault(_Actions);
 
 	/** Stores **/
 
-	var _storesFiltersStore = __webpack_require__(355);
+	var _storesFiltersStore = __webpack_require__(354);
 
 	var _storesFiltersStore2 = _interopRequireDefault(_storesFiltersStore);
 
@@ -21606,13 +21606,13 @@
 
 	var _storesEventBucketsStore2 = _interopRequireDefault(_storesEventBucketsStore);
 
-	var _storesBucketStore = __webpack_require__(356);
+	var _storesBucketStore = __webpack_require__(355);
 
 	var _storesBucketStore2 = _interopRequireDefault(_storesBucketStore);
 
 	/** Action creators **/
 
-	var _actionsFiltersActionCreators = __webpack_require__(353);
+	var _actionsFiltersActionCreators = __webpack_require__(352);
 
 	var _actionsFiltersActionCreators2 = _interopRequireDefault(_actionsFiltersActionCreators);
 
@@ -21627,11 +21627,11 @@
 	/* Static dependencies */
 	// import "stylesheets/modules/container";
 
-	var _imagesStart_imageJpg = __webpack_require__(357);
+	var _imagesStart_imageJpg = __webpack_require__(356);
 
 	var _imagesStart_imageJpg2 = _interopRequireDefault(_imagesStart_imageJpg);
 
-	var _imagesSocial_1Png = __webpack_require__(358);
+	var _imagesSocial_1Png = __webpack_require__(357);
 
 	var _imagesSocial_1Png2 = _interopRequireDefault(_imagesSocial_1Png);
 
@@ -74586,9 +74586,7 @@
 
 	__webpack_require__(343);
 
-	var _tweet_contentHtml = __webpack_require__(347);
-
-	var _tweet_contentHtml2 = _interopRequireDefault(_tweet_contentHtml);
+	// import tweet_content from '../../tweet_content.html';
 
 	var Map = (function (_React$Component) {
 		_inherits(Map, _React$Component);
@@ -74753,7 +74751,7 @@
 							placeMarkersAndInfoWins(nextProps.bucketData.tweets, self.state.infowinLayout);
 						} else {
 							// Load info window content if it's not yet loaded
-							_jquery2['default'].get('/tweet_content.html', function (data) {
+							_jquery2['default'].get('tweet_content.html', function (data) {
 								if (data) {
 									self.state.infowinLayout = data;
 									placeMarkersAndInfoWins(nextProps.bucketData.tweets, self.state.infowinLayout);
@@ -84001,12 +83999,6 @@
 /* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "tweet_content.html"
-
-/***/ },
-/* 348 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* WEBPACK VAR INJECTION */(function(console) {/* JS dependencies */
 	'use strict';
 
@@ -84034,7 +84026,7 @@
 
 	/* Static dependencies */
 
-	__webpack_require__(349);
+	__webpack_require__(348);
 
 	/* Constants */
 	var pointerColor = '#2E7FB1';
@@ -84333,14 +84325,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 349 */
+/* 348 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 350 */,
-/* 351 */
+/* 349 */,
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(console) {/* JS dependencies */
@@ -84719,7 +84711,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 352 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(console) {/* JS dependencies */
@@ -84743,7 +84735,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _actionsFiltersActionCreators = __webpack_require__(353);
+	var _actionsFiltersActionCreators = __webpack_require__(352);
 
 	var _actionsFiltersActionCreators2 = _interopRequireDefault(_actionsFiltersActionCreators);
 
@@ -85083,7 +85075,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 353 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -85118,7 +85110,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 354 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* JS dependencies */
@@ -85150,7 +85142,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 355 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -85245,7 +85237,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 356 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -85348,25 +85340,25 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 357 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "38f9d71424dbdf005efa95d3c08f4843.jpg"
 
 /***/ },
-/* 358 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "f6b9c782d8345e9876640ec7ff6db1ba.png"
 
 /***/ },
-/* 359 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "index.html"
 
 /***/ },
-/* 360 */
+/* 359 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
