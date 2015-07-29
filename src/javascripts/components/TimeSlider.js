@@ -31,6 +31,8 @@ export default class TimeSlider extends React.Component {
 	}
 
 	render () {
+		console.log("TimeSlider.render props=", this.props, ", state=", this.state);
+
 		var sliderVisibility = (!this.props.eventBuckets.isLoading) ? "visible" : "hidden";
 		var loadingDisplay   = (this.props.eventBuckets.isLoading)  ? "block"   : "none";
 		var startTime        = null;

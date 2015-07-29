@@ -9,13 +9,13 @@ export default {
 	
 	/* GET FILTERS */
 
-	receiveFiltersSending: function () {
+	receiveFiltersSending: function (urlParams) {
 		AppDispatcher.dispatch({
 			type: ActionTypes.RECEIVE_FILTERS_SENDING
 		});
 	},
 
-	receiveFiltersSucceeded: function (filters, response, body) {
+	receiveFiltersSucceeded: function (urlParams, filters, response, body) {
 		AppDispatcher.dispatch({
 			type:    ActionTypes.RECEIVE_FILTERS_SUCCEEDED,
 			filters: filters
@@ -24,7 +24,7 @@ export default {
 		EventBucketsActionCreators.getEventBuckets(filters.events[0].id);
 	},
 
-	receiveFiltersFailed: function (error, response, body) {
+	receiveFiltersFailed: function (urlParams, error, response, body) {
 		AppDispatcher.dispatch({
 			type:     ActionTypes.RECEIVE_FILTERS_FAILED,
 			error:    error,
@@ -34,22 +34,22 @@ export default {
 
 	/* GET EVENT BUCKETS METADATA */
 
-	receiveEventBucketsMetadataSending: function () {
+	receiveEventBucketsMetadataSending: function (urlParams) {
 		AppDispatcher.dispatch({
 			type: ActionTypes.RECEIVE_EVENTBUCKETS_SENDING
 		});
 	},
 
-	receiveEventBucketsMetadataSucceeded: function (eventBuckets, response, body) {
+	receiveEventBucketsMetadataSucceeded: function (urlParams, eventBuckets, response, body) {
 		AppDispatcher.dispatch({
 			type:         ActionTypes.RECEIVE_EVENTBUCKETS_SUCCEEDED,
 			eventBuckets: eventBuckets
 		});
 
-		BucketActionCreators.getBucket(eventBuckets.buckets[0].bucket_id);
+		BucketActionCreators.getBucket(urlParams.eventId, eventBuckets.buckets[0].bucketId);
 	},
 
-	receiveEventBucketsMetadataFailed: function (error, response, body) {
+	receiveEventBucketsMetadataFailed: function (urlParams, error, response, body) {
 		AppDispatcher.dispatch({
 			type:     ActionTypes.RECEIVE_EVENTBUCKETS_FAILED,
 			error:    error,
@@ -59,20 +59,20 @@ export default {
 
 	/* GET BUCKET DATA */
 
-	receiveBucketDataSending: function () {
+	receiveBucketDataSending: function (urlParams) {
 		AppDispatcher.dispatch({
 			type: ActionTypes.RECEIVE_BUCKET_SENDING
 		});
 	},
 
-	receiveBucketDataSucceeded: function (bucket, response, body) {
+	receiveBucketDataSucceeded: function (urlParams, bucket, response, body) {
 		AppDispatcher.dispatch({
 			type:   ActionTypes.RECEIVE_BUCKET_SUCCEEDED,
 			bucket: bucket
 		});
 	},
 
-	receiveBucketDataFailed: function (error, response, body) {
+	receiveBucketDataFailed: function (urlParams, error, response, body) {
 		AppDispatcher.dispatch({
 			type:     ActionTypes.RECEIVE_BUCKET_FAILED,
 			error:    error,

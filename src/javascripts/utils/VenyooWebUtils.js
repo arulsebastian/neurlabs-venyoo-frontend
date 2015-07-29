@@ -7,16 +7,19 @@ class VenyooWebUtils {
 	getFilters () {
 		var self = this;
 
-		ServerActionCreators.receiveFiltersSending();
+		var urlParams = {}
+
+		ServerActionCreators.receiveFiltersSending(urlParams);
 
 		request({
 			url: baseUrl + "/metadata",
+			// url: "http://52.24.255.84/metadata/"
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {
-				ServerActionCreators.receiveFiltersSucceeded(JSON.parse(body), response, body);
+				ServerActionCreators.receiveFiltersSucceeded(urlParams, JSON.parse(body), response, body);
 			} else {
-				ServerActionCreators.receiveFiltersFailed(error, response, body);
+				ServerActionCreators.receiveFiltersFailed(urlParams, error, response, body);
 			}
 		});
 	}
@@ -24,33 +27,44 @@ class VenyooWebUtils {
 	getEventBucketsMetadata (eventId) {
 		var self = this;
 
-		ServerActionCreators.receiveEventBucketsMetadataSending();
+		var urlParams = {
+			eventId: eventId
+		};
+
+		ServerActionCreators.receiveEventBucketsMetadataSending(urlParams);
 
 		request({
 			url: baseUrl + "/buckets/" + eventId,
+			// url: "http://52.24.255.84/bucket/?event_id=" + eventId,
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {
-				ServerActionCreators.receiveEventBucketsMetadataSucceeded(JSON.parse(body), response, body);
+				ServerActionCreators.receiveEventBucketsMetadataSucceeded(urlParams, JSON.parse(body), response, body);
 			} else {
-				ServerActionCreators.receiveEventBucketsMetadataFailed(error, response, body);
+				ServerActionCreators.receiveEventBucketsMetadataFailed(urlParams, error, response, body);
 			}
 		});
 	}
 
-	getBucketData (bucketId) {
+	getBucketData (eventId, bucketId) {
 		var self = this;
 
-		ServerActionCreators.receiveBucketDataSending();
+		var urlParams = {
+			eventId:  eventId,
+			bucketId: bucketId
+		};
+
+		ServerActionCreators.receiveBucketDataSending(urlParams);
 
 		request({
 			url: baseUrl + "/bucket/" + bucketId,
+			// url: "http://52.24.255.84/filter/?bucket=" + bucketId + "&sentiment=0&klout_score=4&event_id=" + eventId + "&social_id=0"
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {
-				ServerActionCreators.receiveBucketDataSucceeded(JSON.parse(body), response, body);
+				ServerActionCreators.receiveBucketDataSucceeded(urlParams, JSON.parse(body), response, body);
 			} else {
-				ServerActionCreators.receiveBucketDataFailed(error, response, body);
+				ServerActionCreators.receiveBucketDataFailed(urlParams, error, response, body);
 			}
 		});
 	}

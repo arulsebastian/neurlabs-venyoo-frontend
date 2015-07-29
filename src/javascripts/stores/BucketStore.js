@@ -9,6 +9,7 @@ import _ from "lodash";
 import AppDispatcher from "../AppDispatcher";
 import VenyooConstants from "../constants/VenyooConstants";
 import VenyooWebUtils from "../utils/VenyooWebUtils";
+import DataFormatAdapter from "../utils/DataFormat/DataFormatAdapter";
 
 const CHANGE_EVENT = "change";
 
@@ -83,7 +84,7 @@ BucketStore.dispatchToken = AppDispatcher.register(function (action) {
 
 		case ActionTypes.RECEIVE_BUCKET_SUCCEEDED:
 		 	_isLoading = false;
-		 	_tweets = action.bucket.tweets;
+		 	_tweets = DataFormatAdapter.adjustBucket(action.bucket).tweets;
 		 	BucketStore.emitChange();
 		 	break;
 

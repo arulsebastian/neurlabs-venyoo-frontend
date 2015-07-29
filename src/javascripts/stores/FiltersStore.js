@@ -4,6 +4,7 @@ import _ from "lodash";
 import AppDispatcher from "../AppDispatcher";
 import VenyooConstants from "../constants/VenyooConstants";
 import VenyooWebUtils from "../utils/VenyooWebUtils";
+import DataFormatAdapter from "../utils/DataFormat/DataFormatAdapter";
 
 const CHANGE_EVENT = "change";
 
@@ -119,12 +120,7 @@ FiltersStore.dispatchToken = AppDispatcher.register(function (action) {
 
 		case ActionTypes.RECEIVE_FILTERS_SUCCEEDED:
 			_isLoading = false;
-			_filters = {
-				events:         action.filters.events,
-				socialChannels: action.filters.socials,
-				kloutScores:    action.filters.klout_scores,
-				sentiments:     action.filters.sentiments
-			}
+			_filters = DataFormatAdapter.adjustFilters(action.filters);
 			FiltersStore.emitChange();
 			break;
 
