@@ -22,7 +22,7 @@ import socialImg from '../../images/social_1.png';
 
 function getStoresState (VenyooAppObj) {
 	return {
-		activeEventId: (VenyooAppObj.state) ? VenyooAppObj.state.activeEventId : undefined, // Preserve the value
+		activeEventId: (VenyooAppObj.state) ? VenyooAppObj.state.activeEventId : 1, // Preserve the value
 		filters:       FiltersStore.getState(),
 		eventBuckets:  EventBucketsStore.getState(),
 		bucketData:    BucketStore.getState()
@@ -117,11 +117,12 @@ export default class VenyooApp extends React.Component {
 
 	handleFilterClicked (filters) {
 		console.log("VenyooApp.handleFilterClicked filters=", filters);
+		this.state.activeEventId = filters.eventId;
 		EventBucketsActionCreators.getEventBuckets(filters.eventId);
 	}
 	handleBucketChanged (bucketId) {
-		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId);
-		BucketActionCreators.getBucket(this.state.filters.eventId, bucketId);
+		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", this.state.activeEventId=", this.state.activeEventId);
+		BucketActionCreators.getBucket(this.state.activeEventId, bucketId);
 	}
 
 	_onChange () {
