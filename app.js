@@ -74588,6 +74588,9 @@
 
 	// import tweet_content from '../../tweet_content.html';
 
+	/* Constants */
+	var minZoomLevel = 2;
+
 	var Map = (function (_React$Component) {
 		_inherits(Map, _React$Component);
 
@@ -74606,42 +74609,6 @@
 				infowins: [],
 				markers: []
 			};
-
-			// function generateMarkers (num) {
-			// 	var markers = [];
-
-			// 	/* Generate random markers */
-			// 	var handles = ['Polina', 'Sri', 'Lev', 'Jim', 'Farid'];
-			// 	var pics = [
-			// 		'http://images3.alphacoders.com/199/199875.jpg',
-			// 		'http://www.unlulerkervani.com/data/media/1021/Sendhil-Ramamurthy_4.jpg',
-			// 		'https://s-media-cache-ak0.pinimg.com/236x/75/9a/a6/759aa6249d3c3ffb64b34b53f6697105.jpg',
-			// 		'https://s-media-cache-ak0.pinimg.com/474x/bc/9d/5e/bc9d5e337b511530ccc3fe2eff0ca8c1.jpg',
-			// 		'http://i.dailymail.co.uk/i/pix/2013/10/10/article-2451604-18A46B5B00000578-415_306x423.jpg'
-			// 	];
-			// 	var tweets = [
-			// 		'Life begins when you can spend your spare time programming instead of watching television.',
-			// 		'I\'ve seen the forgeries I\'ve sent out.',
-			// 		'jackpot: you may have an unneccessary change record',
-			// 		'Success covers a multitude of blunders.',
-			// 		'Danger, you haven\'t seen the last of me!',
-			// 		'No, but the first of you turns my stomach!'
-			// 	];
-			// 	for (var i = 0; i < num; i++) {
-			// 		var personId = Math.floor(Math.random() * handles.length);
-			// 		markers.push({
-			// 			position: {
-			// 				lat: Math.random() * 180 - 90, // -90 ... +90
-			// 				lng: Math.random() * 360 - 180 // -180 ... +180           
-			// 			},
-			// 			handle: handles[personId],
-			// 			picUrl: pics[personId],
-			// 			tweet:  tweets[Math.floor(Math.random() * tweets.length)]
-			// 		});
-			// 	}
-
-			// 	return markers;
-			// }
 		}
 
 		_createClass(Map, [{
@@ -74652,53 +74619,49 @@
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				var mapCanvas = _react2['default'].findDOMNode(this.refs.mapCanvas);
+				var self = this;
+				var mapCanvas = _react2['default'].findDOMNode(self.refs.mapCanvas);
 
-				this.state.map = placeGoogleMaps(mapCanvas);
+				self.state.map = placeGoogleMaps(mapCanvas);
 
 				function placeGoogleMaps(canvas) {
 					var mapOptions = {
-						center: new google.maps.LatLng(22.5069837, -45.0795827),
+						center: new google.maps.LatLng(38.6, 41.7),
 						zoom: 2,
 						mapTypeId: google.maps.MapTypeId.ROADMAP
 					};
-					return new google.maps.Map(canvas, mapOptions);
+					var map = new google.maps.Map(canvas, mapOptions);
+					return map;
 				}
 
-				// function generateRandomMarkers (num) {
-				// 	var resultMarkers = [];
+				var mapAdjuster = function mapAdjuster() {
 
-				// 	var handles   = ['@polina', '@sri', '@lev', '@jim', '@farid'];
-				// 	var usernames = ['Polina', 'Sri', 'Lev', 'Jim', 'Farid'];
-				// 	var pics = [
-				// 		'http://images3.alphacoders.com/199/199875.jpg',
-				// 		'http://www.unlulerkervani.com/data/media/1021/Sendhil-Ramamurthy_4.jpg',
-				// 		'https://s-media-cache-ak0.pinimg.com/236x/75/9a/a6/759aa6249d3c3ffb64b34b53f6697105.jpg',
-				// 		'https://s-media-cache-ak0.pinimg.com/474x/bc/9d/5e/bc9d5e337b511530ccc3fe2eff0ca8c1.jpg',
-				// 		'http://i.dailymail.co.uk/i/pix/2013/10/10/article-2451604-18A46B5B00000578-415_306x423.jpg'
-				// 	];
-				// 	var tweets = [
-				// 		'Life begins when you can spend your spare time programming instead of watching television.',
-				// 		'I\'ve seen the forgeries I\'ve sent out.',
-				// 		'jackpot: you may have an unneccessary change record',
-				// 		'Success covers a multitude of blunders.',
-				// 		'Danger, you haven\'t seen the last of me!',
-				// 		'No, but the first of you turns my stomach!'
-				// 	];
-				// 	for (var i = 0; i < num; i++) {
-				// 		var personId = Math.floor(Math.random() * handles.length);
-				// 		resultMarkers.push({
-				// 			handle: handles[personId],
-				// 			username: usernames[personId],
-				// 			picUrl: pics[personId],
-				// 			tweet: tweets[Math.floor(Math.random() * tweets.length)],
-				// 			lat: Math.random() * 180 - 90, // -90 ... +90
-				// 			lng: Math.random() * 360 - 180 // -180 ... +180
-				// 		});
-				// 	}
+					// if (strictBounds.contains(self.state.map.getCenter()))
+					// 	return;
 
-				// 	return resultMarkers;			
-				// }
+					// We're out of bounds - Move the map back within the bounds
+
+					var center = self.state.map.getCenter(),
+					    lng = center.lng(),
+					    lat = center.lat(),
+					    zoom = self.state.map.getZoom();
+
+					console.log('Map.componentDidMount lat=', lat);
+
+					if (zoom === 2 && lat > 44) lat = 44;
+					if (zoom === 3 && lat > 72) lat = 72;
+					if (zoom >= 4 && lat > 79) lat = 79;
+					if (zoom === 2 && lat < -21) lat = -21;
+					if (zoom === 3 && lat < -64) lat = -64;
+					if (zoom >= 4 && lat < -77) lat = -77;
+					self.state.map.setCenter(new google.maps.LatLng(lat, lng));
+
+					if (zoom < minZoomLevel) self.state.map.setZoom(minZoomLevel);
+				};
+
+				google.maps.event.addListener(self.state.map, 'drag', mapAdjuster);
+
+				google.maps.event.addListener(self.state.map, 'zoom_changed', mapAdjuster);
 			}
 		}, {
 			key: 'componentWillReceiveProps',
