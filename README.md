@@ -11,6 +11,7 @@ Install
 First you have to install dependencies:
  - nodejs: https://nodejs.org/
  - npm: https://www.npmjs.com/
+
 The next step is to install webpack package globally:
 ```bash
 npm install -g webpack
@@ -21,6 +22,7 @@ git clone git@github.com:taydakov/neurlabs-venyoo-frontend
 ```
 Go into the cloned directory and now you can install all the dependencies for the project
 ```bash
+cd neurlabs-venyoo-frontend
 npm install
 ```
 The next step is a bit silly but required for proper function of the app:
