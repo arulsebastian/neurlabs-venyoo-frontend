@@ -10,7 +10,13 @@ Install
 -------
 First you have to install dependencies:
  - nodejs: https://nodejs.org/
+curl --silent --location https://rpm.nodesource.com/setup | bash -
+yum -y install nodejs 
+to check: node 
+to exit: cntr+C, cntr+C
+
  - npm: https://www.npmjs.com/
+to check package manager: npm
 
 The next step is to install webpack package globally:
 ```bash
