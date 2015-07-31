@@ -71,10 +71,14 @@ export default class DataTable extends React.Component {
 				}
 			}
 
+			var timeLabel = null;
+			if (this.props.bucketData.tweets.length !== 0)
+				timeLabel = <a className="btn btn-sm grey_bg">{ this.props.bucketData.tweets[0].timeStamp }</a>
+
 			return (
 				<div className="container">
 					<div id="container">
-						<h3 className="grey-color">{ this.state.tweetsTotal } entries <a className="btn btn-sm grey_bg">{ this.props.bucketData.tweets[0].timeStamp }</a> <a href="#" className="full_screen"><i className="fa fa-arrows-alt"></i> Full Screen</a> </h3>
+						<h3 className="grey-color">{ this.state.tweetsTotal } entries {timeLabel} <a href="#" className="full_screen"><i className="fa fa-arrows-alt"></i> Full Screen</a> </h3>
 						<table className="table table-hover table-striped">
 							<tbody>
 								<tr>
