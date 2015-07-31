@@ -35,7 +35,7 @@ So the last step is to run compilation (in watch mode for development):
 ```bash
 webpack --watch
 ```
-The compiled code is at ./build directory
+The compiled code is at ./build directory, use Apache or any other web server to serve files from the ./build directory
 
 How To Create New Component
 ----------------
