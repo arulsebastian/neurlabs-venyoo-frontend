@@ -14,7 +14,7 @@ First you have to install dependencies:
 
 The next step is to install webpack package globally:
 ```bash
-npm install -g webpack
+sudo npm install -g webpack
 ```
 Clone GitHub repo:
 ```bash
