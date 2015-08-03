@@ -1,6 +1,7 @@
 /* JS dependencies */
 import React from "react";
 import DialogBox from "./DialogBox";
+import WebUtils from "../utils/VenyooWebUtils"; // FIXME: API calls should be proxied via ActionCreators
 
 /* Stylesheet dependencies */
 
@@ -68,7 +69,9 @@ export default class DataTable extends React.Component {
 				replyPopups.push(
 					<DialogBox key={ i } 
 							   id={ "Reply" + i }
-							   title={ title } />
+							   title={ title }
+							   actionName="Reply"
+							   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) } />
 				);
 			}
 
@@ -158,6 +161,13 @@ export default class DataTable extends React.Component {
 		this.setState({
 			tweetsPerPage: e.target.value
 		});
+	}
+
+	factoryHandleReply (username) {
+		return function (message) {
+			console.log("DataTable.handleReply username = ", username, ", message = ", message);
+			WebUtils.sendReply(username, message);
+		}
 	}
 
 	/* Helper routines */

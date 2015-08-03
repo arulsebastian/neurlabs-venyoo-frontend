@@ -1,6 +1,14 @@
 import React from "react";
 
 export default class DialogBox extends React.Component {
+	constructor (...args) {
+		super(...args);
+
+		this.state = {
+			message: ""
+		};
+	}
+
 	render () {
 		return (
 			<div key={ this.props.key } className="modal fade custommodal" id={ this.props.id } tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -9,10 +17,10 @@ export default class DialogBox extends React.Component {
 						<div className="modal-body">
 							<div className="entry_popup">
 								{ this.props.title }
-								<input type="text" name="" className="input_field" />
+								<input type="text" name="" className="input_field" value={ this.state.message } onChange={ this.handleMessageChange.bind(this) } />
 								<div className="button_block">
-									<button className="direct_msg" onClick={ this.sendReply }>Reply</button>
-										<button className="cancel_btn" data-dismiss="modal">Cancel</button>
+									<button className="direct_msg" onClick={ this.handleReplyClick.bind(this) }>{ this.props.actionName }</button>
+									<button className="cancel_btn" data-dismiss="modal">Cancel</button>
 								</div>
 							</div>
 						</div>
@@ -21,8 +29,22 @@ export default class DialogBox extends React.Component {
 			</div>
 		);
 	}
+
+	handleMessageChange (e) {
+		this.setState({
+			message: e.target.value
+		});
+	}
+
+	handleReplyClick (e) {
+		console.log("DialogBox.handleReplyClick state.message = ", this.state.message);
+		if (this.props.onAction)
+			this.props.onAction(this.state.message);
+	}
 }
 
 DialogBox.propTypes = {
-	title: React.PropTypes.object.isRequired
+	title:      React.PropTypes.object.isRequired,
+	actionName: React.PropTypes.string.isRequired,
+	onAction:   React.PropTypes.func
 }
