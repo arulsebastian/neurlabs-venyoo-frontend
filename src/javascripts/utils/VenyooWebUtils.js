@@ -5,6 +5,9 @@ import DataFormatAdapter from "./DataFormat/DataFormatAdapter";
 const baseUrl = "http://private-23316-venyoo.apiary-mock.com";
 
 class VenyooWebUtils {
+
+	/* Getting data */
+
 	getFilters () {
 		var self = this;
 
@@ -82,13 +85,40 @@ class VenyooWebUtils {
 		});
 	}
 
+	/* Performing actions */
+
+	sendTweet (screenName, message) {
+		var self = this;
+
+		var urlParams = {
+			screenName: screenName,
+			message:    message
+		};
+
+		ServerActionCreators.sendTweetSending(urlParams);
+
+		request({
+			url: "http://52.24.255.84/tweet/?screenname=" + encodeURIComponent(screenName) + "&message=" + encodeURIComponent(message),
+			withCredentials: false
+		}, function (error, response, body) {
+			if (!error && response.statusCode === 200) {
+				ServerActionCreators.sendTweetSucceeded(
+					urlParams,
+					response,
+					body);
+			} else {
+				ServerActionCreators.sendTweetFailed(urlParams, error, response, body);
+			}
+		});
+	}
+
 	sendReply (username, message) {
 		var self = this;
 
 		var urlParams = {
 			username: username,
 			message:  message
-		}
+		};
 
 		ServerActionCreators.sendReplySending(urlParams);
 
@@ -102,7 +132,79 @@ class VenyooWebUtils {
 					response,
 					body);
 			} else {
-				ServerActionCreators.sendReplyFailed(urlParams, error, respose, body);
+				ServerActionCreators.sendReplyFailed(urlParams, error, response, body);
+			}
+		});
+	}
+
+	sendFavorite (tweetId) {
+		var self = this;
+
+		var urlParams = {
+			tweetId: tweetId
+		};
+
+		ServerActionCreators.sendFavoriteSending(urlParams);
+
+		request({
+			url: "http://52.24.255.84/favorite/?tweet_id=" + tweetId,
+			withCredentials: false
+		}, function (error, response, body) {
+			if (!error && response.statusCode === 200) {
+				ServerActionCreators.sendFavoriteSucceeded(
+					urlParams,
+					response,
+					body);
+			} else {
+				ServerActionCreators.sendFavoriteFailed(urlParams, error, response, body);
+			}
+		});
+	}
+
+	sendRetweet (tweetId) {
+		var self = this;
+
+		var urlParams = {
+			tweetId: tweetId
+		};
+
+		ServerActionCreators.sendRetweetSending(urlParams);
+
+		request({
+			url: "http://52.24.255.84/retweet/?tweet_id=" + tweetId,
+			withCredentials: false
+		}, function (error, response, body) {
+			if (!error && response.statusCode === 200) {
+				ServerActionCreators.sendRetweetSucceeded(
+					urlParams,
+					response,
+					body);
+			} else {
+				ServerActionCreators.sendRetweetFailed(urlParams, error, response, body);
+			}
+		});
+	}
+
+	sendFollow (screenName) {
+		var self = this;
+
+		var urlParams = {
+			screenName: screenName
+		};
+
+		ServerActionCreators.sendFollowSending(urlParams);
+
+		request({
+			url: "http://52.24.255.84/follow/?screenname=" + screenName,
+			withCredentials: false
+		}, function (error, response, body) {
+			if (!error && response.statusCode === 200) {
+				ServerActionCreators.sendFollowSucceeded(
+					urlParams,
+					response,
+					body);
+			} else {
+				ServerActionCreators.sendFollowFailed(urlParams, error, response, body);
 			}
 		});
 	}
