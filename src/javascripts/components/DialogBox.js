@@ -38,12 +38,16 @@ export default class DialogBox extends React.Component {
 
 	handleReplyClick (e) {
 		console.log("DialogBox.handleReplyClick state.message = ", this.state.message);
-		if (this.props.onAction)
-			this.props.onAction(this.state.message);
+		if (this.state.message !== "") {
+			$("#" + this.props.id).modal("hide");
+			if (this.props.onAction)
+				this.props.onAction(this.state.message);
+		}
 	}
 }
 
 DialogBox.propTypes = {
+	id:         React.PropTypes.string.isRequired,
 	title:      React.PropTypes.object.isRequired,
 	actionName: React.PropTypes.string.isRequired,
 	onAction:   React.PropTypes.func
