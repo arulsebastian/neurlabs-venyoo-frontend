@@ -1,5 +1,6 @@
 /* JS dependencies */
 import React from "react";
+import DialogBox from "./DialogBox";
 
 /* Stylesheet dependencies */
 
@@ -37,7 +38,8 @@ export default class DataTable extends React.Component {
 
 		} else {
 
-			var tweetsRows = [];
+			var tweetsRows  = [];
+			var replyPopups = [];
 			var tweetEndNumber = ((this.state.tweetsPerPage * (this.state.pageNumber + 1)) > this.state.tweetsTotal)
 								 ? this.state.tweetsTotal
 								 : (this.state.tweetsPerPage * (this.state.pageNumber + 1));
@@ -46,7 +48,7 @@ export default class DataTable extends React.Component {
 				
 				tweetsRows.push(
 					<tr key={ i }>
-						<td><a href="#" className="reply_btn"><i className="fa fa-long-arrow-left"></i> Reply</a></td>
+						<td><a href="#" className="reply_btn" data-toggle="modal" data-target={ "#Reply" + i }><i className="fa fa-long-arrow-left"></i> Reply</a></td>
 						<td>{ tweetData.message }</td>
 						<td>{ tweetData.mediaLink }</td>
 						<td>{ tweetData.email }</td>
@@ -59,6 +61,14 @@ export default class DataTable extends React.Component {
 							<span className="lbl"></span> </label>
 						</td>
 					</tr>
+				);
+
+				var title = <h3>Reply to: <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>;
+
+				replyPopups.push(
+					<DialogBox key={ i } 
+							   id={ "Reply" + i }
+							   title={ title } />
 				);
 			}
 
@@ -98,6 +108,7 @@ export default class DataTable extends React.Component {
 								{ tweetsRows }
 							</tbody>
 						</table>
+						{ replyPopups }
 					</div>
 					<div className="clearfix">&nbsp;</div>
 					<div className="row">

@@ -22,7 +22,8 @@ import socialImg from '../../images/social_1.png';
 
 function getStoresState (VenyooAppObj) {
 	return {
-		activeEventId: (VenyooAppObj.state) ? VenyooAppObj.state.activeEventId : 1, // Preserve the value
+		activeEventId: (VenyooAppObj.state) ? VenyooAppObj.state.activeEventId : 1, // Preserve the value, but FIX default value of 1
+		activeEvent:   (VenyooAppObj.state) ? VenyooAppObj.state.activeEvent   : null, // Preserve the value
 		filters:       FiltersStore.getState(),
 		eventBuckets:  EventBucketsStore.getState(),
 		bucketData:    BucketStore.getState()
@@ -42,7 +43,7 @@ export default class VenyooApp extends React.Component {
 				{/* Map block */}
 				<div className="map_block">
 					{/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6874863.052680733!2d-117.16151799999996!3d32.71616899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d954a7de4514ad%3A0xc23d2f349e970aed!2sTHE+US+GRANT%2C+a+Luxury+Collection+Hotel%2C+San+Diego!5e0!3m2!1sen!2sin!4v1435239649995" width="100%" height="718" frameborder="0" style={{ border : 0 }} allowfullscreen></iframe> */}
-					<Map bucketData={this.state.bucketData} />
+					<Map eventData={this.activeEvent} bucketData={this.state.bucketData} />
 					{/* Right block */}
 					<div className="map_right">
 						<a href="#" className="map_toggle"><i className="fa fa-bars"></i></a>
@@ -118,6 +119,7 @@ export default class VenyooApp extends React.Component {
 	handleFilterClicked (filters) {
 		console.log("VenyooApp.handleFilterClicked filters=", filters);
 		this.state.activeEventId = filters.eventId;
+		this.state.activeEvent   = filters.events[filters.eventId];
 		EventBucketsActionCreators.getEventBuckets(filters.eventId);
 	}
 	handleBucketChanged (bucketId) {
@@ -126,6 +128,10 @@ export default class VenyooApp extends React.Component {
 	}
 
 	_onChange () {
-		this.setState(getStoresState(this));
+		var newState = getStoresState(this);
+		if (this.state.activeEventId === null && newState.filters) {
+			this.state.activeEventId = 1;
+		}
+		this.setState(newState);
 	}
 };

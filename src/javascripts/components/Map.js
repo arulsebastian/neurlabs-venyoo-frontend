@@ -23,6 +23,7 @@ export default class Map extends React.Component {
 	}
 
 	render () {
+		console.log("Map.render eventData=", this.props.eventData);
 		return (
 			<div ref="mapCanvas" className="map_canvas"></div>
 		);
@@ -135,3 +136,8 @@ export default class Map extends React.Component {
 	}
 
 }
+
+Map.propTypes = {
+	eventData:  React.PropTypes.object,
+	bucketData: React.PropTypes.object
+};
