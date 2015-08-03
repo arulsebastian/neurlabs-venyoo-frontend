@@ -5,6 +5,17 @@ import FiltersActionCreators from "../actions/FiltersActionCreators";
 /* Stylesheet dependencies */
 
 export default class Filters extends React.Component {
+
+	constructor (...args) {
+		super(...args);
+
+		this.state = {
+			currSocialChannelId: null,
+			currKloutScoreId:    null,
+			currSetimentId:      null
+		}
+	}
+
 	render () {
 		if (this.props.filters.isLoading) {
 
@@ -18,6 +29,8 @@ export default class Filters extends React.Component {
 			);
 
 		} else {
+
+			var self = this;
 
 			var events = [];
 			if (this.props.filters.events) {
@@ -33,7 +46,7 @@ export default class Filters extends React.Component {
 				this.props.filters.socialChannels.forEach(function (socialChannel, index) {
 					socialChannels.push(
 						<label id={socialChannel.id} key={index}>
-							<input type="checkbox" name="man" value="man" />
+							<input type="radio" name="socialChannel" data-id={socialChannel.id} onClick={self.handleFilterChange.bind(this)} />
 							<span className="lbl">{socialChannel.caption}</span>
 						</label>
 					);
@@ -45,7 +58,7 @@ export default class Filters extends React.Component {
 				this.props.filters.kloutScores.forEach(function (kloutScore, index) {
 					kloutScores.push(
 						<label id={kloutScore.id} key={index}>
-							<input type="checkbox" name="man" value="man" />
+							<input type="radio" name="kloutScore" data-id={kloutScore.id} onClick={self.handleFilterChange.bind(this)} />
 							<span className="lbl">{kloutScore.caption}</span>
 						</label>
 					);
@@ -57,7 +70,7 @@ export default class Filters extends React.Component {
 				this.props.filters.sentiments.forEach(function (sentiment, index) {
 					sentiments.push(
 						<label id={sentiment.id} key={index}>
-							<input type="checkbox" name="man" value="man" />
+							<input type="radio" name="sentiment" data-id={sentiment.id} onClick={self.handleFilterChange.bind(this)} />
 							<span className="lbl">{sentiment.caption}</span>
 						</label>
 					);
@@ -184,14 +197,38 @@ export default class Filters extends React.Component {
 
 	componentWillReceiveProps (nextProps) {
 		console.log("Filters.componentWillReceiveProps nextProps = ", nextProps);
+
+		// TODO: Assign default values to this.state when new props come
 	}
 
 	/* Event Handlers */
 
+	handleFilterChange () {
+		var socialChannels = document.getElementsByName("socialChannel");
+		var kloutScores    = document.getElementsByName("kloutScore");
+		var sentiments     = document.getElementsByName("sentiment");
+
+		// FIXME: use the code below
+
+		// socialChannels.every(function (socialChannel) {
+		// 	if (socialChannel.checked) {
+		// 		this.state.currSocialChannelId = socialChannel.dataset.id;
+		// 		return false; // break the loop
+		// 	} else {
+		// 		return true;  // continue the loop
+		// 	}
+		// });
+
+		// FIXME: Where is this output in Chrome console?
+
+		console.log("Filters.handleFilterChange state.currSocialChannelId=", this.state.currSocialChannelId);
+	}
+
 	handleFilterClick () {
 		if (this.props.onFilterClick) {
 			this.props.onFilterClick({
-				eventId: React.findDOMNode(this.refs.eventSelector).value
+				eventId:     React.findDOMNode(this.refs.eventSelector).value,
+				sentimentId: 0,
 			});
 		}
 	}

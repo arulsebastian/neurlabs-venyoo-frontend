@@ -130,7 +130,7 @@ export default class VenyooApp extends React.Component {
 	_onChange () {
 		var newState = getStoresState(this);
 		if (this.state.activeEventId === null && newState.filters) {
-			this.state.activeEventId = 1;
+			this.state.activeEventId = 0; // FIXME: get the id value from filters array
 		}
 		this.setState(newState);
 	}

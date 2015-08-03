@@ -37,7 +37,7 @@ export default class SivaramDataFormatAdapter extends PassThroughDataFormatAdapt
 				message:      tweet.tweet,
 				username:     tweet.user,
 				socialHandle: "@" + tweet.user,
-				picUrl:       "http://placehold.it/100x100",
+				picUrl:       tweet.profile_image,
 				mediaLink:    "",
 				sentiment:    tweet.sentiment,
 				follower:     "N",
