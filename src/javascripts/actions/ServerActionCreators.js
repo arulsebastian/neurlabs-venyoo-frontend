@@ -78,5 +78,29 @@ export default {
 			error:    error,
 			response: response
 		});
-	}
+	},
+
+	/* SEND REPLY */
+
+	sendReplySending: function (urlParams) {
+		AppDispatcher.dispatch({
+			type: ActionTypes.SEND_REPLY_SENDING
+		});
+	},
+
+	sendReplySucceeded: function (urlParams, response, body) {
+		console.log("ServerActionCreators.sendReplySucceeded SUCCESS :) body = ", body);
+		AppDispatcher.dispatch({
+			type: ActionTypes.SEND_REPLY_SUCCEEDED
+		});
+	},
+
+	sendReplyFailed: function (urlParams, error, response, body) {
+		console.log("ServerActionCreators.sendReplySucceeded FAIL :( body = ", body);
+		AppDispatcher.dispatch({
+			type:     ActionTypes.SEND_REPLY_FAILED,
+			error:    error,
+			response: response
+		});
+	},
 }

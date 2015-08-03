@@ -90,14 +90,19 @@ class VenyooWebUtils {
 			message:  message
 		}
 
+		ServerActionCreators.sendReplySending(urlParams);
+
 		request({
 			url: "http://52.24.255.84/send/?username=" + encodeURIComponent(username) + "&message=" + encodeURIComponent(message),
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {
-				console.log("VenyooWebUtils.sendReply SUCCESS :) body = ", body);
+				ServerActionCreators.sendReplySucceeded(
+					urlParams,
+					response,
+					body);
 			} else {
-				console.log("VenyooWebUtils.sendReply FAILED :( error = ", error, ", body = ", body);
+				ServerActionCreators.sendReplyFailed(urlParams, error, respose, body);
 			}
 		});
 	}

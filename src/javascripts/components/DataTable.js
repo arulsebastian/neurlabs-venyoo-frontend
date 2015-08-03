@@ -1,7 +1,7 @@
 /* JS dependencies */
 import React from "react";
 import DialogBox from "./DialogBox";
-import WebUtils from "../utils/VenyooWebUtils"; // FIXME: API calls should be proxied via ActionCreators
+import ActionsActionCreators from "../actions/ActionsActionCreators";
 
 /* Stylesheet dependencies */
 
@@ -166,7 +166,7 @@ export default class DataTable extends React.Component {
 	factoryHandleReply (username) {
 		return function (message) {
 			console.log("DataTable.handleReply username = ", username, ", message = ", message);
-			WebUtils.sendReply(username, message);
+			ActionsActionCreators.sendReply(username, message);
 		}
 	}
 
