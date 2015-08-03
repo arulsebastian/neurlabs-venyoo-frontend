@@ -112,7 +112,7 @@ input, textarea, select{ -moz-appearance: none; -webkit-appearance: none;}
 .wrapper .full_screen{ height:39px; float:right; padding:0 15px; margin:0; line-height:39px; font-size:18px; color:#696969; background:#e3e3e3; border:1px solid #bdcee0; border-radius:4px; -webkit-box-shadow:0 -4px 4px rgba(0, 0, 0, 0.1) inset; box-shadow:0 -4px 4px rgba(0, 0, 0, 0.1) inset;}
 .wrapper .full_screen:hover{ background:#d3d3d3;}
 .wrapper .full_screen i{ margin-right:10px;}
-.wrapper .reply_btn{ white-space:nowrap; padding:7px 10px 4px 10px; margin:0; display:inline-block; font-size:16px; color:#696969; border:1px solid #c0d0e1; background:#ffffff; -webkit-box-shadow:0 4px 4px rgba(0, 0, 0, 0.1) inset; box-shadow:0 4px 4px rgba(0, 0, 0, 0.1) inset;}
+.wrapper .reply_btn{ white-space:nowrap; padding:7px 10px 4px 10px; margin:0; display:inline-block; font-size:16px; color:#696969; border:1px solid #c0d0e1; background: rgb(100, 220, 100); -webkit-box-shadow:0 4px 4px rgba(0, 0, 0, 0.1) inset; box-shadow:0 4px 4px rgba(0, 0, 0, 0.1) inset;}
 .wrapper .reply_btn i{ color:#0084b4; margin-right:5px;}
 .wrapper .reply_btn:hover{ background:#d3d3d3;}
 
