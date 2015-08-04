@@ -46,7 +46,7 @@ export default class VenyooApp extends React.Component {
 					<Map eventData={this.activeEvent} bucketData={this.state.bucketData} />
 					{/* Right block */}
 					<div className="map_right">
-						<a href="#" className="map_toggle"><i className="fa fa-bars"></i></a>
+						
 						<div className="inner_block">
 							<div className="right_link">
 								<ul>
@@ -55,8 +55,10 @@ export default class VenyooApp extends React.Component {
 									<li><a href="#">LOGOUT</a></li>
 								</ul>
 							</div>
+							
 							<Filters filters={this.state.filters} onFilterClick={this.handleFilterClicked.bind(this)} />
 						</div>
+						<a href="#" className="map_toggle"><i className="fa fa-bars"></i></a>
 					</div>
 				</div>
 				<div className="detail_main">
