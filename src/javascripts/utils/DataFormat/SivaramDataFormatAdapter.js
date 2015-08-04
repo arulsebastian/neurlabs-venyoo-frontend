@@ -31,6 +31,7 @@ export default class SivaramDataFormatAdapter extends PassThroughDataFormatAdapt
 		var result = { tweets: [] };
 		originalBucket.tweet_metadata.forEach(function (tweet) {
 			result.tweets.push({
+				tweetId:      tweet.tweet_id,
 				lat:          tweet.latitude,
 				lng:          tweet.longitude,
 				email:        "",

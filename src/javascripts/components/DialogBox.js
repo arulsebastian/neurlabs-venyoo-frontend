@@ -44,12 +44,14 @@ export default class DialogBox extends React.Component {
 
 	handleReplyClick (e) {
 		console.log("DialogBox.handleReplyClick state.message = ", this.state.message);
-		if (this.state.message !== "") {
+		if (!this.props.isInput || this.state.message !== "") {
 			$("#" + this.props.id).modal("hide");
 			if (this.props.onAction) {
 				this.props.onAction(this.state.message);
 			}
-			this.state.message = "";
+			this.setState({
+				message: ""
+			});
 		}
 	}
 }

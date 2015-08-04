@@ -12,6 +12,9 @@ import '../../stylesheets/components/map.scss';
 /* Constants */
 const minZoomLevel = 2;
 const directMessagePrefix = "directMessage";
+const followPrefix        = "followPrefix";
+const favoritePrefix      = "favoritePrefix";
+const retweetPrefix       = "retweetPrefix";
 
 export default class Map extends React.Component {
 	constructor (...args) {
@@ -27,6 +30,9 @@ export default class Map extends React.Component {
 
 	render () {
 		var directMessagePopups = [];
+		var followPopups        = [];
+		var favoritePopups      = [];
+		var retweetPopups       = [];
 		for (var i = 0; i < this.props.bucketData.tweets.length; i++) {
 			var tweetData = this.props.bucketData.tweets[i];
 
@@ -39,12 +45,45 @@ export default class Map extends React.Component {
 					<h3>Direct Message to: <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
 				</DialogBox>
 			);
-		}		
+
+			followPopups.push(
+				<DialogBox key={ i }
+						   id={ followPrefix + i }
+						   isInput={ false }
+						   actionName="Follow"
+						   onAction={ this.factoryHandleFollow(tweetData.socialHandle).bind(this) }>
+					<h3>Follow <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
+				</DialogBox>
+			);
+
+			favoritePopups.push(
+				<DialogBox key={ i }
+						   id={ favoritePrefix + i }
+						   isInput={ false }
+						   actionName="Favorite"
+						   onAction={ this.factoryHandleFavorite(tweetData.tweetId).bind(this) }>
+					<h3>Favorite a tweet by <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
+				</DialogBox>
+			);
+
+			retweetPopups.push(
+				<DialogBox key={ i }
+						   id={ retweetPrefix + i }
+						   isInput={ false }
+						   actionName="Retweet"
+						   onAction={ this.factoryHandleRetweet(tweetData.tweetId).bind(this) }>
+					<h3>Retweet <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
+				</DialogBox>
+			);
+		}
 
 		return (
 			<div>
 				<div ref="mapCanvas" className="map_canvas"></div>
 				{ directMessagePopups }
+				{ followPopups }
+				{ favoritePopups }
+				{ retweetPopups }
 			</div>
 		);
 	}
@@ -134,6 +173,10 @@ export default class Map extends React.Component {
 					content = content.replace('{{ infowin_handle }}',   tweet.socialHandle);
 					content = content.replace('{{ infowin_picUrl }}',   tweet.picUrl);
 					content = content.replace('{{ infowin_tweet }}',    tweet.message);
+					content = content.replace('{{ infowin_reply_target }}',    "#" + directMessagePrefix + i);
+					content = content.replace('{{ infowin_follow_target }}',   "#" + followPrefix + i);
+					content = content.replace('{{ infowin_favorite_target }}', "#" + favoritePrefix + i);
+					content = content.replace('{{ infowin_retweet_target }}',  "#" + retweetPrefix + i);
 					content = content.replace('{{ infowin_direct_message_target }}', "#" + directMessagePrefix + i);
 
 					/* Place marker */
@@ -161,10 +204,29 @@ export default class Map extends React.Component {
 	}
 
 	/* Event handlers */
+	
 	factoryHandleReply (username) {
 		return function (message) {
 			console.log("Map.factoryHandleReply username = ", username, ", message = ", message);
 			ActionsActionCreators.sendReply(username, message);
+		}
+	}
+	factoryHandleFollow (screenName) {
+		return function () {
+			console.log("Map.factoryHandleFollow screenName = ", screenName);
+			ActionsActionCreators.sendFollow(screenName);
+		}
+	}
+	factoryHandleFavorite (tweetId) {
+		return function () {
+			console.log("Map.factoryHandleFavorite tweetId = ", tweetId);
+			ActionsActionCreators.sendFavorite(tweetId);
+		}
+	}
+	factoryHandleRetweet (tweetId) {
+		return function () {
+			console.log("Map.factoryHandleRetweet tweetId = ", tweetId);
+			ActionsActionCreators.sendRetweet(tweetId);
 		}
 	}
 
