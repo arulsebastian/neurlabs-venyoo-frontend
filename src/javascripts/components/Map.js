@@ -39,7 +39,7 @@ export default class Map extends React.Component {
 				center:           new google.maps.LatLng(38.6, 41.7),
 				zoom:             2,
 				scrollwheel:      false,
-				disableDefaultUI: true,   // a way to quickly hide all controls
+				disableDefaultUI: true,
 				mapTypeControl:   false,
 				scaleControl:     true,
 				zoomControl:      true,
@@ -76,8 +76,7 @@ export default class Map extends React.Component {
 				self.state.map.setZoom(minZoomLevel);
 		}
 
-		google.maps.event.addListener(self.state.map, "drag", mapAdjuster);
-
+		google.maps.event.addListener(self.state.map, "drag",         mapAdjuster);
 		google.maps.event.addListener(self.state.map, "zoom_changed", mapAdjuster);
 	}
 
