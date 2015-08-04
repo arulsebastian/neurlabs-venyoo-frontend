@@ -52,11 +52,13 @@
 .twitter_public_controls > img {
 	float: left;
 	padding: 10px 10px 0 0; /* $padding/2 $padding/2 0 0; */
+	cursor: pointer;
 }
 
 .twitter_private_controls > img {
 	float: left;
 	padding: 10px 0 0 10px; /* $padding/2 0 0 $padding/2; */
+	cursor: pointer;
 }
 
 .twitter_private_controls {
@@ -76,15 +78,15 @@
 	</div>
 	<div class="twitter_controls">
 		<div class="twitter_private_controls">
-			<img class="twitter_direct_message" src="http://placehold.it/20x20"/>
-			<img class="twitter_quote"          src="http://placehold.it/20x20"/>
+			<img class="twitter_direct_message" src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_direct_message_target }}"/>
+			<img class="twitter_quote"          src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_quote_target }}"/>
 		</div>    
 		
 		<div class="twitter_public_controls">
-			<img class="twitter_back"        src="http://placehold.it/20x20"/>
-			<img class="twitter_add_contact" src="http://placehold.it/20x20"/>
-			<img class="twitter_favorite"    src="http://placehold.it/20x20"/>
-			<img class="twitter_retweet"     src="http://placehold.it/20x20"/>
+			<img class="twitter_respond"  src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_respond_target }}"/>
+			<img class="twitter_follow"   src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_follow_target }}"/>
+			<img class="twitter_favorite" src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_favorite_target }}"/>
+			<img class="twitter_retweet"  src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_retweet_target }}"/>
 		</div>
 	</div>
 </div>

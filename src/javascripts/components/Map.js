@@ -2,13 +2,16 @@
 import React from 'react';
 import jQuery from 'jquery';
 import _ from "lodash";
+import DialogBox from "./DialogBox";
+import ActionsActionCreators from "../actions/ActionsActionCreators";
 
 /* Static dependencies */
 import '../../stylesheets/components/map.scss';
 // import tweet_content from '../../tweet_content.html';
 
 /* Constants */
-var minZoomLevel = 2;
+const minZoomLevel = 2;
+const directMessagePrefix = "directMessage";
 
 export default class Map extends React.Component {
 	constructor (...args) {
@@ -23,8 +26,26 @@ export default class Map extends React.Component {
 	}
 
 	render () {
+		var directMessagePopups = [];
+		for (var i = 0; i < this.props.bucketData.tweets.length; i++) {
+			var tweetData = this.props.bucketData.tweets[i];
+
+			directMessagePopups.push(
+				<DialogBox key={ i }
+						   id={ directMessagePrefix + i }
+						   isInput="true"
+						   actionName="Direct Message"
+						   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) }>
+					<h3>Direct Message to: <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
+				</DialogBox>
+			);
+		}		
+
 		return (
-			<div ref="mapCanvas" className="map_canvas"></div>
+			<div>
+				<div ref="mapCanvas" className="map_canvas"></div>
+				{ directMessagePopups }
+			</div>
 		);
 	}
 
@@ -106,13 +127,14 @@ export default class Map extends React.Component {
 			}
 
 			function placeMarkersAndInfoWins (tweets, contentLayout) {
-				tweets.forEach(function(tweet) {
+				tweets.forEach(function(tweet, i) {
 					/* Prepare infowindow content */
 					var content = contentLayout;
 					content = content.replace('{{ infowin_username }}', tweet.username);
 					content = content.replace('{{ infowin_handle }}',   tweet.socialHandle);
 					content = content.replace('{{ infowin_picUrl }}',   tweet.picUrl);
 					content = content.replace('{{ infowin_tweet }}',    tweet.message);
+					content = content.replace('{{ infowin_direct_message_target }}', "#" + directMessagePrefix + i);
 
 					/* Place marker */
 					var marker = new google.maps.Marker({
@@ -135,6 +157,14 @@ export default class Map extends React.Component {
 					});
 				});			
 			}
+		}
+	}
+
+	/* Event handlers */
+	factoryHandleReply (username) {
+		return function (message) {
+			console.log("Map.factoryHandleReply username = ", username, ", message = ", message);
+			ActionsActionCreators.sendReply(username, message);
 		}
 	}
 

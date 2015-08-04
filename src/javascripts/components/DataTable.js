@@ -53,7 +53,7 @@ export default class DataTable extends React.Component {
 							<input type="checkbox" name="man" value="man" />
 							<span className="lbl"></span> </label>
 						</td>
-						<td><a href="#" className="reply_btn" data-toggle="modal" data-target={ "#Reply" + i }><i className="fa fa-long-arrow-left"></i> Reply</a></td>
+						<td><a href="#" className="reply_btn" data-toggle="modal" data-target={ "#Reply" + i } data-tweet-number={ i }><i className="fa fa-long-arrow-left"></i> Reply</a></td>
 						<td>{ tweetData.message }</td>
 						<td>{ tweetData.mediaLink }</td>
 						<td>{ tweetData.email }</td>
@@ -64,14 +64,14 @@ export default class DataTable extends React.Component {
 					</tr>
 				);
 
-				var title = <h3>Reply to: <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>;
-
 				replyPopups.push(
-					<DialogBox key={ i } 
+					<DialogBox key={ i }
 							   id={ "Reply" + i }
-							   title={ title }
+							   isInput="true"
 							   actionName="Reply"
-							   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) } />
+							   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) }>
+						<h3>Reply to: <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
+					</DialogBox>
 				);
 			}
 
