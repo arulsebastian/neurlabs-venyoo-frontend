@@ -49,6 +49,10 @@ export default class DataTable extends React.Component {
 				
 				tweetsRows.push(
 					<tr key={ i }>
+						<td><label id="a">
+							<input type="checkbox" name="man" value="man" />
+							<span className="lbl"></span> </label>
+						</td>
 						<td><a href="#" className="reply_btn" data-toggle="modal" data-target={ "#Reply" + i }><i className="fa fa-long-arrow-left"></i> Reply</a></td>
 						<td>{ tweetData.message }</td>
 						<td>{ tweetData.mediaLink }</td>
@@ -57,10 +61,6 @@ export default class DataTable extends React.Component {
 						<td>{ tweetData.sentiment }</td>
 						<td>{ tweetData.follower }</td>
 						<td>{ tweetData.following }</td>
-						<td><label id="a">
-							<input type="checkbox" name="man" value="man" />
-							<span className="lbl"></span> </label>
-						</td>
 					</tr>
 				);
 
@@ -95,6 +95,10 @@ export default class DataTable extends React.Component {
 						<table className="table table-hover table-striped">
 							<tbody>
 								<tr>
+									<th> <label id="a">
+										<input type="checkbox" name="man" value="man" />
+										<span className="lbl"></span> </label>
+									</th>
 									<th>Reply</th>
 									<th>Tweet</th>
 									<th>Media Link</th>
@@ -103,10 +107,6 @@ export default class DataTable extends React.Component {
 									<th>Sentiment</th>
 									<th>Follower</th>
 									<th>Following</th>
-									<th> <label id="a">
-										<input type="checkbox" name="man" value="man" />
-										<span className="lbl"></span> </label>
-									</th>
 								</tr>
 								{ tweetsRows }
 							</tbody>

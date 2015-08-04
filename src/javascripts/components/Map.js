@@ -36,16 +36,16 @@ export default class Map extends React.Component {
 
 		function placeGoogleMaps (canvas) {
 			var mapOptions = {
-				center:    new google.maps.LatLng(38.6, 41.7),
-				zoom:      2,
-				scrollwheel: false,
-				disableDefaultUI: true, // a way to quickly hide all controls
-    mapTypeControl: false,
-    scaleControl: true,
-    zoomControl: true,
-	zoomControlOptions: {
-      style: google.maps.ZoomControlStyle.LARGE 
-    },
+				center:           new google.maps.LatLng(38.6, 41.7),
+				zoom:             2,
+				scrollwheel:      false,
+				disableDefaultUI: true,   // a way to quickly hide all controls
+				mapTypeControl:   false,
+				scaleControl:     true,
+				zoomControl:      true,
+				zoomControlOptions: {
+					style: google.maps.ZoomControlStyle.LARGE 
+				},
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 			var map = new google.maps.Map(canvas, mapOptions);
