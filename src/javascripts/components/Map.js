@@ -39,7 +39,7 @@ export default class Map extends React.Component {
 			directMessagePopups.push(
 				<DialogBox key={ i }
 						   id={ directMessagePrefix + i }
-						   isInput="true"
+						   isInput={ true }
 						   actionName="Direct Message"
 						   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) }>
 					<h3>Direct Message to: <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>

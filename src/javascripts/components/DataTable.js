@@ -2,6 +2,7 @@
 import React from "react";
 import DialogBox from "./DialogBox";
 import ActionsActionCreators from "../actions/ActionsActionCreators";
+import _ from "lodash";
 
 /* Stylesheet dependencies */
 
@@ -65,7 +66,7 @@ export default class DataTable extends React.Component {
 				replyPopups.push(
 					<DialogBox key={ i }
 							   id={ "Reply" + i }
-							   isInput="true"
+							   isInput={ true }
 							   actionName="Reply"
 							   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) }>
 						<h3>Reply to: <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
@@ -143,10 +144,16 @@ export default class DataTable extends React.Component {
 	componentWillReceiveProps (nextProps) {
 		console.log("DataTable.componentWillReceiveProps nextProps = ", nextProps);
 
-		this.state.tweetsTotal = nextProps.bucketData.tweets.length;
-		this.state.pageNumber  = 0;
-		this.calculateTweetNumbers();
-		this.fillSelectedTweets();
+		if (!_.isEqual(nextProps.bucketData, this.props.bucketData)) {
+			this.state.tweetsTotal = nextProps.bucketData.tweets.length;
+			this.state.pageNumber  = 0;
+			this.calculateTweetNumbers();
+			this.fillSelectedTweets();
+
+			if (this.props.onSelectionChange) {
+				this.props.onSelectionChange(this.state.selectedTweets);
+			}
+		}
 	}
 
 	calculateTweetNumbers () {

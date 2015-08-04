@@ -17,16 +17,15 @@ import BucketActionCreators from "../actions/BucketActionCreators";
 
 /* Static dependencies */
 // import "stylesheets/modules/container";
-import sliderImg from '../../images/start_image.jpg';
-import socialImg from '../../images/social_1.png';
 
 function getStoresState (VenyooAppObj) {
 	return {
-		activeEventId: (VenyooAppObj.state) ? VenyooAppObj.state.activeEventId : 1, // Preserve the value, but FIX default value of 1
-		activeEvent:   (VenyooAppObj.state) ? VenyooAppObj.state.activeEvent   : null, // Preserve the value
-		filters:       FiltersStore.getState(),
-		eventBuckets:  EventBucketsStore.getState(),
-		bucketData:    BucketStore.getState()
+		activeEventId:         (VenyooAppObj.state) ? VenyooAppObj.state.activeEventId : 1,    // Preserve the value
+		activeEvent:           (VenyooAppObj.state) ? VenyooAppObj.state.activeEvent   : null, // Preserve the value
+		selectedTweetsNumbers: (VenyooAppObj.state) ? VenyooAppObj.state.selectedTweetsNumbers : [],   // Preserve the value
+		filters:               FiltersStore.getState(),
+		eventBuckets:          EventBucketsStore.getState(),
+		bucketData:            BucketStore.getState()
 	};
 }
 
@@ -64,7 +63,7 @@ export default class VenyooApp extends React.Component {
 				<div className="detail_main">
 					{/* Left block */}
 					<div className="left_sec">
-						<div className="start_detail">{/* <img src={sliderImg} alt="" /> */}
+						<div className="start_detail">
 							<TimeSlider eventBuckets={this.state.eventBuckets} onBucketChange={this.handleBucketChanged.bind(this)} />
 						</div>
 						<div className="home_detail">
@@ -77,26 +76,7 @@ export default class VenyooApp extends React.Component {
 							<div className="title">
 								<h3><i className="fa fa-bars"></i>{/**} Event Duration <span>12 hours / 10 min intervals</span>{**/}</h3>
 							</div>
-							<div className="duration_inner">
-								<h2>Actions:</h2>
-								<ul className="action_list">
-									<li> <a href="#"> <i className="social_icon"><img src={socialImg} alt="" /></i>
-									<p>Follow</p>
-									<span className="people">100 people</span> </a> </li>
-									<li> <a href="#"> <i className="social_icon"><img src={socialImg} alt="" /></i>
-									<p>Tweet to</p>
-									<span className="people">100 people</span> </a> </li>
-									<li> <a href="#"> <i className="social_icon"><img src={socialImg} alt="" /></i>
-									<p>Favorite</p>
-									<span className="people">100 people</span> </a> </li>
-									<li> <a href="#"> <i className="social_icon"><img src={socialImg} alt="" /></i>
-									<p>Direct Message</p>
-									<span className="people">10 people</span> </a> </li>
-									<li> <a href="#"> <i className="social_icon"><img src={socialImg} alt="" /></i>
-									<p>Retweet</p>
-									<span className="people">10 people</span> </a> </li>
-								</ul>
-							</div>
+							<Actions bucketData={this.state.bucketData} selectedTweetsNumbers={ this.state.selectedTweetsNumbers } />
 						</div>
 					</div>
 				</div>
@@ -128,8 +108,11 @@ export default class VenyooApp extends React.Component {
 		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", this.state.activeEventId=", this.state.activeEventId);
 		BucketActionCreators.getBucket(this.state.activeEventId, bucketId);
 	}
-	handleDataTableSelectionChanged (selectedTweets) {
-		console.log("VenyooApp.handleDataTableSelectionChanged selectedTweets=", selectedTweets);
+	handleDataTableSelectionChanged (selectedTweetsNumbers) {
+		console.log("VenyooApp.handleDataTableSelectionChanged selectedTweetsNumbers=", selectedTweetsNumbers);
+		this.setState({
+			selectedTweetsNumbers : selectedTweetsNumbers
+		});
 	}
 
 	_onChange () {

@@ -59,6 +59,6 @@ export default class DialogBox extends React.Component {
 DialogBox.propTypes = {
 	id:         React.PropTypes.string.isRequired,
 	actionName: React.PropTypes.string.isRequired,
-	isInput:    React.PropTypes.boolean,
+	isInput:    React.PropTypes.bool,
 	onAction:   React.PropTypes.func
 }
