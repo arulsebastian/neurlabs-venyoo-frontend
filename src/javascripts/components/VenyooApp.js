@@ -68,7 +68,7 @@ export default class VenyooApp extends React.Component {
 							<TimeSlider eventBuckets={this.state.eventBuckets} onBucketChange={this.handleBucketChanged.bind(this)} />
 						</div>
 						<div className="home_detail">
-							<DataTable bucketData={this.state.bucketData} />
+							<DataTable bucketData={this.state.bucketData} onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
 						</div>
 					</div>
 					{/* Right block */}
@@ -127,6 +127,9 @@ export default class VenyooApp extends React.Component {
 	handleBucketChanged (bucketId) {
 		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", this.state.activeEventId=", this.state.activeEventId);
 		BucketActionCreators.getBucket(this.state.activeEventId, bucketId);
+	}
+	handleDataTableSelectionChanged (selectedTweets) {
+		console.log("VenyooApp.handleDataTableSelectionChanged selectedTweets=", selectedTweets);
 	}
 
 	_onChange () {
