@@ -15,6 +15,7 @@ export default {
 		VenyooWebUtils.sendTweet(screenName, message);
 	},
 
+	/* Direct message */
 	sendReply (username, message) {
 		AppDispatcher.dispatch({
 			type: VenyooConstants.ActionTypes.SEND_REPLY
