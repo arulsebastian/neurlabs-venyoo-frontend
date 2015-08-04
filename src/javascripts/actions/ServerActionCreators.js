@@ -80,6 +80,30 @@ export default {
 		});
 	},
 
+	/* SEND TWEET */
+
+	sendTweetSending: function (urlParams) {
+		AppDispatcher.dispatch({
+			type: ActionTypes.SEND_TWEET_SENDING
+		});
+	},
+
+	sendTweetSucceeded: function (urlParams, response, body) {
+		console.log("ServerActionCreators.sendTweetSucceeded SUCCESS :) body = ", body);
+		AppDispatcher.dispatch({
+			type: ActionTypes.SEND_TWEET_SUCCEEDED
+		});
+	},
+
+	sendTweetFailed: function (urlParams, error, response, body) {
+		console.log("ServerActionCreators.sendTweetSucceeded FAIL :( body = ", body);
+		AppDispatcher.dispatch({
+			type:     ActionTypes.SEND_TWEET_FAILED,
+			error:    error,
+			response: response
+		});
+	},
+
 	/* SEND REPLY */
 
 	sendReplySending: function (urlParams) {
@@ -99,6 +123,78 @@ export default {
 		console.log("ServerActionCreators.sendReplySucceeded FAIL :( body = ", body);
 		AppDispatcher.dispatch({
 			type:     ActionTypes.SEND_REPLY_FAILED,
+			error:    error,
+			response: response
+		});
+	},
+
+	/* SEND FAVORITE */
+
+	sendFavoriteSending: function (urlParams) {
+		AppDispatcher.dispatch({
+			type: ActionTypes.SEND_FAVORITE_SENDING
+		});
+	},
+
+	sendFavoriteSucceeded: function (urlParams, response, body) {
+		console.log("ServerActionCreators.sendFavoriteSucceeded SUCCESS :) body = ", body);
+		AppDispatcher.dispatch({
+			type: ActionTypes.SEND_FAVORITE_SUCCEEDED
+		});
+	},
+
+	sendFavoriteFailed: function (urlParams, error, response, body) {
+		console.log("ServerActionCreators.sendFavoriteSucceeded FAIL :( body = ", body);
+		AppDispatcher.dispatch({
+			type:     ActionTypes.SEND_FAVORITE_FAILED,
+			error:    error,
+			response: response
+		});
+	},
+
+	/* SEND RETWEET */
+
+	sendRetweetSending: function (urlParams) {
+		AppDispatcher.dispatch({
+			type: ActionTypes.SEND_RETWEET_SENDING
+		});
+	},
+
+	sendRetweetSucceeded: function (urlParams, response, body) {
+		console.log("ServerActionCreators.sendRetweetSucceeded SUCCESS :) body = ", body);
+		AppDispatcher.dispatch({
+			type: ActionTypes.SEND_RETWEET_SUCCEEDED
+		});
+	},
+
+	sendRetweetFailed: function (urlParams, error, response, body) {
+		console.log("ServerActionCreators.sendRetweetSucceeded FAIL :( body = ", body);
+		AppDispatcher.dispatch({
+			type:     ActionTypes.SEND_RETWEET_FAILED,
+			error:    error,
+			response: response
+		});
+	},
+
+	/* SEND FOLLOW */
+
+	sendFollowSending: function (urlParams) {
+		AppDispatcher.dispatch({
+			type: ActionTypes.SEND_FOLLOW_SENDING
+		});
+	},
+
+	sendFollowSucceeded: function (urlParams, response, body) {
+		console.log("ServerActionCreators.sendFollowSucceeded SUCCESS :) body = ", body);
+		AppDispatcher.dispatch({
+			type: ActionTypes.SEND_FOLLOW_SUCCEEDED
+		});
+	},
+
+	sendFollowFailed: function (urlParams, error, response, body) {
+		console.log("ServerActionCreators.sendFollowSucceeded FAIL :( body = ", body);
+		AppDispatcher.dispatch({
+			type:     ActionTypes.SEND_FOLLOW_FAILED,
 			error:    error,
 			response: response
 		});

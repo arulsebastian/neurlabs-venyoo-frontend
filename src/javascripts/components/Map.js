@@ -23,7 +23,6 @@ export default class Map extends React.Component {
 	}
 
 	render () {
-		console.log("Map.render eventData=", this.props.eventData);
 		return (
 			<div ref="mapCanvas" className="map_canvas"></div>
 		);
@@ -65,8 +64,6 @@ export default class Map extends React.Component {
 				lat    = center.lat(),
 				zoom   = self.state.map.getZoom();
 
-			console.log("Map.componentDidMount lat=", lat);			
-
 			if (zoom === 2 && lat > 44) lat = 44;
 			if (zoom === 3 && lat > 72) lat = 72;
 			if (zoom >=  4 && lat > 79) lat = 79;
@@ -90,7 +87,6 @@ export default class Map extends React.Component {
 		if (!_.isEqual(nextProps.bucketData.tweets, this.props.bucketData.tweets)) {
 
 			/* Remove old markers and infowins */
-			console.log("Map.componentWillReceiveProps state=", self.state);
 			self.state.markers.forEach(function (marker) {
 				marker.infowin.setMap(null);
 				marker.setMap(null);
