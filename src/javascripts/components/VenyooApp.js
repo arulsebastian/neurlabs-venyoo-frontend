@@ -20,8 +20,13 @@ import BucketActionCreators from "../actions/BucketActionCreators";
 
 function getStoresState (VenyooAppObj) {
 	return {
-		activeEventId:         (VenyooAppObj.state) ? VenyooAppObj.state.activeEventId : 1,    // Preserve the value
-		activeEvent:           (VenyooAppObj.state) ? VenyooAppObj.state.activeEvent   : null, // Preserve the value
+		selectedFilters:       (VenyooAppObj.state) ? VenyooAppObj.state.selectedFilters : {
+			/* Default values */
+			eventId:         1, 
+			socialChannelId: 0,
+			kloutScoreId:    4,
+			sentimentId:     0
+		},    // Preserve the value
 		selectedTweetsNumbers: (VenyooAppObj.state) ? VenyooAppObj.state.selectedTweetsNumbers : [],   // Preserve the value
 		filters:               FiltersStore.getState(),
 		eventBuckets:          EventBucketsStore.getState(),
@@ -42,7 +47,7 @@ export default class VenyooApp extends React.Component {
 				{/* Map block */}
 				<div className="map_block">
 					{/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6874863.052680733!2d-117.16151799999996!3d32.71616899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d954a7de4514ad%3A0xc23d2f349e970aed!2sTHE+US+GRANT%2C+a+Luxury+Collection+Hotel%2C+San+Diego!5e0!3m2!1sen!2sin!4v1435239649995" width="100%" height="718" frameborder="0" style={{ border : 0 }} allowfullscreen></iframe> */}
-					<Map eventData={this.activeEvent} bucketData={this.state.bucketData} />
+					<Map bucketData={this.state.bucketData} />
 					{/* Right block */}
 					<div className="map_right">
 						
@@ -100,13 +105,20 @@ export default class VenyooApp extends React.Component {
 
 	handleFilterClicked (filtersChoice) {
 		console.log("VenyooApp.handleFilterClicked filtersChoice=", filtersChoice);
-		this.state.activeEventId = filtersChoice.event.id;
-		this.state.activeEvent   = filtersChoice.event;
-		EventBucketsActionCreators.getEventBuckets(filtersChoice.event.id);
+		this.state.selectedFilters.eventId         = filtersChoice.event.id;
+		this.state.selectedFilters.socialChannelId = filtersChoice.socialChannel.id;
+		this.state.selectedFilters.kloutScoreId    = filtersChoice.kloutScore.id;
+		this.state.selectedFilters.sentimentId     = filtersChoice.sentiment.id;
+		EventBucketsActionCreators.getEventBuckets(this.state.selectedFilters.eventId);
 	}
 	handleBucketChanged (bucketId) {
-		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", this.state.activeEventId=", this.state.activeEventId);
-		BucketActionCreators.getBucket(this.state.activeEventId, bucketId);
+		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", state.selectedFilters=", this.state.selectedFilters);
+		BucketActionCreators.getBucket(
+									   this.state.selectedFilters.eventId, 
+									   bucketId,
+									   this.state.selectedFilters.socialChannelId,
+									   this.state.selectedFilters.kloutScoreId,
+									   this.state.selectedFilters.sentimentId);
 	}
 	handleDataTableSelectionChanged (selectedTweetsNumbers) {
 		console.log("VenyooApp.handleDataTableSelectionChanged selectedTweetsNumbers=", selectedTweetsNumbers);
@@ -117,9 +129,6 @@ export default class VenyooApp extends React.Component {
 
 	_onChange () {
 		var newState = getStoresState(this);
-		if (this.state.activeEventId === null && newState.filters) {
-			this.state.activeEventId = 0; // FIXME: get the id value from filters array
-		}
 		this.setState(newState);
 	}
 };

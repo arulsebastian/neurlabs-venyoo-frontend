@@ -58,19 +58,22 @@ class VenyooWebUtils {
 		});
 	}
 
-	getBucketData (eventId, bucketId) {
+	getBucketData (eventId, bucketId, socialChannelId, kloutScoreId, sentimentId) {
 		var self = this;
 
 		var urlParams = {
-			eventId:  eventId,
-			bucketId: bucketId
+			eventId:         eventId,
+			socialChannelId: socialChannelId,
+			kloutScoreId:    kloutScoreId,
+			sentimentId:     sentimentId,
+			bucketId:        bucketId
 		};
 
 		ServerActionCreators.receiveBucketDataSending(urlParams);
 
 		request({
 			// url: baseUrl + "/bucket/" + bucketId,
-			url: "http://52.24.255.84/filter/?bucket=" + bucketId + "&sentiment=0&klout_score=4&event_id=" + eventId + "&social_id=0",
+			url: "http://52.24.255.84/filter/?bucket=" + bucketId + "&sentiment=" + sentimentId + "&klout_score=" + kloutScoreId + "&event_id=" + eventId + "&social_id=" + socialChannelId,
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {

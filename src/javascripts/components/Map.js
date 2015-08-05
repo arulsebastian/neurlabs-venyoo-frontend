@@ -233,6 +233,5 @@ export default class Map extends React.Component {
 }
 
 Map.propTypes = {
-	eventData:  React.PropTypes.object,
 	bucketData: React.PropTypes.object
 };
