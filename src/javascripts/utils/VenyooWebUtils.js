@@ -34,7 +34,7 @@ class VenyooWebUtils {
 
 	getEventBucketsMetadata (eventId, 
 							 socialChannelId = 0,
-							 kloutScoreId    = 4,
+							 kloutScoreId    = 2,
 							 sentimentId     = 0,
 							 bucketId        = 0) {
 		var self = this;

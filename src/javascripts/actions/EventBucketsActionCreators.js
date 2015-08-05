@@ -5,7 +5,7 @@ import VenyooWebUtils from "../utils/VenyooWebUtils";
 export default {
 	getEventBuckets (eventId, 
 					 socialChannelId = 0,
-					 kloutScoreId    = 4,
+					 kloutScoreId    = 2,
 					 sentimentId     = 0,
 					 bucketId        = 0) {
 		AppDispatcher.dispatch({
