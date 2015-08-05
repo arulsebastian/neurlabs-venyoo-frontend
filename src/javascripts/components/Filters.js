@@ -1,5 +1,6 @@
 /* JS dependencies */
-import React from "react"
+import React from "react";
+import _ from "lodash";
 import FiltersActionCreators from "../actions/FiltersActionCreators";
 
 /* Stylesheet dependencies */
@@ -10,9 +11,10 @@ export default class Filters extends React.Component {
 		super(...args);
 
 		this.state = {
-			currSocialChannelId: null,
-			currKloutScoreId:    null,
-			currSetimentId:      null
+			currEventNumber:         null, // is not used
+			currSocialChannelNumber: null,
+			currKloutScoreNumber:    null,
+			currSentimentNumber:     null
 		}
 	}
 
@@ -32,52 +34,10 @@ export default class Filters extends React.Component {
 
 			var self = this;
 
-			var events = [];
-			if (this.props.filters.events) {
-				this.props.filters.events.forEach(function (event, index) {
-					events.push(
-						<option value={event.id} key={index}>{event.team_home + " vs " + event.team_away}</option>
-					);
-				});
-			}
-
-			var socialChannels = [];
-			if (this.props.filters.socialChannels) {
-				this.props.filters.socialChannels.forEach(function (socialChannel, index) {
-					socialChannels.push(
-						<label id={socialChannel.id} key={index}>
-							<input type="radio" name="socialChannel" data-id={socialChannel.id} onClick={self.handleFilterChange.bind(this)} />
-							<span className="lbl">{socialChannel.caption}</span>
-						</label>
-					);
-				});
-			}
-
-			var kloutScores = [];
-			if (this.props.filters.kloutScores) {
-				this.props.filters.kloutScores.forEach(function (kloutScore, index) {
-					kloutScores.push(
-						<label id={kloutScore.id} key={index}>
-							<input type="radio" name="kloutScore" data-id={kloutScore.id} onClick={self.handleFilterChange.bind(this)} />
-							<span className="lbl">{kloutScore.caption}</span>
-						</label>
-					);
-				});
-			}
-
-			var sentiments = [];
-			if (this.props.filters.sentiments) {
-				this.props.filters.sentiments.forEach(function (sentiment, index) {
-					sentiments.push(
-						<label id={sentiment.id} key={index}>
-							<input type="radio" name="sentiment" data-id={sentiment.id} onClick={self.handleFilterChange.bind(this)} />
-							<span className="lbl">{sentiment.caption}</span>
-						</label>
-					);
-				});
-			}
-
-			// 
+			var events         = assembleEventOptions();
+			var socialChannels = assembleSocialChannelRadios();
+			var kloutScores    = assembleKloutScoreRadios();
+			var sentiments     = assembleSentimentRadios();
 
 			return (
 				<div>
@@ -88,7 +48,7 @@ export default class Filters extends React.Component {
 							<label>Select Event:</label>
 							<div className="select-field">
 								{/* React approach to change state on onChange event is not applicable cause onChange does not work here */}
-								<select className="selectpicker" ref="eventSelector">
+								<select className="selectpicker" ref="eventSelector" onChange={ this.handleEventChange }>
 									{events}
 								</select>
 							</div>
@@ -101,7 +61,7 @@ export default class Filters extends React.Component {
 								<div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 									<div className="panel panel-default">
 										<div className="panel-heading" role="tab" id="headingOne">
-											<h4 className="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Social Channel <span>(Twitter)</span> </a> </h4>
+											<h4 className="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Social Channel {/*<span>(Twitter)</span>*/} </a> </h4>
 										</div>
 										<div id="collapseOne" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 											<div className="panel-body">
@@ -113,81 +73,106 @@ export default class Filters extends React.Component {
 									</div>
 									<div className="panel panel-default">
 										<div className="panel-heading" role="tab" id="headingTwo">
-											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> Klout Score <span>(31-40)</span> </a> </h4>
+											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> Klout Score {/*<span>(31-40)</span>*/} </a> </h4>
 										</div>
 										<div id="collapseTwo" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 											<div className="panel-body">
 												<div className="check_detail">
-													{kloutScores}
+													{ kloutScores }
 												</div>
 											</div>
 										</div>
 									</div>
-									{/*
-									<div className="panel panel-default">
-										<div className="panel-heading" role="tab" id="headingThree">
-											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> Social Relationship <span>(All)</span> </a> </h4>
-										</div>
-										<div id="collapseThree" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-											<div className="panel-body">
-												<div className="check_detail">
-													<label id="a">
-													<input type="checkbox" name="man" value="man" />
-													<span className="lbl">Twitter</span> </label>
-													<label id="b">
-													<input type="checkbox" name="man" value="man" />
-													<span className="lbl">Instagram</span> </label>
-													<label id="c">
-													<input type="checkbox" name="man" value="man" />
-													<span className="lbl">Facebook</span> </label>
-												</div>
-											</div>
-										</div>
-									</div>
-									*/}
 									<div className="panel panel-default">
 										<div className="panel-heading" role="tab" id="headingfour">
-											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="false" aria-controls="collapsefour"> Sentiment <span>(All)</span> </a> </h4>
+											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="false" aria-controls="collapsefour"> Sentiment {/*<span>(All)</span>*/} </a> </h4>
 										</div>
 										<div id="collapsefour" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfour">
 											<div className="panel-body">
 												<div className="check_detail">
-													{sentiments}
+													{ sentiments }
 												</div>
 											</div>
 										</div>
 									</div>
-									{/*
-									<div className="panel panel-default">
-										<div className="panel-heading" role="tab" id="headingfive">
-											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefive" aria-expanded="false" aria-controls="collapsefive"> Keywords <span>(All)</span> </a> </h4>
-										</div>
-										<div id="collapsefive" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfive">
-											<div className="panel-body">
-												<div className="check_detail">
-													<label id="a">
-													<input type="checkbox" name="man" value="man" />
-													<span className="lbl">Twitter</span> </label>
-													<label id="b">
-													<input type="checkbox" name="man" value="man" />
-													<span className="lbl">Instagram</span> </label>
-													<label id="c">
-													<input type="checkbox" name="man" value="man" />
-													<span className="lbl">Facebook</span> </label>
-												</div>
-											</div>
-										</div>
-									</div>
-									*/}
 								</div>
 							</div>
 						</div>
 					</div>
 					<div className="filter_btn">
-						<a href="#" onClick={this.handleFilterClick.bind(this)}>Filter</a>
+						<a href="#" onClick={ this.handleFilterClick.bind(this) }>Filter</a>
 					</div>
 				</div>
 			);
+
+			function assembleEventOptions () {
+				var events = [];
+				if (self.props.filters.events) {
+					self.props.filters.events.forEach(function (event, index) {
+						events.push(
+							<option value={index} key={index}>{event.team_home + " vs " + event.team_away}</option>
+						);
+					});
+				}
+				return events;
+			}
+
+			function assembleSocialChannelRadios () {
+				var socialChannels = [];
+				if (self.props.filters.socialChannels) {
+					self.props.filters.socialChannels.forEach(function (socialChannel, index) {
+						var checked = false;
+						if (index === self.state.currSocialChannelNumber) {
+							checked = true;
+						}
+						socialChannels.push(
+							<label key={index}>
+								<input type="radio" checked={ checked } name="socialChannel" data-id={index} onClick={self.handleFilterChange.bind(self)} />
+								<span className="lbl">{socialChannel.caption}</span>
+							</label>
+						);
+					});
+				}
+				return socialChannels;
+			}
+
+			function assembleKloutScoreRadios () {
+				var kloutScores = [];
+				if (self.props.filters.kloutScores) {
+					self.props.filters.kloutScores.forEach(function (kloutScore, index) {
+						var checked = false;
+						if (index === self.state.currKloutScoreNumber) {
+							checked = true;
+						}
+						kloutScores.push(
+							<label key={index}>
+								<input type="radio" checked={ checked } name="kloutScore" data-id={index} onClick={self.handleFilterChange.bind(self)} />
+								<span className="lbl">{kloutScore.caption}</span>
+							</label>
+						);
+					});
+				}
+				return kloutScores;
+			}
+
+			function assembleSentimentRadios () {
+				var sentiments = [];
+				if (self.props.filters.sentiments) {
+					self.props.filters.sentiments.forEach(function (sentiment, index) {
+						var checked = false;
+						if (index === self.state.currSentimentNumber) {
+							checked = true;
+						}
+						sentiments.push(
+							<label key={index}>
+								<input type="radio" checked={ checked } name="sentiment" data-id={index} onClick={self.handleFilterChange.bind(self)} />
+								<span className="lbl">{sentiment.caption}</span>
+							</label>
+						);
+					});
+				}
+				return sentiments;
+			}
 		}
 	}
 
@@ -198,41 +183,83 @@ export default class Filters extends React.Component {
 	componentWillReceiveProps (nextProps) {
 		console.log("Filters.componentWillReceiveProps nextProps = ", nextProps);
 
-		// TODO: Assign default values to this.state when new props come
+		if (!_.isEqual(nextProps.filters, this.props.filters)) {
+			var currEventNumber         = null; // is not used
+			var currSocialChannelNumber = null;
+			var currKloutScoreNumber    = null;
+			var currSentimentNumber     = null;
+
+			// FIXME: state.currEventNumber is not used
+			// if (nextProps.filters.events.length > 0) {
+			// 	currEventNumber = 0;
+			// }
+			if (nextProps.filters.socialChannels.length > 0) {
+				currSocialChannelNumber = 0;
+			}
+			if (nextProps.filters.kloutScores.length > 0) {
+				currKloutScoreNumber = 0;
+			}
+			if (nextProps.filters.sentiments.length > 0) {
+				currSentimentNumber = 0;
+			}
+
+			this.setState({
+				currEventNumber:         currEventNumber, // is not used
+				currSocialChannelNumber: currSocialChannelNumber,
+				currKloutScoreNumber:    currKloutScoreNumber,
+				currSentimentNumber:     currSentimentNumber
+			});
+		}
 	}
 
 	/* Event Handlers */
+
+	handleEventChange () {
+		console.log("Filters.handleEventChange");
+	}
 
 	handleFilterChange () {
 		var socialChannels = document.getElementsByName("socialChannel");
 		var kloutScores    = document.getElementsByName("kloutScore");
 		var sentiments     = document.getElementsByName("sentiment");
 
-		// FIXME: use the code below
+		/* Get selected filters ids */
+		var currSocialChannelNumber = parseInt(FindSelectedRadioElement(socialChannels).dataset.id);
+		var currKloutScoreNumber    = parseInt(FindSelectedRadioElement(kloutScores).dataset.id);
+		var currSentimentNumber     = parseInt(FindSelectedRadioElement(sentiments).dataset.id);
 
-		// socialChannels.every(function (socialChannel) {
-		// 	if (socialChannel.checked) {
-		// 		this.state.currSocialChannelId = socialChannel.dataset.id;
-		// 		return false; // break the loop
-		// 	} else {
-		// 		return true;  // continue the loop
-		// 	}
-		// });
+		console.log("Filters.handleFilterChange currSocialChannelNumber=", currSocialChannelNumber,
+					", currKloutScoreNumber=", currKloutScoreNumber,
+					", currSentimentNumber=", currSentimentNumber);
 
-		// FIXME: Where is this output in Chrome console?
+		this.setState({
+			currSocialChannelNumber: currSocialChannelNumber,
+			currKloutScoreNumber:    currKloutScoreNumber,
+			currSentimentNumber:     currSentimentNumber
+		});
 
-		console.log("Filters.handleFilterChange state.currSocialChannelId=", this.state.currSocialChannelId);
+		function FindSelectedRadioElement (radioGroupNodeList) {
+			for (var i = 0; i < radioGroupNodeList.length; i++) {
+				if (radioGroupNodeList[i].checked) {
+					return radioGroupNodeList[i];
+				}
+			}
+			return null;
+		}
 	}
 
 	handleFilterClick () {
 		if (this.props.onFilterClick) {
 			this.props.onFilterClick({
-				eventId:     React.findDOMNode(this.refs.eventSelector).value,
-				sentimentId: 0,
+				event:         this.props.filters.events[React.findDOMNode(this.refs.eventSelector).value],
+				socialChannel: this.props.filters.socialChannels[this.state.currSocialChannelNumber],
+				kloutScore:    this.props.filters.kloutScores   [this.state.currKloutScoreNumber],
+				sentiment:     this.props.filters.sentiments    [this.state.currSentimentNumber]
 			});
 		}
 	}
 }
+
 Filters.propTypes = {
 	filters:       React.PropTypes.object.isRequired,
 	onFilterClick: React.PropTypes.func

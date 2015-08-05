@@ -98,11 +98,11 @@ export default class VenyooApp extends React.Component {
 
 	/* Event handlers */
 
-	handleFilterClicked (filters) {
-		console.log("VenyooApp.handleFilterClicked filters=", filters);
-		this.state.activeEventId = filters.eventId;
-		this.state.activeEvent   = filters.events[filters.eventId];
-		EventBucketsActionCreators.getEventBuckets(filters.eventId);
+	handleFilterClicked (filtersChoice) {
+		console.log("VenyooApp.handleFilterClicked filtersChoice=", filtersChoice);
+		this.state.activeEventId = filtersChoice.event.id;
+		this.state.activeEvent   = filtersChoice.event;
+		EventBucketsActionCreators.getEventBuckets(filtersChoice.event.id);
 	}
 	handleBucketChanged (bucketId) {
 		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", this.state.activeEventId=", this.state.activeEventId);
