@@ -46,7 +46,11 @@ export default {
 			eventBuckets: eventBuckets
 		});
 
-		BucketActionCreators.getBucket(urlParams.eventId, eventBuckets.buckets[0].bucketId, urlParams.socialChannelId, urlParams.kloutScoreId, urlParams.sentimentId);
+		BucketActionCreators.getBucket(urlParams.eventId, 
+									   urlParams.bucketId,
+									   urlParams.socialChannelId,
+									   urlParams.kloutScoreId,
+									   urlParams.sentimentId);
 	},
 
 	receiveEventBucketsMetadataFailed: function (urlParams, error, response, body) {

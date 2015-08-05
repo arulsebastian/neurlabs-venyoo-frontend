@@ -32,14 +32,19 @@ class VenyooWebUtils {
 		});
 	}
 
-	getEventBucketsMetadata (eventId, socialChannelId = 0, kloutScoreId = 4, sentimentId = 0) {
+	getEventBucketsMetadata (eventId, 
+							 socialChannelId = 0,
+							 kloutScoreId    = 4,
+							 sentimentId     = 0,
+							 bucketId        = 0) {
 		var self = this;
 
 		var urlParams = {
 			eventId:         eventId,
 			socialChannelId: socialChannelId,
 			kloutScoreId:    kloutScoreId,
-			sentimentId:     sentimentId
+			sentimentId:     sentimentId,
+			bucketId:        bucketId
 		};
 
 		ServerActionCreators.receiveEventBucketsMetadataSending(urlParams);
@@ -61,7 +66,11 @@ class VenyooWebUtils {
 		});
 	}
 
-	getBucketData (eventId, bucketId, socialChannelId, kloutScoreId, sentimentId) {
+	getBucketData (eventId, 
+				   bucketId, 
+				   socialChannelId, 
+				   kloutScoreId, 
+				   sentimentId) {
 		var self = this;
 
 		var urlParams = {

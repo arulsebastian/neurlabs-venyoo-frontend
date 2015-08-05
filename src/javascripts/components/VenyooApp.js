@@ -27,6 +27,7 @@ function getStoresState (VenyooAppObj) {
 			kloutScoreId:    2,
 			sentimentId:     0
 		},    // Preserve the value
+		selectedBucketId:      (VenyooAppObj.state) ? VenyooAppObj.state.selectedBucketId : 0,         // Preserve the value
 		selectedTweetsNumbers: (VenyooAppObj.state) ? VenyooAppObj.state.selectedTweetsNumbers : [],   // Preserve the value
 		filters:               FiltersStore.getState(),
 		eventBuckets:          EventBucketsStore.getState(),
@@ -109,12 +110,17 @@ export default class VenyooApp extends React.Component {
 		this.state.selectedFilters.socialChannelId = filtersChoice.socialChannel.id;
 		this.state.selectedFilters.kloutScoreId    = filtersChoice.kloutScore.id;
 		this.state.selectedFilters.sentimentId     = filtersChoice.sentiment.id;
-		EventBucketsActionCreators.getEventBuckets(this.state.selectedFilters.eventId, this.state.selectedFilters.socialChannelId, this.state.selectedFilters.kloutScoreId, this.state.selectedFilters.sentimentId);
+		EventBucketsActionCreators.getEventBuckets(this.state.selectedFilters.eventId,
+												   this.state.selectedFilters.socialChannelId,
+												   this.state.selectedFilters.kloutScoreId,
+												   this.state.selectedFilters.sentimentId,
+												   this.state.selectedBucketId);
 	}
 	handleBucketChanged (bucketId) {
 		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", state.selectedFilters=", this.state.selectedFilters);
+		this.state.selectedBucketId = bucketId;
 		BucketActionCreators.getBucket(this.state.selectedFilters.eventId, 
-									   bucketId,
+									   this.state.selectedBucketId,
 									   this.state.selectedFilters.socialChannelId,
 									   this.state.selectedFilters.kloutScoreId,
 									   this.state.selectedFilters.sentimentId);
