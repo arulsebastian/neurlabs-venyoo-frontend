@@ -21636,6 +21636,7 @@
 				kloutScoreId: 2,
 				sentimentId: 0
 			}, // Preserve the value
+			selectedBucketId: VenyooAppObj.state ? VenyooAppObj.state.selectedBucketId : 0, // Preserve the value
 			selectedTweetsNumbers: VenyooAppObj.state ? VenyooAppObj.state.selectedTweetsNumbers : [], // Preserve the value
 			filters: _storesFiltersStore2["default"].getState(),
 			eventBuckets: _storesEventBucketsStore2["default"].getState(),
@@ -21781,13 +21782,14 @@
 				this.state.selectedFilters.socialChannelId = filtersChoice.socialChannel.id;
 				this.state.selectedFilters.kloutScoreId = filtersChoice.kloutScore.id;
 				this.state.selectedFilters.sentimentId = filtersChoice.sentiment.id;
-				_actionsEventBucketsActionCreators2["default"].getEventBuckets(this.state.selectedFilters.eventId, this.state.selectedFilters.socialChannelId, this.state.selectedFilters.kloutScoreId, this.state.selectedFilters.sentimentId);
+				_actionsEventBucketsActionCreators2["default"].getEventBuckets(this.state.selectedFilters.eventId, this.state.selectedFilters.socialChannelId, this.state.selectedFilters.kloutScoreId, this.state.selectedFilters.sentimentId, this.state.selectedBucketId);
 			}
 		}, {
 			key: "handleBucketChanged",
 			value: function handleBucketChanged(bucketId) {
 				console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", state.selectedFilters=", this.state.selectedFilters);
-				_actionsBucketActionCreators2["default"].getBucket(this.state.selectedFilters.eventId, bucketId, this.state.selectedFilters.socialChannelId, this.state.selectedFilters.kloutScoreId, this.state.selectedFilters.sentimentId);
+				this.state.selectedBucketId = bucketId;
+				_actionsBucketActionCreators2["default"].getBucket(this.state.selectedFilters.eventId, this.state.selectedBucketId, this.state.selectedFilters.socialChannelId, this.state.selectedFilters.kloutScoreId, this.state.selectedFilters.sentimentId);
 			}
 		}, {
 			key: "handleDataTableSelectionChanged",
@@ -35117,8 +35119,9 @@
 			key: "getEventBucketsMetadata",
 			value: function getEventBucketsMetadata(eventId) {
 				var socialChannelId = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-				var kloutScoreId = arguments.length <= 2 || arguments[2] === undefined ? 4 : arguments[2];
+				var kloutScoreId = arguments.length <= 2 || arguments[2] === undefined ? 2 : arguments[2];
 				var sentimentId = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+				var bucketId = arguments.length <= 4 || arguments[4] === undefined ? 0 : arguments[4];
 
 				var self = this;
 
@@ -35126,7 +35129,8 @@
 					eventId: eventId,
 					socialChannelId: socialChannelId,
 					kloutScoreId: kloutScoreId,
-					sentimentId: sentimentId
+					sentimentId: sentimentId,
+					bucketId: bucketId
 				};
 
 				_actionsServerActionCreators2["default"].receiveEventBucketsMetadataSending(urlParams);
@@ -74300,7 +74304,7 @@
 				eventBuckets: eventBuckets
 			});
 
-			_BucketActionCreators2["default"].getBucket(urlParams.eventId, eventBuckets.buckets[0].bucketId, urlParams.socialChannelId, urlParams.kloutScoreId, urlParams.sentimentId);
+			_BucketActionCreators2["default"].getBucket(urlParams.eventId, urlParams.bucketId, urlParams.socialChannelId, urlParams.kloutScoreId, urlParams.sentimentId);
 		},
 
 		receiveEventBucketsMetadataFailed: function receiveEventBucketsMetadataFailed(urlParams, error, response, body) {
@@ -74484,14 +74488,15 @@
 	exports["default"] = {
 		getEventBuckets: function getEventBuckets(eventId) {
 			var socialChannelId = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-			var kloutScoreId = arguments.length <= 2 || arguments[2] === undefined ? 4 : arguments[2];
+			var kloutScoreId = arguments.length <= 2 || arguments[2] === undefined ? 2 : arguments[2];
 			var sentimentId = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+			var bucketId = arguments.length <= 4 || arguments[4] === undefined ? 0 : arguments[4];
 
 			_AppDispatcher2["default"].dispatch({
 				type: _constantsVenyooConstants2["default"].ActionTypes.GET_EVENTBUCKETS_METADATA
 			});
 
-			_utilsVenyooWebUtils2["default"].getEventBucketsMetadata(eventId, socialChannelId, kloutScoreId, sentimentId);
+			_utilsVenyooWebUtils2["default"].getEventBucketsMetadata(eventId, socialChannelId, kloutScoreId, sentimentId, bucketId);
 		}
 	};
 	module.exports = exports["default"];
@@ -84854,7 +84859,7 @@
 			this.state = {
 				selectedTweets: [], // All the checkboxes across all the pages
 				tweetsTotal: 0,
-				tweetsPerPage: 20,
+				tweetsPerPage: 5,
 				pagesCount: 1,
 				pageNumber: 0, // starts from 0
 				tweetsOnPage: 0
@@ -85111,6 +85116,11 @@
 										_react2["default"].createElement(
 											"select",
 											{ value: this.state.tweetsPerPage, onChange: this.handleTweetsPerPageChange.bind(this) },
+											_react2["default"].createElement(
+												"option",
+												{ value: "5" },
+												"5 per page"
+											),
 											_react2["default"].createElement(
 												"option",
 												{ value: "20" },
