@@ -197,7 +197,7 @@ export default class Filters extends React.Component {
 				currSocialChannelNumber = 0;
 			}
 			if (nextProps.filters.kloutScores.length > 0) {
-				currKloutScoreNumber = 0;
+				currKloutScoreNumber = 2;
 			}
 			if (nextProps.filters.sentiments.length > 0) {
 				currSentimentNumber = 0;

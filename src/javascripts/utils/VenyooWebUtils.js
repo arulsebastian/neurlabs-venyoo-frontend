@@ -32,11 +32,14 @@ class VenyooWebUtils {
 		});
 	}
 
-	getEventBucketsMetadata (eventId) {
+	getEventBucketsMetadata (eventId, socialChannelId = 0, kloutScoreId = 4, sentimentId = 0) {
 		var self = this;
 
 		var urlParams = {
-			eventId: eventId
+			eventId:         eventId,
+			socialChannelId: socialChannelId,
+			kloutScoreId:    kloutScoreId,
+			sentimentId:     sentimentId
 		};
 
 		ServerActionCreators.receiveEventBucketsMetadataSending(urlParams);
