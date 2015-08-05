@@ -66,9 +66,9 @@
 
 	/* Static dependencies */
 
-	__webpack_require__(358);
-
 	__webpack_require__(359);
+
+	__webpack_require__(360);
 
 	_react2["default"].render(_react2["default"].createElement(_componentsVenyooApp2["default"], null), document.querySelector("#main"));
 
@@ -21580,39 +21580,39 @@
 
 	var _Map2 = _interopRequireDefault(_Map);
 
-	var _TimeSlider = __webpack_require__(347);
+	var _TimeSlider = __webpack_require__(349);
 
 	var _TimeSlider2 = _interopRequireDefault(_TimeSlider);
 
-	var _DataTable = __webpack_require__(350);
+	var _DataTable = __webpack_require__(352);
 
 	var _DataTable2 = _interopRequireDefault(_DataTable);
 
-	var _Filters = __webpack_require__(351);
+	var _Filters = __webpack_require__(353);
 
 	var _Filters2 = _interopRequireDefault(_Filters);
 
-	var _Actions = __webpack_require__(353);
+	var _Actions = __webpack_require__(354);
 
 	var _Actions2 = _interopRequireDefault(_Actions);
 
 	/** Stores **/
 
-	var _storesFiltersStore = __webpack_require__(354);
+	var _storesFiltersStore = __webpack_require__(165);
 
 	var _storesFiltersStore2 = _interopRequireDefault(_storesFiltersStore);
 
-	var _storesEventBucketsStore = __webpack_require__(165);
+	var _storesEventBucketsStore = __webpack_require__(356);
 
 	var _storesEventBucketsStore2 = _interopRequireDefault(_storesEventBucketsStore);
 
-	var _storesBucketStore = __webpack_require__(355);
+	var _storesBucketStore = __webpack_require__(357);
 
 	var _storesBucketStore2 = _interopRequireDefault(_storesBucketStore);
 
 	/** Action creators **/
 
-	var _actionsFiltersActionCreators = __webpack_require__(352);
+	var _actionsFiltersActionCreators = __webpack_require__(358);
 
 	var _actionsFiltersActionCreators2 = _interopRequireDefault(_actionsFiltersActionCreators);
 
@@ -21627,17 +21627,16 @@
 	/* Static dependencies */
 	// import "stylesheets/modules/container";
 
-	var _imagesStart_imageJpg = __webpack_require__(356);
-
-	var _imagesStart_imageJpg2 = _interopRequireDefault(_imagesStart_imageJpg);
-
-	var _imagesSocial_1Png = __webpack_require__(357);
-
-	var _imagesSocial_1Png2 = _interopRequireDefault(_imagesSocial_1Png);
-
 	function getStoresState(VenyooAppObj) {
 		return {
-			activeEventId: VenyooAppObj.state ? VenyooAppObj.state.activeEventId : 1, // Preserve the value
+			selectedFilters: VenyooAppObj.state ? VenyooAppObj.state.selectedFilters : {
+				/* Default values */
+				eventId: 1,
+				socialChannelId: 0,
+				kloutScoreId: 4,
+				sentimentId: 0
+			}, // Preserve the value
+			selectedTweetsNumbers: VenyooAppObj.state ? VenyooAppObj.state.selectedTweetsNumbers : [], // Preserve the value
 			filters: _storesFiltersStore2["default"].getState(),
 			eventBuckets: _storesEventBucketsStore2["default"].getState(),
 			bucketData: _storesBucketStore2["default"].getState()
@@ -21672,11 +21671,6 @@
 						_react2["default"].createElement(
 							"div",
 							{ className: "map_right" },
-							_react2["default"].createElement(
-								"a",
-								{ href: "#", className: "map_toggle" },
-								_react2["default"].createElement("i", { className: "fa fa-bars" })
-							),
 							_react2["default"].createElement(
 								"div",
 								{ className: "inner_block" },
@@ -21716,6 +21710,11 @@
 									)
 								),
 								_react2["default"].createElement(_Filters2["default"], { filters: this.state.filters, onFilterClick: this.handleFilterClicked.bind(this) })
+							),
+							_react2["default"].createElement(
+								"a",
+								{ href: "#", className: "map_toggle" },
+								_react2["default"].createElement("i", { className: "fa fa-bars" })
 							)
 						)
 					),
@@ -21733,7 +21732,7 @@
 							_react2["default"].createElement(
 								"div",
 								{ className: "home_detail" },
-								_react2["default"].createElement(_DataTable2["default"], { bucketData: this.state.bucketData })
+								_react2["default"].createElement(_DataTable2["default"], { bucketData: this.state.bucketData, onSelectionChange: this.handleDataTableSelectionChanged.bind(this) })
 							)
 						),
 						_react2["default"].createElement(
@@ -21751,154 +21750,7 @@
 										_react2["default"].createElement("i", { className: "fa fa-bars" })
 									)
 								),
-								_react2["default"].createElement(
-									"div",
-									{ className: "duration_inner" },
-									_react2["default"].createElement(
-										"h2",
-										null,
-										"Actions:"
-									),
-									_react2["default"].createElement(
-										"ul",
-										{ className: "action_list" },
-										_react2["default"].createElement(
-											"li",
-											null,
-											" ",
-											_react2["default"].createElement(
-												"a",
-												{ href: "#" },
-												" ",
-												_react2["default"].createElement(
-													"i",
-													{ className: "social_icon" },
-													_react2["default"].createElement("img", { src: _imagesSocial_1Png2["default"], alt: "" })
-												),
-												_react2["default"].createElement(
-													"p",
-													null,
-													"Follow"
-												),
-												_react2["default"].createElement(
-													"span",
-													{ className: "people" },
-													"100 people"
-												),
-												" "
-											),
-											" "
-										),
-										_react2["default"].createElement(
-											"li",
-											null,
-											" ",
-											_react2["default"].createElement(
-												"a",
-												{ href: "#" },
-												" ",
-												_react2["default"].createElement(
-													"i",
-													{ className: "social_icon" },
-													_react2["default"].createElement("img", { src: _imagesSocial_1Png2["default"], alt: "" })
-												),
-												_react2["default"].createElement(
-													"p",
-													null,
-													"Tweet to"
-												),
-												_react2["default"].createElement(
-													"span",
-													{ className: "people" },
-													"100 people"
-												),
-												" "
-											),
-											" "
-										),
-										_react2["default"].createElement(
-											"li",
-											null,
-											" ",
-											_react2["default"].createElement(
-												"a",
-												{ href: "#" },
-												" ",
-												_react2["default"].createElement(
-													"i",
-													{ className: "social_icon" },
-													_react2["default"].createElement("img", { src: _imagesSocial_1Png2["default"], alt: "" })
-												),
-												_react2["default"].createElement(
-													"p",
-													null,
-													"Favorite"
-												),
-												_react2["default"].createElement(
-													"span",
-													{ className: "people" },
-													"100 people"
-												),
-												" "
-											),
-											" "
-										),
-										_react2["default"].createElement(
-											"li",
-											null,
-											" ",
-											_react2["default"].createElement(
-												"a",
-												{ href: "#" },
-												" ",
-												_react2["default"].createElement(
-													"i",
-													{ className: "social_icon" },
-													_react2["default"].createElement("img", { src: _imagesSocial_1Png2["default"], alt: "" })
-												),
-												_react2["default"].createElement(
-													"p",
-													null,
-													"Direct Message"
-												),
-												_react2["default"].createElement(
-													"span",
-													{ className: "people" },
-													"10 people"
-												),
-												" "
-											),
-											" "
-										),
-										_react2["default"].createElement(
-											"li",
-											null,
-											" ",
-											_react2["default"].createElement(
-												"a",
-												{ href: "#" },
-												" ",
-												_react2["default"].createElement(
-													"i",
-													{ className: "social_icon" },
-													_react2["default"].createElement("img", { src: _imagesSocial_1Png2["default"], alt: "" })
-												),
-												_react2["default"].createElement(
-													"p",
-													null,
-													"Retweet"
-												),
-												_react2["default"].createElement(
-													"span",
-													{ className: "people" },
-													"10 people"
-												),
-												" "
-											),
-											" "
-										)
-									)
-								)
+								_react2["default"].createElement(_Actions2["default"], { bucketData: this.state.bucketData, selectedTweetsNumbers: this.state.selectedTweetsNumbers })
 							)
 						)
 					)
@@ -21923,21 +21775,33 @@
 
 			/* Event handlers */
 
-			value: function handleFilterClicked(filters) {
-				console.log("VenyooApp.handleFilterClicked filters=", filters);
-				this.state.activeEventId = filters.eventId;
-				_actionsEventBucketsActionCreators2["default"].getEventBuckets(filters.eventId);
+			value: function handleFilterClicked(filtersChoice) {
+				console.log("VenyooApp.handleFilterClicked filtersChoice=", filtersChoice);
+				this.state.selectedFilters.eventId = filtersChoice.event.id;
+				this.state.selectedFilters.socialChannelId = filtersChoice.socialChannel.id;
+				this.state.selectedFilters.kloutScoreId = filtersChoice.kloutScore.id;
+				this.state.selectedFilters.sentimentId = filtersChoice.sentiment.id;
+				_actionsEventBucketsActionCreators2["default"].getEventBuckets(this.state.selectedFilters.eventId);
 			}
 		}, {
 			key: "handleBucketChanged",
 			value: function handleBucketChanged(bucketId) {
-				console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", this.state.activeEventId=", this.state.activeEventId);
-				_actionsBucketActionCreators2["default"].getBucket(this.state.activeEventId, bucketId);
+				console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", state.selectedFilters=", this.state.selectedFilters);
+				_actionsBucketActionCreators2["default"].getBucket(this.state.selectedFilters.eventId, bucketId, this.state.selectedFilters.socialChannelId, this.state.selectedFilters.kloutScoreId, this.state.selectedFilters.sentimentId);
+			}
+		}, {
+			key: "handleDataTableSelectionChanged",
+			value: function handleDataTableSelectionChanged(selectedTweetsNumbers) {
+				console.log("VenyooApp.handleDataTableSelectionChanged selectedTweetsNumbers=", selectedTweetsNumbers);
+				this.setState({
+					selectedTweetsNumbers: selectedTweetsNumbers
+				});
 			}
 		}, {
 			key: "_onChange",
 			value: function _onChange() {
-				this.setState(getStoresState(this));
+				var newState = getStoresState(this);
+				this.setState(newState);
 			}
 		}]);
 
@@ -21947,17 +21811,12 @@
 	exports["default"] = VenyooApp;
 	;
 	module.exports = exports["default"];
-	/* Map block */ /* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6874863.052680733!2d-117.16151799999996!3d32.71616899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d954a7de4514ad%3A0xc23d2f349e970aed!2sTHE+US+GRANT%2C+a+Luxury+Collection+Hotel%2C+San+Diego!5e0!3m2!1sen!2sin!4v1435239649995" width="100%" height="718" frameborder="0" style={{ border : 0 }} allowfullscreen></iframe> */ /* Right block */ /* Left block */ /* <img src={sliderImg} alt="" /> */ /* Right block */ /**} Event Duration <span>12 hours / 10 min intervals</span>{**/
+	/* Map block */ /* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6874863.052680733!2d-117.16151799999996!3d32.71616899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d954a7de4514ad%3A0xc23d2f349e970aed!2sTHE+US+GRANT%2C+a+Luxury+Collection+Hotel%2C+San+Diego!5e0!3m2!1sen!2sin!4v1435239649995" width="100%" height="718" frameborder="0" style={{ border : 0 }} allowfullscreen></iframe> */ /* Right block */ /* Left block */ /* Right block */ /**} Event Duration <span>12 hours / 10 min intervals</span>{**/
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 /* 165 */
 /***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 * STORE DESCRIPTION:
-	 * Business logic for managing buckets data for a specific event
-	 */
 
 	"use strict";
 
@@ -21999,10 +21858,10 @@
 
 	var ActionTypes = _constantsVenyooConstants2["default"].ActionTypes;
 
-	var _eventBuckets = {};
+	var _filters = {};
 	var _isLoading = true;
 
-	var EventBucketsStore = (0, _objectAssign2["default"])({}, _events2["default"].EventEmitter.prototype, {
+	var FiltersStore = (0, _objectAssign2["default"])({}, _events2["default"].EventEmitter.prototype, {
 
 		emitChange: function emitChange() {
 			this.emit(CHANGE_EVENT);
@@ -22017,40 +21876,37 @@
 		},
 
 		getState: function getState() {
-			var state = {
-				buckets: _lodash2["default"].cloneDeep(_eventBuckets.buckets)
-			};
+			var state = _lodash2["default"].cloneDeep(_filters);
 			state.isLoading = _isLoading;
 			return state;
 		}
 
 	});
 
-	EventBucketsStore.dispatchToken = _AppDispatcher2["default"].register(function (action) {
+	FiltersStore.dispatchToken = _AppDispatcher2["default"].register(function (action) {
 		switch (action.type) {
-			case ActionTypes.RECEIVE_EVENTBUCKETS_SENDING:
+			case ActionTypes.RECEIVE_FILTERS_SENDING:
 				_isLoading = true;
-				EventBucketsStore.emitChange();
+				FiltersStore.emitChange();
 				break;
 
-			case ActionTypes.RECEIVE_EVENTBUCKETS_SUCCEEDED:
+			case ActionTypes.RECEIVE_FILTERS_SUCCEEDED:
 				_isLoading = false;
-				_eventBuckets.buckets = action.eventBuckets.buckets;
-				EventBucketsStore.emitChange();
+				_filters = action.filters;
+				FiltersStore.emitChange();
 				break;
 
-			case ActionTypes.RECEIVE_EVENTBUCKETS_FAILED:
+			case ActionTypes.RECEIVE_FILTERS_FAILED:
 				_isLoading = false;
-				EventBucketsStore.emitChange();
+				FiltersStore.emitChange();
 				break;
 
 			default:
 			// do nothing
-
 		}
 	});
 
-	exports["default"] = EventBucketsStore;
+	exports["default"] = FiltersStore;
 	module.exports = exports["default"];
 
 /***/ },
@@ -35141,23 +34997,59 @@
 	});
 	exports["default"] = {
 		ActionTypes: {
-			/* GET FILTERS */
+
+			/* GETTING DATA */
+
+			/** GET FILTERS **/
 			GET_FILTERS: "GET_FILTERS",
 			RECEIVE_FILTERS_SENDING: "RECEIVE_FILTERS_SENDING",
 			RECEIVE_FILTERS_SUCCEEDED: "RECEIVE_FILTERS_SUCCEEDED",
 			RECEIVE_FILTERS_FAILED: "RECEIVE_FILTERS_FAILED",
 
-			/* GET EVENT BUCKETS METADATA */
+			/** GET EVENT BUCKETS METADATA **/
 			GET_EVENTBUCKETS_METADATA: "GET_EVENTBUCKETS_METADATA",
 			RECEIVE_EVENTBUCKETS_SENDING: "RECEIVE_EVENTBUCKETS_SENDING",
 			RECEIVE_EVENTBUCKETS_SUCCEEDED: "RECEIVE_EVENTBUCKETS_SUCCEEDED",
 			RECEIVE_EVENTBUCKETS_FAILED: "RECEIVE_EVENTBUCKETS_FAILED",
 
-			/* GET BUCKET DATA */
+			/** GET BUCKET DATA **/
 			GET_BUCKET_DATA: "GET_BUCKET_DATA",
 			RECEIVE_BUCKET_SENDING: "RECEIVE_BUCKET_SENDING",
 			RECEIVE_BUCKET_SUCCEEDED: "RECEIVE_BUCKET_SUCCEEDED",
-			RECEIVE_BUCKET_FAILED: "RECEIVE_BUCKET_FAILED"
+			RECEIVE_BUCKET_FAILED: "RECEIVE_BUCKET_FAILED",
+
+			/* SENDING ACTIONS */
+
+			/** SEND TWEET **/
+
+			SEND_TWEET: "SEND_TWEET",
+			SEND_TWEET_SENDING: "SEND_TWEET_SENDING",
+			SEND_TWEET_SUCCEEDED: "SEND_TWEET_SUCCEEDED",
+			SEND_TWEET_FAILED: "SEND_TWEET_FAILED",
+
+			/** SEND REPLY **/
+			SEND_REPLY: "SEND_REPLY",
+			SEND_REPLY_SENDING: "SEND_REPLY_SENDING",
+			SEND_REPLY_SUCCEEDED: "SEND_REPLY_SUCCEEDED",
+			SEND_REPLY_FAILED: "SEND_REPLY_FAILED",
+
+			/** SEND FAVORITE **/
+			SEND_FAVORITE: "SEND_FAVORITE",
+			SEND_FAVORITE_SENDING: "SEND_FAVORITE_SENDING",
+			SEND_FAVORITE_SUCCEEDED: "SEND_FAVORITE_SUCCEEDED",
+			SEND_FAVORITE_FAILED: "SEND_FAVORITE_FAILED",
+
+			/** SEND RETWEET **/
+			SEND_RETWEET: "SEND_RETWEET",
+			SEND_RETWEET_SENDING: "SEND_RETWEET_SENDING",
+			SEND_RETWEET_SUCCEEDED: "SEND_RETWEET_SUCCEEDED",
+			SEND_RETWEET_FAILED: "SEND_RETWEET_FAILED",
+
+			/** SEND FOLLOW **/
+			SEND_FOLLOW: "SEND_FOLLOW",
+			SEND_FOLLOW_SENDING: "SEND_FOLLOW_SENDING",
+			SEND_FOLLOW_SUCCEEDED: "SEND_FOLLOW_SUCCEEDED",
+			SEND_FOLLOW_FAILED: "SEND_FOLLOW_FAILED"
 		}
 	};
 	module.exports = exports["default"];
@@ -35199,6 +35091,9 @@
 
 		_createClass(VenyooWebUtils, [{
 			key: "getFilters",
+
+			/* Getting data */
+
 			value: function getFilters() {
 				var self = this;
 
@@ -35243,11 +35138,14 @@
 			}
 		}, {
 			key: "getBucketData",
-			value: function getBucketData(eventId, bucketId) {
+			value: function getBucketData(eventId, bucketId, socialChannelId, kloutScoreId, sentimentId) {
 				var self = this;
 
 				var urlParams = {
 					eventId: eventId,
+					socialChannelId: socialChannelId,
+					kloutScoreId: kloutScoreId,
+					sentimentId: sentimentId,
 					bucketId: bucketId
 				};
 
@@ -35255,13 +35153,128 @@
 
 				(0, _request2["default"])({
 					// url: baseUrl + "/bucket/" + bucketId,
-					url: "http://52.24.255.84/filter/?bucket=" + bucketId + "&sentiment=0&klout_score=4&event_id=" + eventId + "&social_id=0",
+					url: "http://52.24.255.84/filter/?bucket=" + bucketId + "&sentiment=" + sentimentId + "&klout_score=" + kloutScoreId + "&event_id=" + eventId + "&social_id=" + socialChannelId,
 					withCredentials: false
 				}, function (error, response, body) {
 					if (!error && response.statusCode === 200) {
 						_actionsServerActionCreators2["default"].receiveBucketDataSucceeded(urlParams, _DataFormatDataFormatAdapter2["default"].adjustBucket(JSON.parse(body)), response, body);
 					} else {
 						_actionsServerActionCreators2["default"].receiveBucketDataFailed(urlParams, error, response, body);
+					}
+				});
+			}
+		}, {
+			key: "sendTweet",
+
+			/* Performing actions */
+
+			value: function sendTweet(screenName, message) {
+				var self = this;
+
+				var urlParams = {
+					screenName: screenName,
+					message: message
+				};
+
+				_actionsServerActionCreators2["default"].sendTweetSending(urlParams);
+
+				(0, _request2["default"])({
+					url: "http://52.24.255.84/tweet/?screenname=" + encodeURIComponent(screenName) + "&message=" + encodeURIComponent(message),
+					withCredentials: false
+				}, function (error, response, body) {
+					if (!error && response.statusCode === 200) {
+						_actionsServerActionCreators2["default"].sendTweetSucceeded(urlParams, response, body);
+					} else {
+						_actionsServerActionCreators2["default"].sendTweetFailed(urlParams, error, response, body);
+					}
+				});
+			}
+		}, {
+			key: "sendReply",
+			value: function sendReply(username, message) {
+				var self = this;
+
+				var urlParams = {
+					username: username,
+					message: message
+				};
+
+				_actionsServerActionCreators2["default"].sendReplySending(urlParams);
+
+				(0, _request2["default"])({
+					url: "http://52.24.255.84/send/?username=" + encodeURIComponent(username) + "&message=" + encodeURIComponent(message),
+					withCredentials: false
+				}, function (error, response, body) {
+					if (!error && response.statusCode === 200) {
+						_actionsServerActionCreators2["default"].sendReplySucceeded(urlParams, response, body);
+					} else {
+						_actionsServerActionCreators2["default"].sendReplyFailed(urlParams, error, response, body);
+					}
+				});
+			}
+		}, {
+			key: "sendFavorite",
+			value: function sendFavorite(tweetId) {
+				var self = this;
+
+				var urlParams = {
+					tweetId: tweetId
+				};
+
+				_actionsServerActionCreators2["default"].sendFavoriteSending(urlParams);
+
+				(0, _request2["default"])({
+					url: "http://52.24.255.84/favorite/?tweet_id=" + tweetId,
+					withCredentials: false
+				}, function (error, response, body) {
+					if (!error && response.statusCode === 200) {
+						_actionsServerActionCreators2["default"].sendFavoriteSucceeded(urlParams, response, body);
+					} else {
+						_actionsServerActionCreators2["default"].sendFavoriteFailed(urlParams, error, response, body);
+					}
+				});
+			}
+		}, {
+			key: "sendRetweet",
+			value: function sendRetweet(tweetId) {
+				var self = this;
+
+				var urlParams = {
+					tweetId: tweetId
+				};
+
+				_actionsServerActionCreators2["default"].sendRetweetSending(urlParams);
+
+				(0, _request2["default"])({
+					url: "http://52.24.255.84/retweet/?tweet_id=" + tweetId,
+					withCredentials: false
+				}, function (error, response, body) {
+					if (!error && response.statusCode === 200) {
+						_actionsServerActionCreators2["default"].sendRetweetSucceeded(urlParams, response, body);
+					} else {
+						_actionsServerActionCreators2["default"].sendRetweetFailed(urlParams, error, response, body);
+					}
+				});
+			}
+		}, {
+			key: "sendFollow",
+			value: function sendFollow(screenName) {
+				var self = this;
+
+				var urlParams = {
+					screenName: screenName
+				};
+
+				_actionsServerActionCreators2["default"].sendFollowSending(urlParams);
+
+				(0, _request2["default"])({
+					url: "http://52.24.255.84/follow/?screenname=" + screenName,
+					withCredentials: false
+				}, function (error, response, body) {
+					if (!error && response.statusCode === 200) {
+						_actionsServerActionCreators2["default"].sendFollowSucceeded(urlParams, response, body);
+					} else {
+						_actionsServerActionCreators2["default"].sendFollowFailed(urlParams, error, response, body);
 					}
 				});
 			}
@@ -74213,7 +74226,7 @@
 /* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	/* WEBPACK VAR INJECTION */(function(console) {"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -74312,9 +74325,130 @@
 				error: error,
 				response: response
 			});
+		},
+
+		/* SEND TWEET */
+
+		sendTweetSending: function sendTweetSending(urlParams) {
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_TWEET_SENDING
+			});
+		},
+
+		sendTweetSucceeded: function sendTweetSucceeded(urlParams, response, body) {
+			console.log("ServerActionCreators.sendTweetSucceeded SUCCESS :) body = ", body);
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_TWEET_SUCCEEDED
+			});
+		},
+
+		sendTweetFailed: function sendTweetFailed(urlParams, error, response, body) {
+			console.log("ServerActionCreators.sendTweetSucceeded FAIL :( body = ", body);
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_TWEET_FAILED,
+				error: error,
+				response: response
+			});
+		},
+
+		/* SEND REPLY */
+
+		sendReplySending: function sendReplySending(urlParams) {
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_REPLY_SENDING
+			});
+		},
+
+		sendReplySucceeded: function sendReplySucceeded(urlParams, response, body) {
+			console.log("ServerActionCreators.sendReplySucceeded SUCCESS :) body = ", body);
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_REPLY_SUCCEEDED
+			});
+		},
+
+		sendReplyFailed: function sendReplyFailed(urlParams, error, response, body) {
+			console.log("ServerActionCreators.sendReplySucceeded FAIL :( body = ", body);
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_REPLY_FAILED,
+				error: error,
+				response: response
+			});
+		},
+
+		/* SEND FAVORITE */
+
+		sendFavoriteSending: function sendFavoriteSending(urlParams) {
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_FAVORITE_SENDING
+			});
+		},
+
+		sendFavoriteSucceeded: function sendFavoriteSucceeded(urlParams, response, body) {
+			console.log("ServerActionCreators.sendFavoriteSucceeded SUCCESS :) body = ", body);
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_FAVORITE_SUCCEEDED
+			});
+		},
+
+		sendFavoriteFailed: function sendFavoriteFailed(urlParams, error, response, body) {
+			console.log("ServerActionCreators.sendFavoriteSucceeded FAIL :( body = ", body);
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_FAVORITE_FAILED,
+				error: error,
+				response: response
+			});
+		},
+
+		/* SEND RETWEET */
+
+		sendRetweetSending: function sendRetweetSending(urlParams) {
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_RETWEET_SENDING
+			});
+		},
+
+		sendRetweetSucceeded: function sendRetweetSucceeded(urlParams, response, body) {
+			console.log("ServerActionCreators.sendRetweetSucceeded SUCCESS :) body = ", body);
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_RETWEET_SUCCEEDED
+			});
+		},
+
+		sendRetweetFailed: function sendRetweetFailed(urlParams, error, response, body) {
+			console.log("ServerActionCreators.sendRetweetSucceeded FAIL :( body = ", body);
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_RETWEET_FAILED,
+				error: error,
+				response: response
+			});
+		},
+
+		/* SEND FOLLOW */
+
+		sendFollowSending: function sendFollowSending(urlParams) {
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_FOLLOW_SENDING
+			});
+		},
+
+		sendFollowSucceeded: function sendFollowSucceeded(urlParams, response, body) {
+			console.log("ServerActionCreators.sendFollowSucceeded SUCCESS :) body = ", body);
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_FOLLOW_SUCCEEDED
+			});
+		},
+
+		sendFollowFailed: function sendFollowFailed(urlParams, error, response, body) {
+			console.log("ServerActionCreators.sendFollowSucceeded FAIL :( body = ", body);
+			_AppDispatcher2["default"].dispatch({
+				type: ActionTypes.SEND_FOLLOW_FAILED,
+				error: error,
+				response: response
+			});
 		}
 	};
 	module.exports = exports["default"];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 /* 336 */
@@ -74377,11 +74511,15 @@
 
 	exports["default"] = {
 		getBucket: function getBucket(eventId, bucketId) {
+			var socialChannelId = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+			var kloutScoreId = arguments.length <= 3 || arguments[3] === undefined ? 4 : arguments[3];
+			var sentimentId = arguments.length <= 4 || arguments[4] === undefined ? 0 : arguments[4];
+
 			_AppDispatcher2["default"].dispatch({
 				type: _constantsVenyooConstants2["default"].ActionTypes.GET_BUCKET_DATA
 			});
 
-			_utilsVenyooWebUtils2["default"].getBucketData(eventId, bucketId);
+			_utilsVenyooWebUtils2["default"].getBucketData(eventId, bucketId, socialChannelId, kloutScoreId, sentimentId);
 		}
 	};
 	module.exports = exports["default"];
@@ -74525,13 +74663,14 @@
 				var result = { tweets: [] };
 				originalBucket.tweet_metadata.forEach(function (tweet) {
 					result.tweets.push({
+						tweetId: tweet.tweet_id,
 						lat: tweet.latitude,
 						lng: tweet.longitude,
 						email: "",
 						message: tweet.tweet,
 						username: tweet.user,
 						socialHandle: "@" + tweet.user,
-						picUrl: "http://placehold.it/100x100",
+						picUrl: tweet.profile_image,
 						mediaLink: "",
 						sentiment: tweet.sentiment,
 						follower: "N",
@@ -74574,7 +74713,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _jquery = __webpack_require__(342);
+	var _jquery = __webpack_require__(343);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -74582,14 +74721,26 @@
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
+	var _DialogBox = __webpack_require__(342);
+
+	var _DialogBox2 = _interopRequireDefault(_DialogBox);
+
+	var _actionsActionsActionCreators = __webpack_require__(344);
+
+	var _actionsActionsActionCreators2 = _interopRequireDefault(_actionsActionsActionCreators);
+
 	/* Static dependencies */
 
-	__webpack_require__(343);
+	__webpack_require__(345);
 
 	// import tweet_content from '../../tweet_content.html';
 
 	/* Constants */
 	var minZoomLevel = 2;
+	var directMessagePrefix = 'directMessage';
+	var followPrefix = 'followPrefix';
+	var favoritePrefix = 'favoritePrefix';
+	var retweetPrefix = 'retweetPrefix';
 
 	var Map = (function (_React$Component) {
 		_inherits(Map, _React$Component);
@@ -74614,7 +74765,107 @@
 		_createClass(Map, [{
 			key: 'render',
 			value: function render() {
-				return _react2['default'].createElement('div', { ref: 'mapCanvas', className: 'map_canvas' });
+				var directMessagePopups = [];
+				var followPopups = [];
+				var favoritePopups = [];
+				var retweetPopups = [];
+				for (var i = 0; i < this.props.bucketData.tweets.length; i++) {
+					var tweetData = this.props.bucketData.tweets[i];
+
+					directMessagePopups.push(_react2['default'].createElement(
+						_DialogBox2['default'],
+						{ key: i,
+							id: directMessagePrefix + i,
+							isInput: true,
+							actionName: 'Direct Message',
+							onAction: this.factoryHandleReply(tweetData.socialHandle).bind(this) },
+						_react2['default'].createElement(
+							'h3',
+							null,
+							'Direct Message to: ',
+							_react2['default'].createElement(
+								'span',
+								null,
+								tweetData.socialHandle
+							),
+							_react2['default'].createElement('br', null),
+							tweetData.message
+						)
+					));
+
+					followPopups.push(_react2['default'].createElement(
+						_DialogBox2['default'],
+						{ key: i,
+							id: followPrefix + i,
+							isInput: false,
+							actionName: 'Follow',
+							onAction: this.factoryHandleFollow(tweetData.socialHandle).bind(this) },
+						_react2['default'].createElement(
+							'h3',
+							null,
+							'Follow ',
+							_react2['default'].createElement(
+								'span',
+								null,
+								tweetData.socialHandle
+							),
+							_react2['default'].createElement('br', null),
+							tweetData.message
+						)
+					));
+
+					favoritePopups.push(_react2['default'].createElement(
+						_DialogBox2['default'],
+						{ key: i,
+							id: favoritePrefix + i,
+							isInput: false,
+							actionName: 'Favorite',
+							onAction: this.factoryHandleFavorite(tweetData.tweetId).bind(this) },
+						_react2['default'].createElement(
+							'h3',
+							null,
+							'Favorite a tweet by ',
+							_react2['default'].createElement(
+								'span',
+								null,
+								tweetData.socialHandle
+							),
+							_react2['default'].createElement('br', null),
+							tweetData.message
+						)
+					));
+
+					retweetPopups.push(_react2['default'].createElement(
+						_DialogBox2['default'],
+						{ key: i,
+							id: retweetPrefix + i,
+							isInput: false,
+							actionName: 'Retweet',
+							onAction: this.factoryHandleRetweet(tweetData.tweetId).bind(this) },
+						_react2['default'].createElement(
+							'h3',
+							null,
+							'Retweet ',
+							_react2['default'].createElement(
+								'span',
+								null,
+								tweetData.socialHandle
+							),
+							_react2['default'].createElement('br', null),
+							tweetData.message
+						)
+					));
+				}
+
+				return _react2['default'].createElement(
+					'div',
+					null,
+					_react2['default'].createElement('div', { ref: 'mapCanvas', className: 'map_canvas' }),
+					directMessagePopups,
+					followPopups,
+					favoritePopups,
+					retweetPopups
+				);
 			}
 		}, {
 			key: 'componentDidMount',
@@ -74628,6 +74879,14 @@
 					var mapOptions = {
 						center: new google.maps.LatLng(38.6, 41.7),
 						zoom: 2,
+						scrollwheel: false,
+						disableDefaultUI: true,
+						mapTypeControl: false,
+						scaleControl: true,
+						zoomControl: true,
+						zoomControlOptions: {
+							style: google.maps.ZoomControlStyle.LARGE
+						},
 						mapTypeId: google.maps.MapTypeId.ROADMAP
 					};
 					var map = new google.maps.Map(canvas, mapOptions);
@@ -74646,8 +74905,6 @@
 					    lat = center.lat(),
 					    zoom = self.state.map.getZoom();
 
-					console.log('Map.componentDidMount lat=', lat);
-
 					if (zoom === 2 && lat > 44) lat = 44;
 					if (zoom === 3 && lat > 72) lat = 72;
 					if (zoom >= 4 && lat > 79) lat = 79;
@@ -74660,7 +74917,6 @@
 				};
 
 				google.maps.event.addListener(self.state.map, 'drag', mapAdjuster);
-
 				google.maps.event.addListener(self.state.map, 'zoom_changed', mapAdjuster);
 			}
 		}, {
@@ -74671,13 +74927,18 @@
 				if (!_lodash2['default'].isEqual(nextProps.bucketData.tweets, this.props.bucketData.tweets)) {
 					(function () {
 						var placeMarkersAndInfoWins = function placeMarkersAndInfoWins(tweets, contentLayout) {
-							tweets.forEach(function (tweet) {
+							tweets.forEach(function (tweet, i) {
 								/* Prepare infowindow content */
 								var content = contentLayout;
 								content = content.replace('{{ infowin_username }}', tweet.username);
 								content = content.replace('{{ infowin_handle }}', tweet.socialHandle);
 								content = content.replace('{{ infowin_picUrl }}', tweet.picUrl);
 								content = content.replace('{{ infowin_tweet }}', tweet.message);
+								content = content.replace('{{ infowin_reply_target }}', '#' + directMessagePrefix + i);
+								content = content.replace('{{ infowin_follow_target }}', '#' + followPrefix + i);
+								content = content.replace('{{ infowin_favorite_target }}', '#' + favoritePrefix + i);
+								content = content.replace('{{ infowin_retweet_target }}', '#' + retweetPrefix + i);
+								content = content.replace('{{ infowin_direct_message_target }}', '#' + directMessagePrefix + i);
 
 								/* Place marker */
 								var marker = new google.maps.Marker({
@@ -74702,7 +74963,6 @@
 						};
 
 						/* Remove old markers and infowins */
-						console.log('Map.componentWillReceiveProps state=', self.state);
 						self.state.markers.forEach(function (marker) {
 							marker.infowin.setMap(null);
 							marker.setMap(null);
@@ -74724,17 +74984,180 @@
 					})();
 				}
 			}
+		}, {
+			key: 'factoryHandleReply',
+
+			/* Event handlers */
+
+			value: function factoryHandleReply(username) {
+				return function (message) {
+					console.log('Map.factoryHandleReply username = ', username, ', message = ', message);
+					_actionsActionsActionCreators2['default'].sendReply(username, message);
+				};
+			}
+		}, {
+			key: 'factoryHandleFollow',
+			value: function factoryHandleFollow(screenName) {
+				return function () {
+					console.log('Map.factoryHandleFollow screenName = ', screenName);
+					_actionsActionsActionCreators2['default'].sendFollow(screenName);
+				};
+			}
+		}, {
+			key: 'factoryHandleFavorite',
+			value: function factoryHandleFavorite(tweetId) {
+				return function () {
+					console.log('Map.factoryHandleFavorite tweetId = ', tweetId);
+					_actionsActionsActionCreators2['default'].sendFavorite(tweetId);
+				};
+			}
+		}, {
+			key: 'factoryHandleRetweet',
+			value: function factoryHandleRetweet(tweetId) {
+				return function () {
+					console.log('Map.factoryHandleRetweet tweetId = ', tweetId);
+					_actionsActionsActionCreators2['default'].sendRetweet(tweetId);
+				};
+			}
 		}]);
 
 		return Map;
 	})(_react2['default'].Component);
 
 	exports['default'] = Map;
+
+	Map.propTypes = {
+		bucketData: _react2['default'].PropTypes.object
+	};
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 /* 342 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(console) {"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var DialogBox = (function (_React$Component) {
+		_inherits(DialogBox, _React$Component);
+
+		function DialogBox() {
+			_classCallCheck(this, DialogBox);
+
+			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+				args[_key] = arguments[_key];
+			}
+
+			_get(Object.getPrototypeOf(DialogBox.prototype), "constructor", this).apply(this, args);
+
+			this.state = {
+				message: ""
+			};
+		}
+
+		_createClass(DialogBox, [{
+			key: "render",
+			value: function render() {
+				var inputElement = null;
+
+				if (this.props.isInput) {
+					inputElement = _react2["default"].createElement("input", { type: "text", name: "", className: "input_field", value: this.state.message, onChange: this.handleMessageChange.bind(this) });
+				}
+
+				return _react2["default"].createElement(
+					"div",
+					{ key: this.props.key, className: "modal fade custommodal", id: this.props.id, tabindex: "-1", role: "dialog" },
+					_react2["default"].createElement(
+						"div",
+						{ className: "modal-dialog", role: "document" },
+						_react2["default"].createElement(
+							"div",
+							{ className: "modal-content" },
+							_react2["default"].createElement(
+								"div",
+								{ className: "modal-body" },
+								_react2["default"].createElement(
+									"div",
+									{ className: "entry_popup" },
+									this.props.children,
+									inputElement,
+									_react2["default"].createElement(
+										"div",
+										{ className: "button_block" },
+										_react2["default"].createElement(
+											"button",
+											{ className: "direct_msg", onClick: this.handleReplyClick.bind(this) },
+											this.props.actionName
+										),
+										_react2["default"].createElement(
+											"button",
+											{ className: "cancel_btn", "data-dismiss": "modal" },
+											"Cancel"
+										)
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}, {
+			key: "handleMessageChange",
+			value: function handleMessageChange(e) {
+				this.setState({
+					message: e.target.value
+				});
+			}
+		}, {
+			key: "handleReplyClick",
+			value: function handleReplyClick(e) {
+				console.log("DialogBox.handleReplyClick state.message = ", this.state.message);
+				if (!this.props.isInput || this.state.message !== "") {
+					$("#" + this.props.id).modal("hide");
+					if (this.props.onAction) {
+						this.props.onAction(this.state.message);
+					}
+					this.setState({
+						message: ""
+					});
+				}
+			}
+		}]);
+
+		return DialogBox;
+	})(_react2["default"].Component);
+
+	exports["default"] = DialogBox;
+
+	DialogBox.propTypes = {
+		id: _react2["default"].PropTypes.string.isRequired,
+		actionName: _react2["default"].PropTypes.string.isRequired,
+		isInput: _react2["default"].PropTypes.bool,
+		onAction: _react2["default"].PropTypes.func
+	};
+	module.exports = exports["default"];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -83950,16 +84373,88 @@
 
 
 /***/ },
-/* 343 */
+/* 344 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 * The ambiguous filename means that ActionCreators are for Actions (like Reply, Favorite etc) in this file
+	 */
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var _AppDispatcher = __webpack_require__(170);
+
+	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+	var _constantsVenyooConstants = __webpack_require__(174);
+
+	var _constantsVenyooConstants2 = _interopRequireDefault(_constantsVenyooConstants);
+
+	var _utilsVenyooWebUtils = __webpack_require__(175);
+
+	var _utilsVenyooWebUtils2 = _interopRequireDefault(_utilsVenyooWebUtils);
+
+	exports["default"] = {
+		sendTweet: function sendTweet(screenName, message) {
+			_AppDispatcher2["default"].dispatch({
+				type: _constantsVenyooConstants2["default"].ActionTypes.SEND_TWEET
+			});
+
+			_utilsVenyooWebUtils2["default"].sendTweet(screenName, message);
+		},
+
+		/* Direct message */
+		sendReply: function sendReply(username, message) {
+			_AppDispatcher2["default"].dispatch({
+				type: _constantsVenyooConstants2["default"].ActionTypes.SEND_REPLY
+			});
+
+			_utilsVenyooWebUtils2["default"].sendReply(username, message);
+		},
+
+		sendFavorite: function sendFavorite(tweetId) {
+			_AppDispatcher2["default"].dispatch({
+				type: _constantsVenyooConstants2["default"].ActionTypes.SEND_FAVORITE
+			});
+
+			_utilsVenyooWebUtils2["default"].sendFavorite(tweetId);
+		},
+
+		sendRetweet: function sendRetweet(tweetId) {
+			_AppDispatcher2["default"].dispatch({
+				type: _constantsVenyooConstants2["default"].ActionTypes.SEND_RETWEET
+			});
+
+			_utilsVenyooWebUtils2["default"].sendRetweet(tweetId);
+		},
+
+		sendFollow: function sendFollow(tweetId) {
+			_AppDispatcher2["default"].dispatch({
+				type: _constantsVenyooConstants2["default"].ActionTypes.SEND_FOLLOW
+			});
+
+			_utilsVenyooWebUtils2["default"].sendFollow(tweetId);
+		}
+	};
+	module.exports = exports["default"];
+
+/***/ },
+/* 345 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 344 */,
-/* 345 */,
 /* 346 */,
-/* 347 */
+/* 347 */,
+/* 348 */,
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(console) {/* JS dependencies */
@@ -83989,7 +84484,7 @@
 
 	/* Static dependencies */
 
-	__webpack_require__(348);
+	__webpack_require__(350);
 
 	/* Constants */
 	var pointerColor = '#2E7FB1';
@@ -84288,14 +84783,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 348 */
+/* 350 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 349 */,
-/* 350 */
+/* 351 */,
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(console) {/* JS dependencies */
@@ -84307,7 +84802,7 @@
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -84318,6 +84813,18 @@
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _DialogBox = __webpack_require__(342);
+
+	var _DialogBox2 = _interopRequireDefault(_DialogBox);
+
+	var _actionsActionsActionCreators = __webpack_require__(344);
+
+	var _actionsActionsActionCreators2 = _interopRequireDefault(_actionsActionsActionCreators);
+
+	var _lodash = __webpack_require__(168);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
 
 	/* Stylesheet dependencies */
 
@@ -84334,11 +84841,12 @@
 			_get(Object.getPrototypeOf(DataTable.prototype), "constructor", this).apply(this, args);
 
 			this.state = {
-				tweets: [],
+				selectedTweets: [], // All the checkboxes across all the pages
 				tweetsTotal: 0,
 				tweetsPerPage: 20,
 				pagesCount: 1,
-				pageNumber: 0 // starts from 0
+				pageNumber: 0, // starts from 0
+				tweetsOnPage: 0
 			};
 		}
 
@@ -84365,8 +84873,8 @@
 				} else {
 
 					var tweetsRows = [];
-					var tweetEndNumber = this.state.tweetsPerPage * (this.state.pageNumber + 1) > this.state.tweetsTotal ? this.state.tweetsTotal : this.state.tweetsPerPage * (this.state.pageNumber + 1);
-					for (var i = this.state.tweetsPerPage * this.state.pageNumber; i < tweetEndNumber; i++) {
+					var replyPopups = [];
+					for (var i = this.state.startTweetNumber; i < this.state.endTweetNumber; i++) {
 						var tweetData = this.props.bucketData.tweets[i];
 
 						tweetsRows.push(_react2["default"].createElement(
@@ -84376,8 +84884,19 @@
 								"td",
 								null,
 								_react2["default"].createElement(
+									"label",
+									{ id: "a" },
+									_react2["default"].createElement("input", { type: "checkbox", checked: this.state.selectedTweets[i], "data-tweet-number": i, onChange: this.handleCheckBoxClick.bind(this) }),
+									_react2["default"].createElement("span", { className: "lbl" }),
+									" "
+								)
+							),
+							_react2["default"].createElement(
+								"td",
+								null,
+								_react2["default"].createElement(
 									"a",
-									{ href: "#", className: "reply_btn" },
+									{ href: "#", className: "reply_btn", "data-toggle": "modal", "data-target": "#Reply" + i, "data-tweet-number": i },
 									_react2["default"].createElement("i", { className: "fa fa-long-arrow-left" }),
 									" Reply"
 								)
@@ -84416,17 +84935,27 @@
 								"td",
 								null,
 								tweetData.following
-							),
+							)
+						));
+
+						replyPopups.push(_react2["default"].createElement(
+							_DialogBox2["default"],
+							{ key: i,
+								id: "Reply" + i,
+								isInput: true,
+								actionName: "Reply",
+								onAction: this.factoryHandleReply(tweetData.socialHandle).bind(this) },
 							_react2["default"].createElement(
-								"td",
+								"h3",
 								null,
+								"Reply to: ",
 								_react2["default"].createElement(
-									"label",
-									{ id: "a" },
-									_react2["default"].createElement("input", { type: "checkbox", name: "man", value: "man" }),
-									_react2["default"].createElement("span", { className: "lbl" }),
-									" "
-								)
+									"span",
+									null,
+									tweetData.socialHandle
+								),
+								_react2["default"].createElement("br", null),
+								tweetData.message
 							)
 						));
 					}
@@ -84456,6 +84985,13 @@
 						}
 					}
 
+					var timeLabel = null;
+					if (this.props.bucketData.tweets.length !== 0) timeLabel = _react2["default"].createElement(
+						"a",
+						{ className: "btn btn-sm grey_bg" },
+						this.props.bucketData.tweets[0].timeStamp
+					);
+
 					return _react2["default"].createElement(
 						"div",
 						{ className: "container" },
@@ -84467,11 +85003,7 @@
 								{ className: "grey-color" },
 								this.state.tweetsTotal,
 								" entries ",
-								_react2["default"].createElement(
-									"a",
-									{ className: "btn btn-sm grey_bg" },
-									this.props.bucketData.tweets[0].timeStamp
-								),
+								timeLabel,
 								" ",
 								_react2["default"].createElement(
 									"a",
@@ -84490,6 +85022,18 @@
 									_react2["default"].createElement(
 										"tr",
 										null,
+										_react2["default"].createElement(
+											"th",
+											null,
+											" ",
+											_react2["default"].createElement(
+												"label",
+												{ id: "a" },
+												_react2["default"].createElement("input", { type: "checkbox", onChange: this.handleCheckAllClick.bind(this) }),
+												_react2["default"].createElement("span", { className: "lbl" }),
+												" "
+											)
+										),
 										_react2["default"].createElement(
 											"th",
 											null,
@@ -84529,23 +85073,12 @@
 											"th",
 											null,
 											"Following"
-										),
-										_react2["default"].createElement(
-											"th",
-											null,
-											" ",
-											_react2["default"].createElement(
-												"label",
-												{ id: "a" },
-												_react2["default"].createElement("input", { type: "checkbox", name: "man", value: "man" }),
-												_react2["default"].createElement("span", { className: "lbl" }),
-												" "
-											)
 										)
 									),
 									tweetsRows
 								)
-							)
+							),
+							replyPopups
 						),
 						_react2["default"].createElement(
 							"div",
@@ -84627,8 +85160,34 @@
 			value: function componentWillReceiveProps(nextProps) {
 				console.log("DataTable.componentWillReceiveProps nextProps = ", nextProps);
 
-				this.state.tweetsTotal = nextProps.bucketData.tweets.length;
-				this.state.pageNumber = 0;
+				if (!_lodash2["default"].isEqual(nextProps.bucketData, this.props.bucketData)) {
+					this.state.tweetsTotal = nextProps.bucketData.tweets.length;
+					this.state.pageNumber = 0;
+					this.calculateTweetNumbers();
+					this.fillSelectedTweets();
+
+					if (this.props.onSelectionChange) {
+						this.props.onSelectionChange(this.state.selectedTweets);
+					}
+				}
+			}
+		}, {
+			key: "calculateTweetNumbers",
+			value: function calculateTweetNumbers() {
+				this.state.startTweetNumber = this.state.tweetsPerPage * this.state.pageNumber;
+				this.state.endTweetNumber = this.state.tweetsPerPage * (this.state.pageNumber + 1) > this.state.tweetsTotal ? this.state.tweetsTotal : this.state.tweetsPerPage * (this.state.pageNumber + 1);
+				this.state.tweetsOnPage = this.state.endTweetNumber - this.state.startTweetNumber + 1;
+			}
+		}, {
+			key: "fillSelectedTweets",
+			value: function fillSelectedTweets() {
+				var value = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+
+				this.state.selectedTweets = new Array(this.state.tweetsTotal);
+				// Assign value to all the checkboxes
+				for (var i = 0; i < this.state.tweetsTotal; i++) {
+					this.state.selectedTweets[i] = value;
+				}
 			}
 		}, {
 			key: "handlePageChange",
@@ -84636,16 +85195,46 @@
 			/* Events Handlers */
 
 			value: function handlePageChange(e) {
+				this.state.pageNumber = parseInt(e.target.dataset.page);
+				this.calculateTweetNumbers();
 				this.setState({
-					pageNumber: parseInt(e.target.dataset.page)
+					pageNumber: this.state.pageNumber
 				});
 			}
 		}, {
 			key: "handleTweetsPerPageChange",
 			value: function handleTweetsPerPageChange(e) {
+				this.state.tweetsPerPage = e.target.value;
+				this.calculateTweetNumbers();
 				this.setState({
-					tweetsPerPage: e.target.value
+					tweetsPerPage: this.state.tweetsPerPage
 				});
+			}
+		}, {
+			key: "factoryHandleReply",
+			value: function factoryHandleReply(username) {
+				return function (message) {
+					console.log("DataTable.handleReply username = ", username, ", message = ", message);
+					_actionsActionsActionCreators2["default"].sendReply(username, message);
+				};
+			}
+		}, {
+			key: "handleCheckBoxClick",
+			value: function handleCheckBoxClick(e) {
+				this.state.selectedTweets[e.target.dataset.tweetNumber] = e.target.checked;
+				if (this.props.onSelectionChange) {
+					this.props.onSelectionChange(this.state.selectedTweets);
+				}
+				this.forceUpdate();
+			}
+		}, {
+			key: "handleCheckAllClick",
+			value: function handleCheckAllClick(e) {
+				this.fillSelectedTweets(e.target.checked);
+				if (this.props.onSelectionChange) {
+					this.props.onSelectionChange(this.state.selectedTweets);
+				}
+				this.forceUpdate();
 			}
 		}, {
 			key: "calcPagesCount",
@@ -84669,12 +85258,17 @@
 
 	exports["default"] = DataTable;
 	;
+
+	DataTable.propTypes = {
+		bucketData: _react2["default"].PropTypes.object.isRequired,
+		onSelectionChange: _react2["default"].PropTypes.func
+	};
 	module.exports = exports["default"];
 	/* Loading bar */
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 351 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(console) {/* JS dependencies */
@@ -84698,7 +85292,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _actionsFiltersActionCreators = __webpack_require__(352);
+	var _lodash = __webpack_require__(168);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _actionsFiltersActionCreators = __webpack_require__(358);
 
 	var _actionsFiltersActionCreators2 = _interopRequireDefault(_actionsFiltersActionCreators);
 
@@ -84710,7 +85308,18 @@
 		function Filters() {
 			_classCallCheck(this, Filters);
 
-			_get(Object.getPrototypeOf(Filters.prototype), "constructor", this).apply(this, arguments);
+			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+				args[_key] = arguments[_key];
+			}
+
+			_get(Object.getPrototypeOf(Filters.prototype), "constructor", this).apply(this, args);
+
+			this.state = {
+				currEventNumber: null, // is not used
+				currSocialChannelNumber: null,
+				currKloutScoreNumber: null,
+				currSentimentNumber: null
+			};
 		}
 
 		_createClass(Filters, [{
@@ -84728,67 +85337,95 @@
 						)
 					);
 				} else {
+					var assembleEventOptions = function assembleEventOptions() {
+						var events = [];
+						if (self.props.filters.events) {
+							self.props.filters.events.forEach(function (event, index) {
+								events.push(_react2["default"].createElement(
+									"option",
+									{ value: index, key: index },
+									event.team_home + " vs " + event.team_away
+								));
+							});
+						}
+						return events;
+					};
 
-					var events = [];
-					if (this.props.filters.events) {
-						this.props.filters.events.forEach(function (event, index) {
-							events.push(_react2["default"].createElement(
-								"option",
-								{ value: event.id, key: index },
-								event.team_home + " vs " + event.team_away
-							));
-						});
-					}
+					var assembleSocialChannelRadios = function assembleSocialChannelRadios() {
+						var socialChannels = [];
+						if (self.props.filters.socialChannels) {
+							self.props.filters.socialChannels.forEach(function (socialChannel, index) {
+								var checked = false;
+								if (index === self.state.currSocialChannelNumber) {
+									checked = true;
+								}
+								socialChannels.push(_react2["default"].createElement(
+									"label",
+									{ key: index },
+									_react2["default"].createElement("input", { type: "radio", checked: checked, name: "socialChannel", "data-id": index, onClick: self.handleFilterChange.bind(self) }),
+									_react2["default"].createElement(
+										"span",
+										{ className: "lbl" },
+										socialChannel.caption
+									)
+								));
+							});
+						}
+						return socialChannels;
+					};
 
-					var socialChannels = [];
-					if (this.props.filters.socialChannels) {
-						this.props.filters.socialChannels.forEach(function (socialChannel, index) {
-							socialChannels.push(_react2["default"].createElement(
-								"label",
-								{ id: socialChannel.id, key: index },
-								_react2["default"].createElement("input", { type: "checkbox", name: "man", value: "man" }),
-								_react2["default"].createElement(
-									"span",
-									{ className: "lbl" },
-									socialChannel.caption
-								)
-							));
-						});
-					}
+					var assembleKloutScoreRadios = function assembleKloutScoreRadios() {
+						var kloutScores = [];
+						if (self.props.filters.kloutScores) {
+							self.props.filters.kloutScores.forEach(function (kloutScore, index) {
+								var checked = false;
+								if (index === self.state.currKloutScoreNumber) {
+									checked = true;
+								}
+								kloutScores.push(_react2["default"].createElement(
+									"label",
+									{ key: index },
+									_react2["default"].createElement("input", { type: "radio", checked: checked, name: "kloutScore", "data-id": index, onClick: self.handleFilterChange.bind(self) }),
+									_react2["default"].createElement(
+										"span",
+										{ className: "lbl" },
+										kloutScore.caption
+									)
+								));
+							});
+						}
+						return kloutScores;
+					};
 
-					var kloutScores = [];
-					if (this.props.filters.kloutScores) {
-						this.props.filters.kloutScores.forEach(function (kloutScore, index) {
-							kloutScores.push(_react2["default"].createElement(
-								"label",
-								{ id: kloutScore.id, key: index },
-								_react2["default"].createElement("input", { type: "checkbox", name: "man", value: "man" }),
-								_react2["default"].createElement(
-									"span",
-									{ className: "lbl" },
-									kloutScore.caption
-								)
-							));
-						});
-					}
+					var assembleSentimentRadios = function assembleSentimentRadios() {
+						var sentiments = [];
+						if (self.props.filters.sentiments) {
+							self.props.filters.sentiments.forEach(function (sentiment, index) {
+								var checked = false;
+								if (index === self.state.currSentimentNumber) {
+									checked = true;
+								}
+								sentiments.push(_react2["default"].createElement(
+									"label",
+									{ key: index },
+									_react2["default"].createElement("input", { type: "radio", checked: checked, name: "sentiment", "data-id": index, onClick: self.handleFilterChange.bind(self) }),
+									_react2["default"].createElement(
+										"span",
+										{ className: "lbl" },
+										sentiment.caption
+									)
+								));
+							});
+						}
+						return sentiments;
+					};
 
-					var sentiments = [];
-					if (this.props.filters.sentiments) {
-						this.props.filters.sentiments.forEach(function (sentiment, index) {
-							sentiments.push(_react2["default"].createElement(
-								"label",
-								{ id: sentiment.id, key: index },
-								_react2["default"].createElement("input", { type: "checkbox", name: "man", value: "man" }),
-								_react2["default"].createElement(
-									"span",
-									{ className: "lbl" },
-									sentiment.caption
-								)
-							));
-						});
-					}
+					var self = this;
 
-					//
+					var events = assembleEventOptions();
+					var socialChannels = assembleSocialChannelRadios();
+					var kloutScores = assembleKloutScoreRadios();
+					var sentiments = assembleSentimentRadios();
 
 					return _react2["default"].createElement(
 						"div",
@@ -84809,7 +85446,7 @@
 									{ className: "select-field" },
 									_react2["default"].createElement(
 										"select",
-										{ className: "selectpicker", ref: "eventSelector" },
+										{ className: "selectpicker", ref: "eventSelector", onChange: this.handleEventChange },
 										events
 									)
 								)
@@ -84842,11 +85479,6 @@
 														"a",
 														{ role: "button", "data-toggle": "collapse", "data-parent": "#accordion", href: "#collapseOne", "aria-expanded": "true", "aria-controls": "collapseOne" },
 														" Social Channel ",
-														_react2["default"].createElement(
-															"span",
-															null,
-															"(Twitter)"
-														),
 														" "
 													),
 													" "
@@ -84880,11 +85512,6 @@
 														"a",
 														{ className: "collapsed", role: "button", "data-toggle": "collapse", "data-parent": "#accordion", href: "#collapseTwo", "aria-expanded": "false", "aria-controls": "collapseTwo" },
 														" Klout Score ",
-														_react2["default"].createElement(
-															"span",
-															null,
-															"(31-40)"
-														),
 														" "
 													),
 													" "
@@ -84918,11 +85545,6 @@
 														"a",
 														{ className: "collapsed", role: "button", "data-toggle": "collapse", "data-parent": "#accordion", href: "#collapsefour", "aria-expanded": "false", "aria-controls": "collapsefour" },
 														" Sentiment ",
-														_react2["default"].createElement(
-															"span",
-															null,
-															"(All)"
-														),
 														" "
 													),
 													" "
@@ -84967,16 +85589,81 @@
 			key: "componentWillReceiveProps",
 			value: function componentWillReceiveProps(nextProps) {
 				console.log("Filters.componentWillReceiveProps nextProps = ", nextProps);
+
+				if (!_lodash2["default"].isEqual(nextProps.filters, this.props.filters)) {
+					var currEventNumber = null; // is not used
+					var currSocialChannelNumber = null;
+					var currKloutScoreNumber = null;
+					var currSentimentNumber = null;
+
+					// FIXME: state.currEventNumber is not used
+					// if (nextProps.filters.events.length > 0) {
+					// 	currEventNumber = 0;
+					// }
+					if (nextProps.filters.socialChannels.length > 0) {
+						currSocialChannelNumber = 0;
+					}
+					if (nextProps.filters.kloutScores.length > 0) {
+						currKloutScoreNumber = 0;
+					}
+					if (nextProps.filters.sentiments.length > 0) {
+						currSentimentNumber = 0;
+					}
+
+					this.setState({
+						currEventNumber: currEventNumber, // is not used
+						currSocialChannelNumber: currSocialChannelNumber,
+						currKloutScoreNumber: currKloutScoreNumber,
+						currSentimentNumber: currSentimentNumber
+					});
+				}
 			}
 		}, {
-			key: "handleFilterClick",
+			key: "handleEventChange",
 
 			/* Event Handlers */
 
+			value: function handleEventChange() {
+				console.log("Filters.handleEventChange");
+			}
+		}, {
+			key: "handleFilterChange",
+			value: function handleFilterChange() {
+				var socialChannels = document.getElementsByName("socialChannel");
+				var kloutScores = document.getElementsByName("kloutScore");
+				var sentiments = document.getElementsByName("sentiment");
+
+				/* Get selected filters ids */
+				var currSocialChannelNumber = parseInt(FindSelectedRadioElement(socialChannels).dataset.id);
+				var currKloutScoreNumber = parseInt(FindSelectedRadioElement(kloutScores).dataset.id);
+				var currSentimentNumber = parseInt(FindSelectedRadioElement(sentiments).dataset.id);
+
+				console.log("Filters.handleFilterChange currSocialChannelNumber=", currSocialChannelNumber, ", currKloutScoreNumber=", currKloutScoreNumber, ", currSentimentNumber=", currSentimentNumber);
+
+				this.setState({
+					currSocialChannelNumber: currSocialChannelNumber,
+					currKloutScoreNumber: currKloutScoreNumber,
+					currSentimentNumber: currSentimentNumber
+				});
+
+				function FindSelectedRadioElement(radioGroupNodeList) {
+					for (var i = 0; i < radioGroupNodeList.length; i++) {
+						if (radioGroupNodeList[i].checked) {
+							return radioGroupNodeList[i];
+						}
+					}
+					return null;
+				}
+			}
+		}, {
+			key: "handleFilterClick",
 			value: function handleFilterClick() {
 				if (this.props.onFilterClick) {
 					this.props.onFilterClick({
-						eventId: _react2["default"].findDOMNode(this.refs.eventSelector).value
+						event: this.props.filters.events[_react2["default"].findDOMNode(this.refs.eventSelector).value],
+						socialChannel: this.props.filters.socialChannels[this.state.currSocialChannelNumber],
+						kloutScore: this.props.filters.kloutScores[this.state.currKloutScoreNumber],
+						sentiment: this.props.filters.sentiments[this.state.currSentimentNumber]
 					});
 				}
 			}
@@ -84992,121 +85679,408 @@
 		onFilterClick: _react2["default"].PropTypes.func
 	};
 	module.exports = exports["default"];
-	/* Loading bar */ /* Event Sec */ /* Event Select */ /* React approach to change state on onChange event is not applicable cause onChange does not work here */ /* Filter */ /* Collapse */ /*
-	                                                                                                                                                                                            <div className="panel panel-default">
-	                                                                                                                                                                                            <div className="panel-heading" role="tab" id="headingThree">
-	                                                                                                                                                                                            	<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> Social Relationship <span>(All)</span> </a> </h4>
-	                                                                                                                                                                                            </div>
-	                                                                                                                                                                                            <div id="collapseThree" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-	                                                                                                                                                                                            	<div className="panel-body">
-	                                                                                                                                                                                            		<div className="check_detail">
-	                                                                                                                                                                                            			<label id="a">
-	                                                                                                                                                                                            			<input type="checkbox" name="man" value="man" />
-	                                                                                                                                                                                            			<span className="lbl">Twitter</span> </label>
-	                                                                                                                                                                                            			<label id="b">
-	                                                                                                                                                                                            			<input type="checkbox" name="man" value="man" />
-	                                                                                                                                                                                            			<span className="lbl">Instagram</span> </label>
-	                                                                                                                                                                                            			<label id="c">
-	                                                                                                                                                                                            			<input type="checkbox" name="man" value="man" />
-	                                                                                                                                                                                            			<span className="lbl">Facebook</span> </label>
-	                                                                                                                                                                                            		</div>
-	                                                                                                                                                                                            	</div>
-	                                                                                                                                                                                            </div>
-	                                                                                                                                                                                            </div>
-	                                                                                                                                                                                            */ /*
-	                                                                                                                                                                                               <div className="panel panel-default">
-	                                                                                                                                                                                               <div className="panel-heading" role="tab" id="headingfive">
-	                                                                                                                                                                                               	<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefive" aria-expanded="false" aria-controls="collapsefive"> Keywords <span>(All)</span> </a> </h4>
-	                                                                                                                                                                                               </div>
-	                                                                                                                                                                                               <div id="collapsefive" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfive">
-	                                                                                                                                                                                               	<div className="panel-body">
-	                                                                                                                                                                                               		<div className="check_detail">
-	                                                                                                                                                                                               			<label id="a">
-	                                                                                                                                                                                               			<input type="checkbox" name="man" value="man" />
-	                                                                                                                                                                                               			<span className="lbl">Twitter</span> </label>
-	                                                                                                                                                                                               			<label id="b">
-	                                                                                                                                                                                               			<input type="checkbox" name="man" value="man" />
-	                                                                                                                                                                                               			<span className="lbl">Instagram</span> </label>
-	                                                                                                                                                                                               			<label id="c">
-	                                                                                                                                                                                               			<input type="checkbox" name="man" value="man" />
-	                                                                                                                                                                                               			<span className="lbl">Facebook</span> </label>
-	                                                                                                                                                                                               		</div>
-	                                                                                                                                                                                               	</div>
-	                                                                                                                                                                                               </div>
-	                                                                                                                                                                                               </div>
-	                                                                                                                                                                                               */
+	/* Loading bar */ /* Event Sec */ /* Event Select */ /* React approach to change state on onChange event is not applicable cause onChange does not work here */ /* Filter */ /* Collapse */ /*<span>(Twitter)</span>*/ /*<span>(31-40)</span>*/ /*<span>(All)</span>*/
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 352 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function(console) {/* JS dependencies */
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _AppDispatcher = __webpack_require__(170);
-
-	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
-
-	var _constantsVenyooConstants = __webpack_require__(174);
-
-	var _constantsVenyooConstants2 = _interopRequireDefault(_constantsVenyooConstants);
-
-	var _utilsVenyooWebUtils = __webpack_require__(175);
-
-	var _utilsVenyooWebUtils2 = _interopRequireDefault(_utilsVenyooWebUtils);
-
-	exports["default"] = {
-		getFilters: function getFilters() {
-			_AppDispatcher2["default"].dispatch({
-				type: _constantsVenyooConstants2["default"].ActionTypes.GET_FILTERS
-			});
-
-			_utilsVenyooWebUtils2["default"].getFilters();
-		}
-	};
-	module.exports = exports["default"];
-
-/***/ },
-/* 353 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* JS dependencies */
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	/* Stylesheet dependencies */
+	var _actionsActionsActionCreators = __webpack_require__(344);
 
-	exports["default"] = _react2["default"].createClass({
-		displayName: "Actions",
+	var _actionsActionsActionCreators2 = _interopRequireDefault(_actionsActionsActionCreators);
 
-		render: function render() {
-			return _react2["default"].createElement(
-				"div",
-				null,
-				"Actions"
-			);
+	var _DialogBox = __webpack_require__(342);
+
+	var _DialogBox2 = _interopRequireDefault(_DialogBox);
+
+	/* Static dependencies */
+
+	var _imagesSocial_1Png = __webpack_require__(355);
+
+	var _imagesSocial_1Png2 = _interopRequireDefault(_imagesSocial_1Png);
+
+	var Actions = (function (_React$Component) {
+		_inherits(Actions, _React$Component);
+
+		function Actions() {
+			_classCallCheck(this, Actions);
+
+			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+				args[_key] = arguments[_key];
+			}
+
+			_get(Object.getPrototypeOf(Actions.prototype), "constructor", this).apply(this, args);
+
+			this.state = {
+				selectedTweets: [],
+				uniqueSelectedUsers: []
+			};
 		}
-	});
+
+		_createClass(Actions, [{
+			key: "render",
+			value: function render() {
+				var tweetsAmount = this.state.selectedTweets.length;
+				var usersAmount = this.state.uniqueSelectedUsers.length;
+				var tweetsModalProp = tweetsAmount > 0 ? "modal" : "";
+				var usersModalProp = usersAmount > 0 ? "modal" : "";
+
+				console.log("Actions.render state = ", this.state);
+
+				return _react2["default"].createElement(
+					"div",
+					{ className: "duration_inner" },
+					_react2["default"].createElement(
+						"h2",
+						null,
+						"Actions:"
+					),
+					_react2["default"].createElement(
+						"ul",
+						{ className: "action_list" },
+						_react2["default"].createElement(
+							"li",
+							null,
+							" ",
+							_react2["default"].createElement(
+								"a",
+								{ href: "#", "data-toggle": usersModalProp, "data-target": "#followSelected" },
+								" ",
+								_react2["default"].createElement(
+									"i",
+									{ className: "social_icon" },
+									_react2["default"].createElement("img", { src: _imagesSocial_1Png2["default"], alt: "" })
+								),
+								_react2["default"].createElement(
+									"p",
+									null,
+									"Follow"
+								),
+								_react2["default"].createElement(
+									"span",
+									{ className: "people" },
+									usersAmount,
+									" people"
+								),
+								" "
+							),
+							" "
+						),
+						_react2["default"].createElement(
+							"li",
+							null,
+							" ",
+							_react2["default"].createElement(
+								"a",
+								{ href: "#", "data-toggle": usersModalProp, "data-target": "#tweetToSelected" },
+								" ",
+								_react2["default"].createElement(
+									"i",
+									{ className: "social_icon" },
+									_react2["default"].createElement("img", { src: _imagesSocial_1Png2["default"], alt: "" })
+								),
+								_react2["default"].createElement(
+									"p",
+									null,
+									"Tweet to"
+								),
+								_react2["default"].createElement(
+									"span",
+									{ className: "people" },
+									usersAmount,
+									" people"
+								),
+								" "
+							),
+							" "
+						),
+						_react2["default"].createElement(
+							"li",
+							null,
+							" ",
+							_react2["default"].createElement(
+								"a",
+								{ href: "#", "data-toggle": tweetsModalProp, "data-target": "#favoriteSelected" },
+								" ",
+								_react2["default"].createElement(
+									"i",
+									{ className: "social_icon" },
+									_react2["default"].createElement("img", { src: _imagesSocial_1Png2["default"], alt: "" })
+								),
+								_react2["default"].createElement(
+									"p",
+									null,
+									"Favorite"
+								),
+								_react2["default"].createElement(
+									"span",
+									{ className: "people" },
+									tweetsAmount,
+									" tweets"
+								),
+								" "
+							),
+							" "
+						),
+						_react2["default"].createElement(
+							"li",
+							null,
+							" ",
+							_react2["default"].createElement(
+								"a",
+								{ href: "#", "data-toggle": usersModalProp, "data-target": "#directMessageToSelected" },
+								" ",
+								_react2["default"].createElement(
+									"i",
+									{ className: "social_icon" },
+									_react2["default"].createElement("img", { src: _imagesSocial_1Png2["default"], alt: "" })
+								),
+								_react2["default"].createElement(
+									"p",
+									null,
+									"Direct Message to"
+								),
+								_react2["default"].createElement(
+									"span",
+									{ className: "people" },
+									usersAmount,
+									" people"
+								),
+								" "
+							),
+							" "
+						),
+						_react2["default"].createElement(
+							"li",
+							null,
+							" ",
+							_react2["default"].createElement(
+								"a",
+								{ href: "#", "data-toggle": tweetsModalProp, "data-target": "#retweetSelected" },
+								" ",
+								_react2["default"].createElement(
+									"i",
+									{ className: "social_icon" },
+									_react2["default"].createElement("img", { src: _imagesSocial_1Png2["default"], alt: "" })
+								),
+								_react2["default"].createElement(
+									"p",
+									null,
+									"Retweet"
+								),
+								_react2["default"].createElement(
+									"span",
+									{ className: "people" },
+									tweetsAmount,
+									" tweets"
+								),
+								" "
+							),
+							" "
+						)
+					),
+					_react2["default"].createElement(
+						_DialogBox2["default"],
+						{ id: "followSelected",
+							isInput: false,
+							actionName: "Follow",
+							onAction: this.handleFollowClick.bind(this) },
+						_react2["default"].createElement(
+							"h3",
+							null,
+							"You’ve selected ",
+							_react2["default"].createElement(
+								"span",
+								null,
+								usersAmount,
+								" people"
+							),
+							_react2["default"].createElement("br", null),
+							"Are you sure you want to Follow all the users?"
+						)
+					),
+					_react2["default"].createElement(
+						_DialogBox2["default"],
+						{ id: "tweetToSelected",
+							isInput: true,
+							actionName: "Tweet",
+							onAction: this.handleTweetClick.bind(this) },
+						_react2["default"].createElement(
+							"h3",
+							null,
+							"You’ve selected ",
+							_react2["default"].createElement(
+								"span",
+								null,
+								usersAmount,
+								" people"
+							),
+							_react2["default"].createElement("br", null),
+							"Enter the message to Tweet To all the users:"
+						)
+					),
+					_react2["default"].createElement(
+						_DialogBox2["default"],
+						{ id: "favoriteSelected",
+							isInput: false,
+							actionName: "Favorite",
+							onAction: this.handleFavoriteClick.bind(this) },
+						_react2["default"].createElement(
+							"h3",
+							null,
+							"You’ve selected ",
+							_react2["default"].createElement(
+								"span",
+								null,
+								tweetsAmount,
+								" tweets"
+							),
+							_react2["default"].createElement("br", null),
+							"Are you sure you want to Favorite all the tweets?"
+						)
+					),
+					_react2["default"].createElement(
+						_DialogBox2["default"],
+						{ id: "directMessageToSelected",
+							isInput: true,
+							actionName: "Direct Message",
+							onAction: this.handleDirectMessageClick.bind(this) },
+						_react2["default"].createElement(
+							"h3",
+							null,
+							"You’ve selected ",
+							_react2["default"].createElement(
+								"span",
+								null,
+								usersAmount,
+								" people"
+							),
+							_react2["default"].createElement("br", null),
+							"Enter the message to Direct Message to all the users:"
+						)
+					),
+					_react2["default"].createElement(
+						_DialogBox2["default"],
+						{ id: "retweetSelected",
+							isInput: false,
+							actionName: "Retweet",
+							onAction: this.handleRetweetClick.bind(this) },
+						_react2["default"].createElement(
+							"h3",
+							null,
+							"You’ve selected ",
+							_react2["default"].createElement(
+								"span",
+								null,
+								tweetsAmount,
+								" tweets"
+							),
+							_react2["default"].createElement("br", null),
+							"Are you sure you want to Retweet all the tweets?"
+						)
+					)
+				);
+			}
+		}, {
+			key: "componentWillReceiveProps",
+			value: function componentWillReceiveProps(nextProps) {
+				console.log("Actions.componentWillReceiveProps nextProps = ", nextProps);
+
+				var uniqueSelectedUsers = [];
+				var selectedTweets = [];
+				nextProps.bucketData.tweets.forEach(function (tweet, i) {
+					if (nextProps.selectedTweetsNumbers[i]) {
+						selectedTweets.push(tweet);
+						if (uniqueSelectedUsers.indexOf(tweet.socialHandle) === -1) {
+							uniqueSelectedUsers.push(tweet.socialHandle);
+						}
+					}
+				});
+
+				this.setState({
+					selectedTweets: selectedTweets,
+					uniqueSelectedUsers: uniqueSelectedUsers
+				});
+			}
+		}, {
+			key: "handleFollowClick",
+
+			/* Event Handlers */
+
+			value: function handleFollowClick() {
+				_actionsActionsActionCreators2["default"].sendFollow(this.state.selectedTweets[0].tweetId);
+			}
+		}, {
+			key: "handleTweetClick",
+			value: function handleTweetClick(message) {
+				_actionsActionsActionCreators2["default"].sendTweet(this.state.selectedTweets[0].socialHandle, message);
+			}
+		}, {
+			key: "handleFavoriteClick",
+			value: function handleFavoriteClick() {
+				_actionsActionsActionCreators2["default"].sendFavorite(this.state.selectedTweets[0].tweetId);
+			}
+		}, {
+			key: "handleDirectMessageClick",
+			value: function handleDirectMessageClick(message) {
+				_actionsActionsActionCreators2["default"].sendReply(this.state.selectedTweets[0].username, message);
+			}
+		}, {
+			key: "handleRetweetClick",
+			value: function handleRetweetClick() {
+				_actionsActionsActionCreators2["default"].sendRetweet(this.state.selectedTweets[0].tweetId);
+			}
+		}]);
+
+		return Actions;
+	})(_react2["default"].Component);
+
+	exports["default"] = Actions;
+	;
+
+	Actions.PropTypes = {
+		bucketData: _react2["default"].PropTypes.object.isRequired,
+		selectedTweetsNumbers: _react2["default"].PropTypes.array.isRequired
+	};
 	module.exports = exports["default"];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 354 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "f6b9c782d8345e9876640ec7ff6db1ba.png"
+
+/***/ },
+/* 356 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 * STORE DESCRIPTION:
+	 * Business logic for managing buckets data for a specific event
+	 */
 
 	"use strict";
 
@@ -85148,10 +86122,10 @@
 
 	var ActionTypes = _constantsVenyooConstants2["default"].ActionTypes;
 
-	var _filters = {};
+	var _eventBuckets = {};
 	var _isLoading = true;
 
-	var FiltersStore = (0, _objectAssign2["default"])({}, _events2["default"].EventEmitter.prototype, {
+	var EventBucketsStore = (0, _objectAssign2["default"])({}, _events2["default"].EventEmitter.prototype, {
 
 		emitChange: function emitChange() {
 			this.emit(CHANGE_EVENT);
@@ -85166,41 +86140,44 @@
 		},
 
 		getState: function getState() {
-			var state = _lodash2["default"].cloneDeep(_filters);
+			var state = {
+				buckets: _lodash2["default"].cloneDeep(_eventBuckets.buckets)
+			};
 			state.isLoading = _isLoading;
 			return state;
 		}
 
 	});
 
-	FiltersStore.dispatchToken = _AppDispatcher2["default"].register(function (action) {
+	EventBucketsStore.dispatchToken = _AppDispatcher2["default"].register(function (action) {
 		switch (action.type) {
-			case ActionTypes.RECEIVE_FILTERS_SENDING:
+			case ActionTypes.RECEIVE_EVENTBUCKETS_SENDING:
 				_isLoading = true;
-				FiltersStore.emitChange();
+				EventBucketsStore.emitChange();
 				break;
 
-			case ActionTypes.RECEIVE_FILTERS_SUCCEEDED:
+			case ActionTypes.RECEIVE_EVENTBUCKETS_SUCCEEDED:
 				_isLoading = false;
-				_filters = action.filters;
-				FiltersStore.emitChange();
+				_eventBuckets.buckets = action.eventBuckets.buckets;
+				EventBucketsStore.emitChange();
 				break;
 
-			case ActionTypes.RECEIVE_FILTERS_FAILED:
+			case ActionTypes.RECEIVE_EVENTBUCKETS_FAILED:
 				_isLoading = false;
-				FiltersStore.emitChange();
+				EventBucketsStore.emitChange();
 				break;
 
 			default:
 			// do nothing
+
 		}
 	});
 
-	exports["default"] = FiltersStore;
+	exports["default"] = EventBucketsStore;
 	module.exports = exports["default"];
 
 /***/ },
-/* 355 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -85303,25 +86280,48 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 356 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "38f9d71424dbdf005efa95d3c08f4843.jpg"
-
-/***/ },
-/* 357 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "f6b9c782d8345e9876640ec7ff6db1ba.png"
-
-/***/ },
 /* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var _AppDispatcher = __webpack_require__(170);
+
+	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+	var _constantsVenyooConstants = __webpack_require__(174);
+
+	var _constantsVenyooConstants2 = _interopRequireDefault(_constantsVenyooConstants);
+
+	var _utilsVenyooWebUtils = __webpack_require__(175);
+
+	var _utilsVenyooWebUtils2 = _interopRequireDefault(_utilsVenyooWebUtils);
+
+	exports["default"] = {
+		getFilters: function getFilters() {
+			_AppDispatcher2["default"].dispatch({
+				type: _constantsVenyooConstants2["default"].ActionTypes.GET_FILTERS
+			});
+
+			_utilsVenyooWebUtils2["default"].getFilters();
+		}
+	};
+	module.exports = exports["default"];
+
+/***/ },
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "index.html"
 
 /***/ },
-/* 359 */
+/* 360 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

@@ -1,6 +1,6 @@
 .map_canvas {
   width: 100%;
-  height: 718px;
+  height: 535px;
   border: 0; }
 .slider_start_label {
   width: 80px;
@@ -5201,8 +5201,7 @@ input, textarea, select {
   width: 100%;
   float: left;
   padding: 0;
-  margin: 0;
-  line-height: 1px; }
+  margin: 0; }
 
 .wrapper .map_block iframe {
   max-width: 100%;
@@ -5210,8 +5209,8 @@ input, textarea, select {
 
 .wrapper .map_right {
   width: 100%;
-  max-width: 380px;
-  float: left;
+  max-width: 427px;
+  float: right;
   padding: 0;
   margin: 0;
   position: absolute;
@@ -5222,7 +5221,8 @@ input, textarea, select {
 .wrapper .map_toggle {
   width: 46px;
   height: 42px;
-  float: left;
+  float: right;
+  display: block;
   padding: 0;
   margin: 0;
   font-size: 20px;
@@ -5230,13 +5230,14 @@ input, textarea, select {
   line-height: 42px;
   text-align: center;
   background: #1c89c6;
-  position: absolute;
-  left: -46px; }
+  /* position: absolute; */
+  /* left: -46px; */ }
 
 .wrapper .map_right .inner_block {
-  width: 100%;
-  height: 630px;
-  float: left;
+  width: 380px;
+  height: 500px;
+  float: right;
+  /* display: inline-block; */
   padding: 0;
   margin: 0;
   background: #fff; }
@@ -5271,6 +5272,7 @@ input, textarea, select {
   margin: 0;
   font-size: 17px;
   color: #999999;
+  height: 42px;
   display: block;
   background: #cccccc;
   font-family: 'Conv_MyriadPro-Bold_2'; }
@@ -5748,7 +5750,7 @@ input[type=checkbox] + .lbl, input[type=radio] + .lbl {
 
 .wrapper .right_sec .duration_sec .title {
   width: 100%;
-  min-height: 63px;
+  min-height: 60px;
   float: left;
   padding: 14px;
   margin: 0;
