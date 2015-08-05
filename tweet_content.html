@@ -5,8 +5,8 @@
 	position: relative;
 	width: 300px;
 	/* padding: 10px; /* $padding; */
-	margin-top: 20px;
-	margin-bottom: 7px;
+	margin-top: 10px;
+	margin-bottom: 0px;
 	/* border: black solid 1px; */
 }
 
@@ -64,10 +64,49 @@
 .twitter_private_controls {
 	float: right;
 }
+
+.twitter_pic{
+	color: #00aced;
+	font-size: 50px !important;
+}
+.twitter_direct_message, .twitter_quote, .twitter_reply, .twitter_follow, .twitter_favorite, .twitter_retweet, .twitter_tweetto {
+	font-size: 20px !important;
+	padding:5px;
+	color: #ccc;
+}
+
+.twitter_direct_message, .twitter_quote, .twitter_reply, .twitter_follow, .twitter_favorite, .twitter_retweet, .twitter_tweetto {
+	cursor: pointer;
+}
+.twitter_follow:hover , .twitter_reply:hover{
+	color: #00aced;
+}
+.twitter_retweet:hover{
+	color: #5D9352;
+}
+.twitter_direct_message:hover{
+	color: #8FA963;
+}
+.twitter_favorite:hover{
+	color: #DFD074
+}
+.twitter_tweetto:hover, .twitter_quote:hover{
+	color: #9E78C3;
+}
+.twitter_quote{
+	display: none !important;
+}
+.twitter_public_controls, .twitter_private_controls{
+	margin-top:10px;
+}
+.twitter_controls{
+	height:40px;
+	overflow: hidden;
+}
 </style>
 
 <div class="tweet_info">
-	<img class="twitter_pic" src="http://placehold.it/50x50"/>
+	<div class="twitter_pic  fa fa-twitter" /></div>
 	<div class="user_info">
 		<img class="user_pic" src="{{ infowin_picUrl }}"/>
 		<div class="user_name">{{ infowin_username }}</div>
@@ -78,15 +117,16 @@
 	</div>
 	<div class="twitter_controls">
 		<div class="twitter_private_controls">
-			<img class="twitter_direct_message" src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_direct_message_target }}"/>
-			<img class="twitter_quote"          src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_quote_target }}"/>
+			<p class="fa fa-envelope twitter_direct_message" data-toggle="modal" data-target="{{ infowin_direct_message_target }}" alt="Direct Message"></p>
+			<p class="fa fa-twitter twitter_follow" data-toggle="modal" data-target="{{ infowin_follow_target }}" alt="Follow"></p>
+            <p class="fa fa-pencil-square-o twitter_tweetto" data-toggle="modal" data-target="{{ infowin_tweet_to_target }}" alt="Tweet To"></p>
 		</div>    
 		
 		<div class="twitter_public_controls">
-			<img class="twitter_reply"    src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_reply_target }}"/>
-			<img class="twitter_follow"   src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_follow_target }}"/>
-			<img class="twitter_favorite" src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_favorite_target }}"/>
-			<img class="twitter_retweet"  src="http://placehold.it/20x20" data-toggle="modal" data-target="{{ infowin_retweet_target }}"/>
+			<p class="fa fa-reply twitter_reply" data-toggle="modal" data-target="{{ infowin_reply_target }}" alt="Reply"></p>
+            <p class="fa fa-quote-right twitter_quote" data-toggle="modal" data-target="{{ infowin_quote_target }}" alt="Quote"></p>
+			<p class="fa fa-star twitter_favorite" data-toggle="modal" data-target="{{ infowin_favorite_target }}" alt="Favorite"></p>
+			<p class="fa fa-retweet twitter_retweet" data-toggle="modal" data-target="{{ infowin_retweet_target }}" alt="Retweet"></p>
 		</div>
 	</div>
 </div>

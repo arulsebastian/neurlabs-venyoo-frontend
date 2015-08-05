@@ -74754,6 +74754,7 @@
 	/* Constants */
 	var minZoomLevel = 2;
 	var directMessagePrefix = 'directMessage';
+	var tweetToPrefix = 'tweetTo';
 	var followPrefix = 'followPrefix';
 	var favoritePrefix = 'favoritePrefix';
 	var retweetPrefix = 'retweetPrefix';
@@ -74782,6 +74783,7 @@
 			key: 'render',
 			value: function render() {
 				var directMessagePopups = [];
+				var tweetToPopups = [];
 				var followPopups = [];
 				var favoritePopups = [];
 				var retweetPopups = [];
@@ -74805,7 +74807,36 @@
 								tweetData.socialHandle
 							),
 							_react2['default'].createElement('br', null),
-							tweetData.message
+							_react2['default'].createElement(
+								'span',
+								{ className: 'reg_text' },
+								tweetData.message
+							)
+						)
+					));
+
+					tweetToPopups.push(_react2['default'].createElement(
+						_DialogBox2['default'],
+						{ key: i,
+							id: tweetToPrefix + i,
+							isInput: true,
+							actionName: 'Tweet',
+							onAction: this.factoryHandleTweetTo(tweetData.socialHandle).bind(this) },
+						_react2['default'].createElement(
+							'h3',
+							null,
+							'Tweet to: ',
+							_react2['default'].createElement(
+								'span',
+								null,
+								tweetData.socialHandle
+							),
+							_react2['default'].createElement('br', null),
+							_react2['default'].createElement(
+								'span',
+								{ className: 'reg_text' },
+								tweetData.message
+							)
 						)
 					));
 
@@ -74826,7 +74857,11 @@
 								tweetData.socialHandle
 							),
 							_react2['default'].createElement('br', null),
-							tweetData.message
+							_react2['default'].createElement(
+								'span',
+								{ className: 'reg_text' },
+								tweetData.message
+							)
 						)
 					));
 
@@ -74847,7 +74882,11 @@
 								tweetData.socialHandle
 							),
 							_react2['default'].createElement('br', null),
-							tweetData.message
+							_react2['default'].createElement(
+								'span',
+								{ className: 'reg_text' },
+								tweetData.message
+							)
 						)
 					));
 
@@ -74868,7 +74907,11 @@
 								tweetData.socialHandle
 							),
 							_react2['default'].createElement('br', null),
-							tweetData.message
+							_react2['default'].createElement(
+								'span',
+								{ className: 'reg_text' },
+								tweetData.message
+							)
 						)
 					));
 				}
@@ -74880,7 +74923,8 @@
 					directMessagePopups,
 					followPopups,
 					favoritePopups,
-					retweetPopups
+					retweetPopups,
+					tweetToPopups
 				);
 			}
 		}, {
@@ -74955,6 +74999,7 @@
 								content = content.replace('{{ infowin_favorite_target }}', '#' + favoritePrefix + i);
 								content = content.replace('{{ infowin_retweet_target }}', '#' + retweetPrefix + i);
 								content = content.replace('{{ infowin_direct_message_target }}', '#' + directMessagePrefix + i);
+								content = content.replace('{{ infowin_tweet_to_target }}', '#' + tweetToPrefix + i);
 
 								/* Place marker */
 								var marker = new google.maps.Marker({
@@ -75009,6 +75054,14 @@
 				return function (message) {
 					console.log('Map.factoryHandleReply username = ', username, ', message = ', message);
 					_actionsActionsActionCreators2['default'].sendReply(username, message);
+				};
+			}
+		}, {
+			key: 'factoryHandleTweetTo',
+			value: function factoryHandleTweetTo(username) {
+				return function (message) {
+					console.log('Map.factoryHandleTweetTo username = ', username, ', message = ', message);
+					_actionsActionsActionCreators2['default'].sendTweet(username, message);
 				};
 			}
 		}, {
@@ -85030,68 +85083,72 @@
 								" "
 							),
 							_react2["default"].createElement(
-								"table",
-								{ className: "table table-hover table-striped" },
+								"div",
+								{ style: { overflow: "auto" } },
 								_react2["default"].createElement(
-									"tbody",
-									null,
+									"table",
+									{ className: "table table-hover table-striped" },
 									_react2["default"].createElement(
-										"tr",
+										"tbody",
 										null,
 										_react2["default"].createElement(
-											"th",
+											"tr",
 											null,
-											" ",
 											_react2["default"].createElement(
-												"label",
-												{ id: "a" },
-												_react2["default"].createElement("input", { type: "checkbox", onChange: this.handleCheckAllClick.bind(this) }),
-												_react2["default"].createElement("span", { className: "lbl" }),
-												" "
+												"th",
+												null,
+												" ",
+												_react2["default"].createElement(
+													"label",
+													{ id: "a" },
+													_react2["default"].createElement("input", { type: "checkbox", onChange: this.handleCheckAllClick.bind(this) }),
+													_react2["default"].createElement("span", { className: "lbl" }),
+													" "
+												)
+											),
+											_react2["default"].createElement(
+												"th",
+												null,
+												"Reply"
+											),
+											_react2["default"].createElement(
+												"th",
+												null,
+												"Tweet"
+											),
+											_react2["default"].createElement(
+												"th",
+												null,
+												"Media Link"
+											),
+											_react2["default"].createElement(
+												"th",
+												null,
+												"Email"
+											),
+											_react2["default"].createElement(
+												"th",
+												null,
+												"Social Handle"
+											),
+											_react2["default"].createElement(
+												"th",
+												null,
+												"Sentiment"
+											),
+											_react2["default"].createElement(
+												"th",
+												null,
+												"Follower"
+											),
+											_react2["default"].createElement(
+												"th",
+												null,
+												"Following"
 											)
 										),
-										_react2["default"].createElement(
-											"th",
-											null,
-											"Reply"
-										),
-										_react2["default"].createElement(
-											"th",
-											null,
-											"Tweet"
-										),
-										_react2["default"].createElement(
-											"th",
-											null,
-											"Media Link"
-										),
-										_react2["default"].createElement(
-											"th",
-											null,
-											"Email"
-										),
-										_react2["default"].createElement(
-											"th",
-											null,
-											"Social Handle"
-										),
-										_react2["default"].createElement(
-											"th",
-											null,
-											"Sentiment"
-										),
-										_react2["default"].createElement(
-											"th",
-											null,
-											"Follower"
-										),
-										_react2["default"].createElement(
-											"th",
-											null,
-											"Following"
-										)
-									),
-									tweetsRows
+										tweetsRows
+									)
 								)
 							),
 							replyPopups
@@ -85458,11 +85515,6 @@
 								"div",
 								{ className: "event_select" },
 								_react2["default"].createElement(
-									"label",
-									null,
-									"Select Event:"
-								),
-								_react2["default"].createElement(
 									"div",
 									{ className: "select-field" },
 									_react2["default"].createElement(
@@ -85475,11 +85527,6 @@
 							_react2["default"].createElement(
 								"div",
 								{ className: "filter" },
-								_react2["default"].createElement(
-									"h3",
-									null,
-									"Filters:"
-								),
 								_react2["default"].createElement(
 									"div",
 									{ className: "collapse_sec" },
@@ -85992,10 +86039,14 @@
 								"span",
 								null,
 								usersAmount,
-								" people"
+								" users"
 							),
 							_react2["default"].createElement("br", null),
-							"Are you sure you want to Follow all the users?"
+							_react2["default"].createElement(
+								"span",
+								{ className: "reg_text" },
+								"Are you sure you want to Follow all the users?"
+							)
 						)
 					),
 					_react2["default"].createElement(
@@ -86012,10 +86063,14 @@
 								"span",
 								null,
 								usersAmount,
-								" people"
+								" users"
 							),
 							_react2["default"].createElement("br", null),
-							"Enter the message to Tweet To all the users:"
+							_react2["default"].createElement(
+								"span",
+								{ className: "reg_text" },
+								"Enter the message to Tweet To all the users:"
+							)
 						)
 					),
 					_react2["default"].createElement(
@@ -86035,7 +86090,11 @@
 								" tweets"
 							),
 							_react2["default"].createElement("br", null),
-							"Are you sure you want to Favorite all the tweets?"
+							_react2["default"].createElement(
+								"span",
+								{ className: "reg_text" },
+								"Are you sure you want to Favorite all the tweets?"
+							)
 						)
 					),
 					_react2["default"].createElement(
@@ -86052,10 +86111,14 @@
 								"span",
 								null,
 								usersAmount,
-								" people"
+								" users"
 							),
 							_react2["default"].createElement("br", null),
-							"Enter the message to Direct Message to all the users:"
+							_react2["default"].createElement(
+								"span",
+								{ className: "reg_text" },
+								"Enter the message to Direct Message to all the users:"
+							)
 						)
 					),
 					_react2["default"].createElement(
@@ -86075,7 +86138,11 @@
 								" tweets"
 							),
 							_react2["default"].createElement("br", null),
-							"Are you sure you want to Retweet all the tweets?"
+							_react2["default"].createElement(
+								"span",
+								{ className: "reg_text" },
+								"Are you sure you want to Retweet all the tweets?"
+							)
 						)
 					)
 				);
