@@ -45,7 +45,6 @@ export default class Filters extends React.Component {
 					<div className="event_sec" id="container2">
 						{/* Event Select */}
 						<div className="event_select">
-							<label>Select Event:</label>
 							<div className="select-field">
 								{/* React approach to change state on onChange event is not applicable cause onChange does not work here */}
 								<select className="selectpicker" ref="eventSelector" onChange={ this.handleEventChange }>
@@ -55,7 +54,6 @@ export default class Filters extends React.Component {
 						</div>
 						{/* Filter */}
 						<div className="filter">
-							<h3>Filters:</h3>
 							{/* Collapse */}
 							<div className="collapse_sec">
 								<div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true">

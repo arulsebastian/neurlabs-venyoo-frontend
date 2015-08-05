@@ -12,6 +12,7 @@ import '../../stylesheets/components/map.scss';
 /* Constants */
 const minZoomLevel = 2;
 const directMessagePrefix = "directMessage";
+const tweetToPrefix       = "tweetTo";
 const followPrefix        = "followPrefix";
 const favoritePrefix      = "favoritePrefix";
 const retweetPrefix       = "retweetPrefix";
@@ -30,6 +31,7 @@ export default class Map extends React.Component {
 
 	render () {
 		var directMessagePopups = [];
+		var tweetToPopups       = [];
 		var followPopups        = [];
 		var favoritePopups      = [];
 		var retweetPopups       = [];
@@ -42,7 +44,17 @@ export default class Map extends React.Component {
 						   isInput={ true }
 						   actionName="Direct Message"
 						   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) }>
-					<h3>Direct Message to: <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
+					<h3>Direct Message to: <span>{ tweetData.socialHandle }</span><br /><span className="reg_text">{ tweetData.message }</span></h3>
+				</DialogBox>
+			);
+			
+			tweetToPopups.push(
+				<DialogBox key={ i }
+						   id={ tweetToPrefix + i }
+						   isInput={ true }
+						   actionName="Tweet"
+						   onAction={ this.factoryHandleTweetTo(tweetData.socialHandle).bind(this) }>
+					<h3>Tweet to: <span>{ tweetData.socialHandle }</span><br /><span className="reg_text">{ tweetData.message }</span></h3>
 				</DialogBox>
 			);
 
@@ -52,9 +64,10 @@ export default class Map extends React.Component {
 						   isInput={ false }
 						   actionName="Follow"
 						   onAction={ this.factoryHandleFollow(tweetData.socialHandle).bind(this) }>
-					<h3>Follow <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
+					<h3>Follow <span>{ tweetData.socialHandle }</span><br /><span className="reg_text">{ tweetData.message }</span></h3>
 				</DialogBox>
 			);
+
 
 			favoritePopups.push(
 				<DialogBox key={ i }
@@ -62,7 +75,7 @@ export default class Map extends React.Component {
 						   isInput={ false }
 						   actionName="Favorite"
 						   onAction={ this.factoryHandleFavorite(tweetData.tweetId).bind(this) }>
-					<h3>Favorite a tweet by <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
+					<h3>Favorite a tweet by <span>{ tweetData.socialHandle }</span><br /><span className="reg_text">{ tweetData.message }</span></h3>
 				</DialogBox>
 			);
 
@@ -72,7 +85,7 @@ export default class Map extends React.Component {
 						   isInput={ false }
 						   actionName="Retweet"
 						   onAction={ this.factoryHandleRetweet(tweetData.tweetId).bind(this) }>
-					<h3>Retweet <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
+					<h3>Retweet <span>{ tweetData.socialHandle }</span><br /><span className="reg_text">{ tweetData.message }</span></h3>
 				</DialogBox>
 			);
 		}
@@ -178,6 +191,7 @@ export default class Map extends React.Component {
 					content = content.replace('{{ infowin_favorite_target }}', "#" + favoritePrefix + i);
 					content = content.replace('{{ infowin_retweet_target }}',  "#" + retweetPrefix + i);
 					content = content.replace('{{ infowin_direct_message_target }}', "#" + directMessagePrefix + i);
+					content = content.replace('{{ infowin_tweet_target }}',          "#" + tweetToPrefix + i);
 
 					/* Place marker */
 					var marker = new google.maps.Marker({
@@ -209,6 +223,12 @@ export default class Map extends React.Component {
 		return function (message) {
 			console.log("Map.factoryHandleReply username = ", username, ", message = ", message);
 			ActionsActionCreators.sendReply(username, message);
+		}
+	}
+	factoryHandleTweetTo (username) {
+		return function (message) {
+			console.log("Map.factoryHandleTweetTo username = ", username, ", message = ", message);
+			ActionsActionCreators.sendTweet(username, message);
 		}
 	}
 	factoryHandleFollow (screenName) {
