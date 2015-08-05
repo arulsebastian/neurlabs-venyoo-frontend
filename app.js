@@ -21592,7 +21592,7 @@
 
 	var _Filters2 = _interopRequireDefault(_Filters);
 
-	var _Actions = __webpack_require__(354);
+	var _Actions = __webpack_require__(355);
 
 	var _Actions2 = _interopRequireDefault(_Actions);
 
@@ -21602,17 +21602,17 @@
 
 	var _storesFiltersStore2 = _interopRequireDefault(_storesFiltersStore);
 
-	var _storesEventBucketsStore = __webpack_require__(356);
+	var _storesEventBucketsStore = __webpack_require__(357);
 
 	var _storesEventBucketsStore2 = _interopRequireDefault(_storesEventBucketsStore);
 
-	var _storesBucketStore = __webpack_require__(357);
+	var _storesBucketStore = __webpack_require__(358);
 
 	var _storesBucketStore2 = _interopRequireDefault(_storesBucketStore);
 
 	/** Action creators **/
 
-	var _actionsFiltersActionCreators = __webpack_require__(358);
+	var _actionsFiltersActionCreators = __webpack_require__(354);
 
 	var _actionsFiltersActionCreators2 = _interopRequireDefault(_actionsFiltersActionCreators);
 
@@ -21633,7 +21633,7 @@
 				/* Default values */
 				eventId: 1,
 				socialChannelId: 0,
-				kloutScoreId: 4,
+				kloutScoreId: 2,
 				sentimentId: 0
 			}, // Preserve the value
 			selectedTweetsNumbers: VenyooAppObj.state ? VenyooAppObj.state.selectedTweetsNumbers : [], // Preserve the value
@@ -21781,7 +21781,7 @@
 				this.state.selectedFilters.socialChannelId = filtersChoice.socialChannel.id;
 				this.state.selectedFilters.kloutScoreId = filtersChoice.kloutScore.id;
 				this.state.selectedFilters.sentimentId = filtersChoice.sentiment.id;
-				_actionsEventBucketsActionCreators2["default"].getEventBuckets(this.state.selectedFilters.eventId);
+				_actionsEventBucketsActionCreators2["default"].getEventBuckets(this.state.selectedFilters.eventId, this.state.selectedFilters.socialChannelId, this.state.selectedFilters.kloutScoreId, this.state.selectedFilters.sentimentId);
 			}
 		}, {
 			key: "handleBucketChanged",
@@ -35116,10 +35116,17 @@
 		}, {
 			key: "getEventBucketsMetadata",
 			value: function getEventBucketsMetadata(eventId) {
+				var socialChannelId = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+				var kloutScoreId = arguments.length <= 2 || arguments[2] === undefined ? 4 : arguments[2];
+				var sentimentId = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+
 				var self = this;
 
 				var urlParams = {
-					eventId: eventId
+					eventId: eventId,
+					socialChannelId: socialChannelId,
+					kloutScoreId: kloutScoreId,
+					sentimentId: sentimentId
 				};
 
 				_actionsServerActionCreators2["default"].receiveEventBucketsMetadataSending(urlParams);
@@ -74293,7 +74300,7 @@
 				eventBuckets: eventBuckets
 			});
 
-			_BucketActionCreators2["default"].getBucket(urlParams.eventId, eventBuckets.buckets[0].bucketId);
+			_BucketActionCreators2["default"].getBucket(urlParams.eventId, eventBuckets.buckets[0].bucketId, urlParams.socialChannelId, urlParams.kloutScoreId, urlParams.sentimentId);
 		},
 
 		receiveEventBucketsMetadataFailed: function receiveEventBucketsMetadataFailed(urlParams, error, response, body) {
@@ -74476,11 +74483,15 @@
 
 	exports["default"] = {
 		getEventBuckets: function getEventBuckets(eventId) {
+			var socialChannelId = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+			var kloutScoreId = arguments.length <= 2 || arguments[2] === undefined ? 4 : arguments[2];
+			var sentimentId = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+
 			_AppDispatcher2["default"].dispatch({
 				type: _constantsVenyooConstants2["default"].ActionTypes.GET_EVENTBUCKETS_METADATA
 			});
 
-			_utilsVenyooWebUtils2["default"].getEventBucketsMetadata(eventId);
+			_utilsVenyooWebUtils2["default"].getEventBucketsMetadata(eventId, socialChannelId, kloutScoreId, sentimentId);
 		}
 	};
 	module.exports = exports["default"];
@@ -85296,7 +85307,7 @@
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
-	var _actionsFiltersActionCreators = __webpack_require__(358);
+	var _actionsFiltersActionCreators = __webpack_require__(354);
 
 	var _actionsFiltersActionCreators2 = _interopRequireDefault(_actionsFiltersActionCreators);
 
@@ -85477,8 +85488,15 @@
 													" ",
 													_react2["default"].createElement(
 														"a",
-														{ role: "button", "data-toggle": "collapse", "data-parent": "#accordion", href: "#collapseOne", "aria-expanded": "true", "aria-controls": "collapseOne" },
+														{ className: "collapsed", role: "button", "data-toggle": "collapse", "data-parent": "#accordion", href: "#collapseOne", "aria-expanded": "true", "aria-controls": "collapseOne" },
 														" Social Channel ",
+														_react2["default"].createElement(
+															"span",
+															null,
+															"(",
+															this.props.filters.socialChannels[this.state.currSocialChannelNumber].caption,
+															")"
+														),
 														" "
 													),
 													" "
@@ -85486,7 +85504,7 @@
 											),
 											_react2["default"].createElement(
 												"div",
-												{ id: "collapseOne", className: "panel-collapse collapse in", role: "tabpanel", "aria-labelledby": "headingOne" },
+												{ id: "collapseOne", className: "panel-collapse collapse", role: "tabpanel", "aria-labelledby": "headingOne" },
 												_react2["default"].createElement(
 													"div",
 													{ className: "panel-body" },
@@ -85512,6 +85530,13 @@
 														"a",
 														{ className: "collapsed", role: "button", "data-toggle": "collapse", "data-parent": "#accordion", href: "#collapseTwo", "aria-expanded": "false", "aria-controls": "collapseTwo" },
 														" Klout Score ",
+														_react2["default"].createElement(
+															"span",
+															null,
+															"(",
+															this.props.filters.kloutScores[this.state.currKloutScoreNumber].caption,
+															")"
+														),
 														" "
 													),
 													" "
@@ -85543,8 +85568,15 @@
 													" ",
 													_react2["default"].createElement(
 														"a",
-														{ className: "collapsed", role: "button", "data-toggle": "collapse", "data-parent": "#accordion", href: "#collapsefour", "aria-expanded": "false", "aria-controls": "collapsefour" },
+														{ role: "button", "data-toggle": "collapse", "data-parent": "#accordion", href: "#collapsefour", "aria-expanded": "false", "aria-controls": "collapsefour" },
 														" Sentiment ",
+														_react2["default"].createElement(
+															"span",
+															null,
+															"(",
+															this.props.filters.sentiments[this.state.currSentimentNumber].caption,
+															")"
+														),
 														" "
 													),
 													" "
@@ -85552,7 +85584,7 @@
 											),
 											_react2["default"].createElement(
 												"div",
-												{ id: "collapsefour", className: "panel-collapse collapse", role: "tabpanel", "aria-labelledby": "headingfour" },
+												{ id: "collapsefour", className: "panel-collapse collapse in", role: "tabpanel", "aria-labelledby": "headingfour" },
 												_react2["default"].createElement(
 													"div",
 													{ className: "panel-body" },
@@ -85604,7 +85636,7 @@
 						currSocialChannelNumber = 0;
 					}
 					if (nextProps.filters.kloutScores.length > 0) {
-						currKloutScoreNumber = 0;
+						currKloutScoreNumber = 2;
 					}
 					if (nextProps.filters.sentiments.length > 0) {
 						currSentimentNumber = 0;
@@ -85679,11 +85711,46 @@
 		onFilterClick: _react2["default"].PropTypes.func
 	};
 	module.exports = exports["default"];
-	/* Loading bar */ /* Event Sec */ /* Event Select */ /* React approach to change state on onChange event is not applicable cause onChange does not work here */ /* Filter */ /* Collapse */ /*<span>(Twitter)</span>*/ /*<span>(31-40)</span>*/ /*<span>(All)</span>*/
+	/* Loading bar */ /* Event Sec */ /* Event Select */ /* React approach to change state on onChange event is not applicable cause onChange does not work here */ /* Filter */ /* Collapse */
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 /* 354 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var _AppDispatcher = __webpack_require__(170);
+
+	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+	var _constantsVenyooConstants = __webpack_require__(174);
+
+	var _constantsVenyooConstants2 = _interopRequireDefault(_constantsVenyooConstants);
+
+	var _utilsVenyooWebUtils = __webpack_require__(175);
+
+	var _utilsVenyooWebUtils2 = _interopRequireDefault(_utilsVenyooWebUtils);
+
+	exports["default"] = {
+		getFilters: function getFilters() {
+			_AppDispatcher2["default"].dispatch({
+				type: _constantsVenyooConstants2["default"].ActionTypes.GET_FILTERS
+			});
+
+			_utilsVenyooWebUtils2["default"].getFilters();
+		}
+	};
+	module.exports = exports["default"];
+
+/***/ },
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(console) {/* JS dependencies */
@@ -85717,7 +85784,7 @@
 
 	/* Static dependencies */
 
-	var _imagesSocial_1Png = __webpack_require__(355);
+	var _imagesSocial_1Png = __webpack_require__(356);
 
 	var _imagesSocial_1Png2 = _interopRequireDefault(_imagesSocial_1Png);
 
@@ -86068,13 +86135,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 355 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "f6b9c782d8345e9876640ec7ff6db1ba.png"
 
 /***/ },
-/* 356 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -86177,7 +86244,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 357 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -86277,41 +86344,6 @@
 	});
 
 	exports["default"] = BucketStore;
-	module.exports = exports["default"];
-
-/***/ },
-/* 358 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _AppDispatcher = __webpack_require__(170);
-
-	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
-
-	var _constantsVenyooConstants = __webpack_require__(174);
-
-	var _constantsVenyooConstants2 = _interopRequireDefault(_constantsVenyooConstants);
-
-	var _utilsVenyooWebUtils = __webpack_require__(175);
-
-	var _utilsVenyooWebUtils2 = _interopRequireDefault(_utilsVenyooWebUtils);
-
-	exports["default"] = {
-		getFilters: function getFilters() {
-			_AppDispatcher2["default"].dispatch({
-				type: _constantsVenyooConstants2["default"].ActionTypes.GET_FILTERS
-			});
-
-			_utilsVenyooWebUtils2["default"].getFilters();
-		}
-	};
 	module.exports = exports["default"];
 
 /***/ },
