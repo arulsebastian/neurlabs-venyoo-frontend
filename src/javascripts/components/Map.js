@@ -96,6 +96,7 @@ export default class Map extends React.Component {
 				{ followPopups }
 				{ favoritePopups }
 				{ retweetPopups }
+				{ tweetToPopups }
 			</div>
 		);
 	}
@@ -190,7 +191,7 @@ export default class Map extends React.Component {
 					content = content.replace('{{ infowin_favorite_target }}', "#" + favoritePrefix + i);
 					content = content.replace('{{ infowin_retweet_target }}',  "#" + retweetPrefix + i);
 					content = content.replace('{{ infowin_direct_message_target }}', "#" + directMessagePrefix + i);
-					content = content.replace('{{ infowin_tweet_target }}',          "#" + tweetToPrefix + i);
+					content = content.replace('{{ infowin_tweet_to_target }}',       "#" + tweetToPrefix + i);
 
 					/* Place marker */
 					var marker = new google.maps.Marker({
