@@ -91,25 +91,27 @@ export default class DataTable extends React.Component {
 				<div className="container">
 					<div id="container">
 						<h3 className="grey-color">{ this.state.tweetsTotal } entries {timeLabel} <a href="#" className="full_screen"><i className="fa fa-arrows-alt"></i> Full Screen</a> </h3>
-						<table className="table table-hover table-striped">
-							<tbody>
-								<tr>
-									<th> <label id="a">
-										<input type="checkbox" onChange={ this.handleCheckAllClick.bind(this) } />
-										<span className="lbl"></span> </label>
-									</th>
-									<th>Reply</th>
-									<th>Tweet</th>
-									<th>Media Link</th>
-									<th>Email</th>
-									<th>Social Handle</th>
-									<th>Sentiment</th>
-									<th>Follower</th>
-									<th>Following</th>
-								</tr>
-								{ tweetsRows }
-							</tbody>
-						</table>
+						<div style={{ overflow: "auto" }}>
+							<table className="table table-hover table-striped">
+								<tbody>
+									<tr>
+										<th> <label id="a">
+											<input type="checkbox" onChange={ this.handleCheckAllClick.bind(this) } />
+											<span className="lbl"></span> </label>
+										</th>
+										<th>Reply</th>
+										<th>Tweet</th>
+										<th>Media Link</th>
+										<th>Email</th>
+										<th>Social Handle</th>
+										<th>Sentiment</th>
+										<th>Follower</th>
+										<th>Following</th>
+									</tr>
+									{ tweetsRows }
+								</tbody>
+							</table>
+						</div>
 						{ replyPopups }
 					</div>
 					<div className="clearfix">&nbsp;</div>

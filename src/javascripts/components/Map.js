@@ -68,7 +68,6 @@ export default class Map extends React.Component {
 				</DialogBox>
 			);
 
-
 			favoritePopups.push(
 				<DialogBox key={ i }
 						   id={ favoritePrefix + i }
