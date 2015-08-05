@@ -59,11 +59,12 @@ export default class Filters extends React.Component {
 							{/* Collapse */}
 							<div className="collapse_sec">
 								<div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+									
 									<div className="panel panel-default">
 										<div className="panel-heading" role="tab" id="headingOne">
-											<h4 className="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Social Channel {/*<span>(Twitter)</span>*/} </a> </h4>
+											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Social Channel <span>({ this.props.filters.socialChannels[this.state.currSocialChannelNumber].caption })</span> </a> </h4>
 										</div>
-										<div id="collapseOne" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+										<div id="collapseOne" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 											<div className="panel-body">
 												<div className="check_detail">
 													{socialChannels}
@@ -73,7 +74,7 @@ export default class Filters extends React.Component {
 									</div>
 									<div className="panel panel-default">
 										<div className="panel-heading" role="tab" id="headingTwo">
-											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> Klout Score {/*<span>(31-40)</span>*/} </a> </h4>
+											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> Klout Score <span>({ this.props.filters.kloutScores[this.state.currKloutScoreNumber].caption })</span> </a> </h4>
 										</div>
 										<div id="collapseTwo" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 											<div className="panel-body">
@@ -85,9 +86,9 @@ export default class Filters extends React.Component {
 									</div>
 									<div className="panel panel-default">
 										<div className="panel-heading" role="tab" id="headingfour">
-											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="false" aria-controls="collapsefour"> Sentiment {/*<span>(All)</span>*/} </a> </h4>
+											<h4 className="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="false" aria-controls="collapsefour"> Sentiment <span>({ this.props.filters.sentiments[this.state.currSentimentNumber].caption })</span> </a> </h4>
 										</div>
-										<div id="collapsefour" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfour">
+										<div id="collapsefour" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingfour">
 											<div className="panel-body">
 												<div className="check_detail">
 													{ sentiments }
