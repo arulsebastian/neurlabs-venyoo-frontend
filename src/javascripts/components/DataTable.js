@@ -13,7 +13,7 @@ export default class DataTable extends React.Component {
 		this.state = {
 			selectedTweets: [],   // All the checkboxes across all the pages
 			tweetsTotal:    0,
-			tweetsPerPage:  20,
+			tweetsPerPage:  5,
 			pagesCount:     1,
 			pageNumber:     0,    // starts from 0
 			tweetsOnPage:   0
@@ -118,6 +118,7 @@ export default class DataTable extends React.Component {
 							<div className="select_detail">
 								<div className="select-field">
 									<select value={this.state.tweetsPerPage} onChange={this.handleTweetsPerPageChange.bind(this)}>
+										<option value="5">5 per page</option>
 										<option value="20">20 per page</option>
 										<option value="50">50 per page</option>
 										<option value="150">150 per page</option>
