@@ -7,27 +7,19 @@ import DataTable from "./DataTable";
 import Filters from "./Filters";
 import Actions from "./Actions";
 /** Stores **/
-import FiltersStore from "../stores/FiltersStore";
+import FiltersStore      from "../stores/FiltersStore";
 import EventBucketsStore from "../stores/EventBucketsStore";
-import BucketStore from "../stores/BucketStore";
+import BucketStore       from "../stores/BucketStore";
 /** Action creators **/
-import FiltersActionCreators from "../actions/FiltersActionCreators";
+import FiltersActionCreators      from "../actions/FiltersActionCreators";
 import EventBucketsActionCreators from "../actions/EventBucketsActionCreators";
-import BucketActionCreators from "../actions/BucketActionCreators";
+import BucketActionCreators       from "../actions/BucketActionCreators";
 
 /* Static dependencies */
 // import "stylesheets/modules/container";
 
 function getStoresState (VenyooAppObj) {
 	return {
-		selectedFilters:       (VenyooAppObj.state) ? VenyooAppObj.state.selectedFilters : {
-			/* Default values */
-			eventId:         1, 
-			socialChannelId: 0,
-			kloutScoreId:    2,
-			sentimentId:     0
-		},    // Preserve the value
-		selectedBucketId:      (VenyooAppObj.state) ? VenyooAppObj.state.selectedBucketId : 0,         // Preserve the value
 		selectedTweetsNumbers: (VenyooAppObj.state) ? VenyooAppObj.state.selectedTweetsNumbers : [],   // Preserve the value
 		filters:               FiltersStore.getState(),
 		eventBuckets:          EventBucketsStore.getState(),
@@ -94,6 +86,9 @@ export default class VenyooApp extends React.Component {
 		FiltersStore     .addChangeListener(this._onChange.bind(this));
 		EventBucketsStore.addChangeListener(this._onChange.bind(this));
 		BucketStore      .addChangeListener(this._onChange.bind(this));
+
+		/* Get filters to fill the system with data */
+		FiltersActionCreators.getFilters();
 	}
 
 	componentWillUnmount () {
@@ -106,24 +101,19 @@ export default class VenyooApp extends React.Component {
 
 	handleFilterClicked (filtersChoice) {
 		console.log("VenyooApp.handleFilterClicked filtersChoice=", filtersChoice);
-		this.state.selectedFilters.eventId         = filtersChoice.event.id;
-		this.state.selectedFilters.socialChannelId = filtersChoice.socialChannel.id;
-		this.state.selectedFilters.kloutScoreId    = filtersChoice.kloutScore.id;
-		this.state.selectedFilters.sentimentId     = filtersChoice.sentiment.id;
-		EventBucketsActionCreators.getEventBuckets(this.state.selectedFilters.eventId,
-												   this.state.selectedFilters.socialChannelId,
-												   this.state.selectedFilters.kloutScoreId,
-												   this.state.selectedFilters.sentimentId,
-												   this.state.selectedBucketId);
+		FiltersActionCreators.changeFiltersSelection(filtersChoice.event.id,
+													 filtersChoice.socialChannel.id,
+													 filtersChoice.kloutScore.id,
+													 filtersChoice.sentiment.id,
+													 this.state.eventBuckets.selected.bucketId);
 	}
 	handleBucketChanged (bucketId) {
-		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", state.selectedFilters=", this.state.selectedFilters);
-		this.state.selectedBucketId = bucketId;
-		BucketActionCreators.getBucket(this.state.selectedFilters.eventId, 
-									   this.state.selectedBucketId,
-									   this.state.selectedFilters.socialChannelId,
-									   this.state.selectedFilters.kloutScoreId,
-									   this.state.selectedFilters.sentimentId);
+		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", state.filters.selected=", this.state.filters.selected);
+		EventBucketsActionCreators.changeBucketSelection(bucketId,
+														 this.state.filters.selected.eventId,
+														 this.state.filters.selected.socialChannelId,
+														 this.state.filters.selected.kloutScoreId,
+														 this.state.filters.selected.sentimentId);
 	}
 	handleDataTableSelectionChanged (selectedTweetsNumbers) {
 		console.log("VenyooApp.handleDataTableSelectionChanged selectedTweetsNumbers=", selectedTweetsNumbers);

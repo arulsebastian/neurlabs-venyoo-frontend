@@ -3,6 +3,7 @@
  * Business logic for managing buckets data for a specific event
  */
 
+/* JS dependencies */
 import events from "events";
 import assign from "object-assign";
 import _ from "lodash";
@@ -11,10 +12,13 @@ import VenyooConstants from "../constants/VenyooConstants";
 import VenyooWebUtils from "../utils/VenyooWebUtils";
 import DataFormatAdapter from "../utils/DataFormat/DataFormatAdapter";
 
+/* Static dependencies */
+
+/* Constants */
 const CHANGE_EVENT = "change";
+const ActionTypes = VenyooConstants.ActionTypes;
 
-var ActionTypes = VenyooConstants.ActionTypes;
-
+/* Store State */
 var _eventBuckets = {};
 var _isLoading = true;
 

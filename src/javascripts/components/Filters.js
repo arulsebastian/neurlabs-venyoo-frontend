@@ -3,7 +3,7 @@ import React from "react";
 import _ from "lodash";
 import FiltersActionCreators from "../actions/FiltersActionCreators";
 
-/* Stylesheet dependencies */
+/* Static dependencies */
 
 export default class Filters extends React.Component {
 
@@ -173,10 +173,6 @@ export default class Filters extends React.Component {
 				return sentiments;
 			}
 		}
-	}
-
-	componentDidMount () {
-		FiltersActionCreators.getFilters();
 	}
 
 	componentWillReceiveProps (nextProps) {
