@@ -103,9 +103,6 @@ export default class Filters extends React.Component {
 							</div>
 						</div>
 					</div>
-					<div className="filter_btn">
-						<a href="#" onClick={ this.handleFilterClick.bind(this) }>Filter</a>
-					</div>
 				</div>
 			);
 
@@ -209,14 +206,20 @@ export default class Filters extends React.Component {
 					", currKloutScoreId=", currKloutScoreId,
 					", currSentimentId=", currSentimentId);
 
-		this.setState({
-			selected: {
-				eventId:         this.state.selected.eventId,
-				socialChannelId: currSocialChannelId,
-				kloutScoreId:    currKloutScoreId,
-				sentimentId:     currSentimentId
-			}
-		});
+		var selectedFilters = {
+			eventId:         this.state.selected.eventId,
+			socialChannelId: currSocialChannelId,
+			kloutScoreId:    currKloutScoreId,
+			sentimentId:     currSentimentId
+		};
+
+		if (this.props.onFilterClick) {
+			this.props.onFilterClick(selectedFilters);
+		} else {
+			this.setState({
+				selected: selectedFilters
+			});
+		}
 
 		function FindSelectedRadioElement (radioGroupNodeList) {
 			for (var i = 0; i < radioGroupNodeList.length; i++) {
@@ -225,12 +228,6 @@ export default class Filters extends React.Component {
 				}
 			}
 			return null;
-		}
-	}
-
-	handleFilterClick () {
-		if (this.props.onFilterClick) {
-			this.props.onFilterClick(this.state.selected);
 		}
 	}
 }
