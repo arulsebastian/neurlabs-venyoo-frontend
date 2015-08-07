@@ -10,7 +10,7 @@ export default {
 		});
 
 		VenyooWebUtils.getFilters();
-	}
+	},
 
 	changeFiltersSelection (nextEventId         = 1,
 							nextSocialChannelId = 0,
@@ -18,8 +18,8 @@ export default {
 							nextSentimentId     = 0,
 							bucketId            = 0) {
 		AppDispatcher.dispatch({
-			type:     VenyooConstants.ActionTypes.CHANGE_FILTERS_SELECTION
-			selected: {
+			type:     VenyooConstants.ActionTypes.CHANGE_FILTERS_SELECTION,
+			selectedFilters: {
 				eventId:         nextEventId,
 				socialChannelId: nextSocialChannelId,
 				kloutScoreId:    nextKloutScoreId,

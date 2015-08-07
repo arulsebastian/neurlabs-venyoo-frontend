@@ -16,8 +16,8 @@ const CHANGE_EVENT = "change";
 const ActionTypes = VenyooConstants.ActionTypes;
 
 /* Store State */
-var _filters   = {};
-var _selected  = {
+var _filters = {};
+var _selectedFilters = {
 	/* Default values */
 	eventId:         1, 
 	socialChannelId: 0,
@@ -42,7 +42,7 @@ var FiltersStore = assign({}, events.EventEmitter.prototype, {
 
 	getState: function () {
 		var state = _.cloneDeep(_filters);
-		state.selected = _selected;
+		state.selected  = _selectedFilters;
 		state.isLoading = _isLoading;
 		return state;
 	}
@@ -53,7 +53,7 @@ FiltersStore.dispatchToken = AppDispatcher.register(function (action) {
 	switch (action.type) {
 		/* UI events */
 		case ActionTypes.CHANGE_FILTERS_SELECTION:
-			_selected = action.selectedFilters;
+			_selectedFilters = action.selectedFilters;
 			FiltersStore.emitChange();
 			break;
 

@@ -16,11 +16,12 @@ import DataFormatAdapter from "../utils/DataFormat/DataFormatAdapter";
 
 /* Constants */
 const CHANGE_EVENT = "change";
-const ActionTypes = VenyooConstants.ActionTypes;
+const ActionTypes  = VenyooConstants.ActionTypes;
 
 /* Store State */
-var _eventBuckets = {};
-var _isLoading = true;
+var _selectedBucketId = 0;
+var _eventBuckets     = {};
+var _isLoading        = true;
 
 var EventBucketsStore = assign({}, events.EventEmitter.prototype, {
 
@@ -38,9 +39,10 @@ var EventBucketsStore = assign({}, events.EventEmitter.prototype, {
 
 	getState: function () {
 		var state = {
-			buckets: _.cloneDeep(_eventBuckets.buckets)
+			buckets:          _.cloneDeep(_eventBuckets.buckets),
+			selectedBucketId: _selectedBucketId,
+			isLoading:        _isLoading
 		};
-		state.isLoading = _isLoading;
 		return state;
 	}
 
@@ -48,6 +50,13 @@ var EventBucketsStore = assign({}, events.EventEmitter.prototype, {
 
 EventBucketsStore.dispatchToken = AppDispatcher.register(function (action) {
 	switch (action.type) {
+		/* UI events */
+		case ActionTypes.CHANGE_BUCKET_SELECTION:
+			_selectedBucketId = action.selectedBucketId;
+			EventBucketsStore.emitChange();
+			break;
+
+		/* API events */
 		case ActionTypes.RECEIVE_EVENTBUCKETS_SENDING:
 			_isLoading = true;
 			EventBucketsStore.emitChange();

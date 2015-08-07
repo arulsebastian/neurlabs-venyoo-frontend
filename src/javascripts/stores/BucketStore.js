@@ -16,11 +16,12 @@ import DataFormatAdapter from "../utils/DataFormat/DataFormatAdapter";
 
 /* Constants */
 const CHANGE_EVENT = "change";
-const ActionTypes = VenyooConstants.ActionTypes;
+const ActionTypes  = VenyooConstants.ActionTypes;
 
 /* Store State */
-var _tweets = [];
-var _isLoading = true;
+var _tweets                = [];
+var _selectedTweetsNumbers = [];
+var _isLoading             = true;
 
 var BucketStore = assign({}, events.EventEmitter.prototype, {
 
@@ -38,9 +39,10 @@ var BucketStore = assign({}, events.EventEmitter.prototype, {
 
 	getState: function () {
 		var state = {
-			tweets: _.cloneDeep(_tweets)
+			tweets:                _.cloneDeep(_tweets),
+			selectedTweetsNumbers: _selectedTweetsNumbers,
+			isLoading:             _isLoading
 		};
-		state.isLoading = _isLoading;
 		return state;
 	}
 
@@ -48,6 +50,13 @@ var BucketStore = assign({}, events.EventEmitter.prototype, {
 
 BucketStore.dispatchToken = AppDispatcher.register(function (action) {
 	switch (action.type) {
+		/* UI events */
+		case ActionTypes.CHANGE_TWEETS_SELECTION:
+			_selectedTweetsNumbers = action.selectedTweetsNumbers;
+			BucketStore.emitChange();
+			break;
+
+		/* API events */
 		case ActionTypes.RECEIVE_BUCKET_SENDING:
 			_isLoading = true;
 			BucketStore.emitChange();

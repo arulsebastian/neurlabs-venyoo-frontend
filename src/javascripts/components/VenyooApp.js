@@ -20,10 +20,9 @@ import BucketActionCreators       from "../actions/BucketActionCreators";
 
 function getStoresState (VenyooAppObj) {
 	return {
-		selectedTweetsNumbers: (VenyooAppObj.state) ? VenyooAppObj.state.selectedTweetsNumbers : [],   // Preserve the value
-		filters:               FiltersStore.getState(),
-		eventBuckets:          EventBucketsStore.getState(),
-		bucketData:            BucketStore.getState()
+		filters:      FiltersStore.getState(),
+		eventBuckets: EventBucketsStore.getState(),
+		bucketData:   BucketStore.getState()
 	};
 }
 
@@ -74,7 +73,9 @@ export default class VenyooApp extends React.Component {
 							<div className="title">
 								<h3><i className="fa fa-bars"></i>{/**} Event Duration <span>12 hours / 10 min intervals</span>{**/}</h3>
 							</div>
-							<Actions bucketData={this.state.bucketData} selectedTweetsNumbers={ this.state.selectedTweetsNumbers } />
+							<Actions bucketData={this.state.bucketData} selectedTweetsNumbers={ this.state.bucketData.selectedTweetsNumbers } />
+							<hr />
+							<Actions bucketData={this.state.bucketData} selectedTweetsNumbers={ this.state.bucketData.selectedTweetsNumbers } />
 						</div>
 					</div>
 				</div>
@@ -99,13 +100,13 @@ export default class VenyooApp extends React.Component {
 
 	/* Event handlers */
 
-	handleFilterClicked (filtersChoice) {
-		console.log("VenyooApp.handleFilterClicked filtersChoice=", filtersChoice);
-		FiltersActionCreators.changeFiltersSelection(filtersChoice.event.id,
-													 filtersChoice.socialChannel.id,
-													 filtersChoice.kloutScore.id,
-													 filtersChoice.sentiment.id,
-													 this.state.eventBuckets.selected.bucketId);
+	handleFilterClicked (selectedFilters) {
+		console.log("VenyooApp.handleFilterClicked selectedFilters=", selectedFilters);
+		FiltersActionCreators.changeFiltersSelection(selectedFilters.eventId,
+													 selectedFilters.socialChannelId,
+													 selectedFilters.kloutScoreId,
+													 selectedFilters.sentimentId,
+													 this.state.eventBuckets.selectedBucketId);
 	}
 	handleBucketChanged (bucketId) {
 		console.log("VenyooApp.handleBucketChanged bucketId=", bucketId, ", state.filters.selected=", this.state.filters.selected);
@@ -117,9 +118,7 @@ export default class VenyooApp extends React.Component {
 	}
 	handleDataTableSelectionChanged (selectedTweetsNumbers) {
 		console.log("VenyooApp.handleDataTableSelectionChanged selectedTweetsNumbers=", selectedTweetsNumbers);
-		this.setState({
-			selectedTweetsNumbers : selectedTweetsNumbers
-		});
+		// BucketActionCreators.changeTweetsSelection(selectedTweetsNumbers);
 	}
 
 	_onChange () {

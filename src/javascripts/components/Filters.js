@@ -11,10 +11,7 @@ export default class Filters extends React.Component {
 		super(...args);
 
 		this.state = {
-			currEventNumber:         null, // is not used
-			currSocialChannelNumber: null,
-			currKloutScoreNumber:    null,
-			currSentimentNumber:     null
+			selected: {}
 		}
 	}
 
@@ -33,6 +30,10 @@ export default class Filters extends React.Component {
 		} else {
 
 			var self = this;
+
+			var currSocialChannelNumber = null;
+			var currKloutScoreNumber    = null;
+			var currSentimentNumber     = null;
 
 			var events         = assembleEventOptions();
 			var socialChannels = assembleSocialChannelRadios();
@@ -60,7 +61,7 @@ export default class Filters extends React.Component {
 									
 									<div className="panel panel-default">
 										<div className="panel-heading" role="tab" id="headingOne">
-											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Social Channel <span>({ this.props.filters.socialChannels[this.state.currSocialChannelNumber].caption })</span> </a> </h4>
+											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Social Channel <span>({ this.props.filters.socialChannels[currSocialChannelNumber].caption })</span> </a> </h4>
 										</div>
 										<div id="collapseOne" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 											<div className="panel-body">
@@ -72,7 +73,11 @@ export default class Filters extends React.Component {
 									</div>
 									<div className="panel panel-default">
 										<div className="panel-heading" role="tab" id="headingTwo">
-											<h4 className="panel-title"> <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> Klout Score <span>({ this.props.filters.kloutScores[this.state.currKloutScoreNumber].caption })</span> </a> </h4>
+											<h4 className="panel-title">
+												<a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+													Klout Score <span>({ this.props.filters.kloutScores[currKloutScoreNumber].caption })</span>
+												</a>
+											</h4>
 										</div>
 										<div id="collapseTwo" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 											<div className="panel-body">
@@ -84,7 +89,7 @@ export default class Filters extends React.Component {
 									</div>
 									<div className="panel panel-default">
 										<div className="panel-heading" role="tab" id="headingfour">
-											<h4 className="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="false" aria-controls="collapsefour"> Sentiment <span>({ this.props.filters.sentiments[this.state.currSentimentNumber].caption })</span> </a> </h4>
+											<h4 className="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="false" aria-controls="collapsefour"> Sentiment <span>({ this.props.filters.sentiments[currSentimentNumber].caption })</span> </a> </h4>
 										</div>
 										<div id="collapsefour" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingfour">
 											<div className="panel-body">
@@ -109,7 +114,7 @@ export default class Filters extends React.Component {
 				if (self.props.filters.events) {
 					self.props.filters.events.forEach(function (event, index) {
 						events.push(
-							<option value={index} key={index}>{event.team_home + " vs " + event.team_away}</option>
+							<option value={ event.id } key={index}>{event.team_home + " vs " + event.team_away}</option>
 						);
 					});
 				}
@@ -121,13 +126,14 @@ export default class Filters extends React.Component {
 				if (self.props.filters.socialChannels) {
 					self.props.filters.socialChannels.forEach(function (socialChannel, index) {
 						var checked = false;
-						if (index === self.state.currSocialChannelNumber) {
+						if (socialChannel.id === self.state.selected.socialChannelId) {
+							currSocialChannelNumber = index;
 							checked = true;
 						}
 						socialChannels.push(
 							<label key={index}>
-								<input type="radio" checked={ checked } name="socialChannel" data-id={index} onClick={self.handleFilterChange.bind(self)} />
-								<span className="lbl">{socialChannel.caption}</span>
+								<input type="radio" checked={ checked } name="socialChannel" data-id={ socialChannel.id } onClick={self.handleFilterChange.bind(self)} />
+								<span className="lbl">{ socialChannel.caption }</span>
 							</label>
 						);
 					});
@@ -140,13 +146,14 @@ export default class Filters extends React.Component {
 				if (self.props.filters.kloutScores) {
 					self.props.filters.kloutScores.forEach(function (kloutScore, index) {
 						var checked = false;
-						if (index === self.state.currKloutScoreNumber) {
+						if (kloutScore.id === self.state.selected.kloutScoreId) {
+							currKloutScoreNumber = index;
 							checked = true;
 						}
 						kloutScores.push(
 							<label key={index}>
-								<input type="radio" checked={ checked } name="kloutScore" data-id={index} onClick={self.handleFilterChange.bind(self)} />
-								<span className="lbl">{kloutScore.caption}</span>
+								<input type="radio" checked={ checked } name="kloutScore" data-id={ kloutScore.id } onClick={self.handleFilterChange.bind(self)} />
+								<span className="lbl">{ kloutScore.caption }</span>
 							</label>
 						);
 					});
@@ -159,13 +166,14 @@ export default class Filters extends React.Component {
 				if (self.props.filters.sentiments) {
 					self.props.filters.sentiments.forEach(function (sentiment, index) {
 						var checked = false;
-						if (index === self.state.currSentimentNumber) {
+						if (sentiment.id === self.state.selected.sentimentId) {
+							currSentimentNumber = index;
 							checked = true;
 						}
 						sentiments.push(
 							<label key={index}>
-								<input type="radio" checked={ checked } name="sentiment" data-id={index} onClick={self.handleFilterChange.bind(self)} />
-								<span className="lbl">{sentiment.caption}</span>
+								<input type="radio" checked={ checked } name="sentiment" data-id={ sentiment.id } onClick={self.handleFilterChange.bind(self)} />
+								<span className="lbl">{ sentiment.caption }</span>
 							</label>
 						);
 					});
@@ -178,33 +186,7 @@ export default class Filters extends React.Component {
 	componentWillReceiveProps (nextProps) {
 		console.log("Filters.componentWillReceiveProps nextProps = ", nextProps);
 
-		if (!_.isEqual(nextProps.filters, this.props.filters)) {
-			var currEventNumber         = null; // is not used
-			var currSocialChannelNumber = null;
-			var currKloutScoreNumber    = null;
-			var currSentimentNumber     = null;
-
-			// FIXME: state.currEventNumber is not used
-			// if (nextProps.filters.events.length > 0) {
-			// 	currEventNumber = 0;
-			// }
-			if (nextProps.filters.socialChannels.length > 0) {
-				currSocialChannelNumber = 0;
-			}
-			if (nextProps.filters.kloutScores.length > 0) {
-				currKloutScoreNumber = 2;
-			}
-			if (nextProps.filters.sentiments.length > 0) {
-				currSentimentNumber = 0;
-			}
-
-			this.setState({
-				currEventNumber:         currEventNumber, // is not used
-				currSocialChannelNumber: currSocialChannelNumber,
-				currKloutScoreNumber:    currKloutScoreNumber,
-				currSentimentNumber:     currSentimentNumber
-			});
-		}
+		this.state.selected = nextProps.filters.selected;
 	}
 
 	/* Event Handlers */
@@ -219,18 +201,21 @@ export default class Filters extends React.Component {
 		var sentiments     = document.getElementsByName("sentiment");
 
 		/* Get selected filters ids */
-		var currSocialChannelNumber = parseInt(FindSelectedRadioElement(socialChannels).dataset.id);
-		var currKloutScoreNumber    = parseInt(FindSelectedRadioElement(kloutScores).dataset.id);
-		var currSentimentNumber     = parseInt(FindSelectedRadioElement(sentiments).dataset.id);
+		var currSocialChannelId = parseInt(FindSelectedRadioElement(socialChannels).dataset.id);
+		var currKloutScoreId    = parseInt(FindSelectedRadioElement(kloutScores).dataset.id);
+		var currSentimentId     = parseInt(FindSelectedRadioElement(sentiments).dataset.id);
 
-		console.log("Filters.handleFilterChange currSocialChannelNumber=", currSocialChannelNumber,
-					", currKloutScoreNumber=", currKloutScoreNumber,
-					", currSentimentNumber=", currSentimentNumber);
+		console.log("Filters.handleFilterChange currSocialChannelId=", currSocialChannelId,
+					", currKloutScoreId=", currKloutScoreId,
+					", currSentimentId=", currSentimentId);
 
 		this.setState({
-			currSocialChannelNumber: currSocialChannelNumber,
-			currKloutScoreNumber:    currKloutScoreNumber,
-			currSentimentNumber:     currSentimentNumber
+			selected: {
+				eventId:         this.state.selected.eventId,
+				socialChannelId: currSocialChannelId,
+				kloutScoreId:    currKloutScoreId,
+				sentimentId:     currSentimentId
+			}
 		});
 
 		function FindSelectedRadioElement (radioGroupNodeList) {
@@ -245,12 +230,7 @@ export default class Filters extends React.Component {
 
 	handleFilterClick () {
 		if (this.props.onFilterClick) {
-			this.props.onFilterClick({
-				event:         this.props.filters.events[React.findDOMNode(this.refs.eventSelector).value],
-				socialChannel: this.props.filters.socialChannels[this.state.currSocialChannelNumber],
-				kloutScore:    this.props.filters.kloutScores   [this.state.currKloutScoreNumber],
-				sentiment:     this.props.filters.sentiments    [this.state.currSentimentNumber]
-			});
+			this.props.onFilterClick(this.state.selected);
 		}
 	}
 }

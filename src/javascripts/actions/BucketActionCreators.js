@@ -13,5 +13,12 @@ export default {
 		});
 
 		VenyooWebUtils.getBucketData(eventId, bucketId, socialChannelId, kloutScoreId, sentimentId);
+	},
+
+	changeTweetsSelection (nextSelectedTweetsNumbers) {
+		AppDispatcher.dispatch({
+			type:                  VenyooConstants.ActionTypes.CHANGE_TWEETS_SELECTION,
+			selectedTweetsNumbers: nextSelectedTweetsNumbers
+		});
 	}
 }
