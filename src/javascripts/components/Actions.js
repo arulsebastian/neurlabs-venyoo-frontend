@@ -39,7 +39,7 @@ export default class Actions extends React.Component {
 					<p>Favorite</p>
 					<span className="people">{ tweetsAmount } tweets</span> </a> </li>
 					<li> <a href="#" data-toggle={ usersModalProp } data-target="#directMessageToSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
-					<p>Direct Message to</p>
+					<p>Message</p>
 					<span className="people">{ usersAmount } people</span> </a> </li>
 					<li> <a href="#" data-toggle={ tweetsModalProp } data-target="#retweetSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
 					<p>Retweet</p>

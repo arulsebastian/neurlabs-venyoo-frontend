@@ -10,25 +10,38 @@ export default class DialogBox extends React.Component {
 	}
 
 	render () {
-		var inputElement = null;
+		var inputElement      = null;
+		var additionalClasses = "";
+		var content           = null;
 
 		if (this.props.isInput) {
 			inputElement = <input type="text" name="" className="input_field" value={ this.state.message } onChange={ this.handleMessageChange.bind(this) } />;
 		}
 
+		if (this.props.isBig) {
+			additionalClasses = "big_popup";
+			content =
+				<div className="wrapper">
+					{ this.props.children }
+				</div>
+		} else {
+			content = 
+				<div className="entry_popup">
+					{ this.props.children }
+					{ inputElement }
+					<div className="button_block">
+						<button className="direct_msg" onClick={ this.handleReplyClick.bind(this) }>{ this.props.actionName }</button>
+						<button className="cancel_btn" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+		}
+
 		return (
-			<div key={ this.props.key } className="modal fade custommodal" id={ this.props.id } tabindex="-1" role="dialog">
+			<div key={ this.props.key } className={ "modal fade custommodal " + additionalClasses } id={ this.props.id } tabindex="-1" role="dialog">
 				<div className="modal-dialog" role="document">
 					<div className="modal-content">
 						<div className="modal-body">
-							<div className="entry_popup">
-								{ this.props.children }
-								{ inputElement }
-								<div className="button_block">
-									<button className="direct_msg" onClick={ this.handleReplyClick.bind(this) }>{ this.props.actionName }</button>
-									<button className="cancel_btn" data-dismiss="modal">Cancel</button>
-								</div>
-							</div>
+							{ content }
 						</div>
 					</div>
 				</div>
@@ -60,5 +73,6 @@ DialogBox.propTypes = {
 	id:         React.PropTypes.string.isRequired,
 	actionName: React.PropTypes.string.isRequired,
 	isInput:    React.PropTypes.bool,
-	onAction:   React.PropTypes.func
+	isBig:      React.PropTypes.bool,
+	onAction:   React.PropTypes.func,
 }

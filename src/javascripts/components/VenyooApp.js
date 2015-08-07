@@ -1,11 +1,12 @@
 /* JS dependencies */
-/** React Components **/
 import React from "react";
+/** React Components **/
 import Map from "./Map";
 import TimeSlider from "./TimeSlider";
 import DataTable from "./DataTable";
 import Filters from "./Filters";
 import Actions from "./Actions";
+import DialogBox from "./DialogBox";
 /** Stores **/
 import FiltersStore      from "../stores/FiltersStore";
 import EventBucketsStore from "../stores/EventBucketsStore";
@@ -66,6 +67,18 @@ export default class VenyooApp extends React.Component {
 						<div className="home_detail">
 							<DataTable bucketData={this.state.bucketData} onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
 						</div>
+						<DialogBox id="FullscreenDataTable"
+								   isInput={ false }
+								   isBig={ true }
+								   actionName="111"
+								   onAction={ function () { console.log() } } >
+							<div className="popup_datalist">
+								<DataTable bucketData={this.state.bucketData} onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
+							</div>
+							<div className="action_detail">
+								<Actions bucketData={this.state.bucketData} />
+							</div>
+						</DialogBox>
 					</div>
 					{/* Right block */}
 					<div className="right_sec">
@@ -73,8 +86,6 @@ export default class VenyooApp extends React.Component {
 							<div className="title">
 								<h3><i className="fa fa-bars"></i>{/**} Event Duration <span>12 hours / 10 min intervals</span>{**/}</h3>
 							</div>
-							<Actions bucketData={this.state.bucketData} />
-							<hr />
 							<Actions bucketData={this.state.bucketData} />
 						</div>
 					</div>

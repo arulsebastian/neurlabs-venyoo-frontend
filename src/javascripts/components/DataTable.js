@@ -5,7 +5,8 @@ import ActionsActionCreators from "../actions/ActionsActionCreators";
 import _ from "lodash";
 import Routines from "../utils/Routines";
 
-/* Stylesheet dependencies */
+/* Static dependencies */
+import "../../stylesheets/components/datatable.scss";
 
 export default class DataTable extends React.Component {
 	constructor (...args) {
@@ -89,10 +90,10 @@ export default class DataTable extends React.Component {
 				timeLabel = <a className="btn btn-sm grey_bg">{ this.props.bucketData.tweets[0].timeStamp }</a>
 
 			return (
-				<div className="container">
-					<div id="container">
+				<div className="container data-table">
+					<div id="container" className="data-table">
 						<h3 className="grey-color">{ this.state.tweetsTotal } entries {timeLabel} <a href="#" className="full_screen"><i className="fa fa-arrows-alt"></i> Full Screen</a> </h3>
-						<div style={{ overflow: "auto" }}>
+						<div>
 							<table className="table table-hover table-striped">
 								<tbody>
 									<tr>
