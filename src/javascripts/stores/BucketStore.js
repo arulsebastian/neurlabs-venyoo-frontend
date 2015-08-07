@@ -10,10 +10,7 @@ import _ from "lodash";
 import AppDispatcher from "../AppDispatcher";
 import VenyooConstants from "../constants/VenyooConstants";
 import VenyooWebUtils from "../utils/VenyooWebUtils";
-import DataFormatAdapter from "../utils/DataFormat/DataFormatAdapter";
 import Routines from "../utils/Routines";
-
-/* Static dependencies */
 
 /* Constants */
 const CHANGE_EVENT = "change";
