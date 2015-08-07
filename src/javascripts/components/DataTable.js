@@ -13,8 +13,7 @@ export default class DataTable extends React.Component {
 		super(...args);
 
 		this.state = {
-			checkedTweets:  [],   // All the checkboxes across all the pages
-			repliedTweets:  [],
+			checkedTweets:  [],
 			tweetsTotal:    0,
 			tweetsPerPage:  5,
 			pagesCount:     1,
@@ -50,7 +49,7 @@ export default class DataTable extends React.Component {
 				var tweetData    = this.props.bucketData.tweets[i];
 				var repliedClass = null;
 
-				if (this.state.repliedTweets[i]) {
+				if (this.props.bucketData.repliedTweets[i]) {
 					repliedClass = "replied";
 				}
 
@@ -162,13 +161,12 @@ export default class DataTable extends React.Component {
 	componentWillReceiveProps (nextProps) {
 		console.log("DataTable.componentWillReceiveProps nextProps = ", nextProps);
 
-		this.state.checkedTweets = nextProps.bucketData.checkedTweets; 
+		this.state.checkedTweets = nextProps.bucketData.checkedTweets;
 
 		if (!_.isEqual(nextProps.bucketData.tweets, this.props.bucketData.tweets)) {
 			this.state.tweetsTotal = nextProps.bucketData.tweets.length;
 			this.state.pageNumber  = 0;
 			this.calculateTweetNumbers();
-			this.state.repliedTweets = Routines.fill(this.state.tweetsTotal, false);
 		}
 	}
 
@@ -199,11 +197,12 @@ export default class DataTable extends React.Component {
 	}
 
 	factoryHandleReply (username) {
-		return function (message, tag) {
-			console.log("DataTable.handleReply username = ", username, ", message = ", message, ", tag = ", tag);
-			this.state.repliedTweets[tag] = true;
-			this.forceUpdate();
+		return function (message, tweetNumber) {
+			console.log("DataTable.handleReply username = ", username, ", message = ", message, ", tweetNumber = ", tweetNumber);
 			ActionsActionCreators.sendReply(username, message);
+			if (this.props.onReply) {
+				this.props.onReply(tweetNumber);
+			}
 		}
 	}
 
@@ -238,5 +237,6 @@ DataTable.propTypes = {
 	isPrimary:         React.PropTypes.bool,
 	bucketData:        React.PropTypes.object.isRequired,
 	buttonContent:     React.PropTypes.object,
-	onSelectionChange: React.PropTypes.func
+	onSelectionChange: React.PropTypes.func,
+	onReply:           React.PropTypes.func
 };

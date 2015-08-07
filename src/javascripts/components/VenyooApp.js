@@ -80,7 +80,8 @@ export default class VenyooApp extends React.Component {
 							<DataTable isPrimary={ true }
 									   bucketData={ this.state.bucketData }
 									   buttonContent={ dataTableFullscreenButtonContent }
-									   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
+									   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) }
+									   onReply={ this.handleDataTableReply.bind(this) } />
 						</div>
 						<DialogBox id="FullscreenDataTable"
 								   isBig={ true } >
@@ -88,7 +89,8 @@ export default class VenyooApp extends React.Component {
 								<DataTable isPrimary={ false }
 										   bucketData={ this.state.bucketData }
 										   buttonContent={ dataTableExitFullscreenButtonContent }
-										   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
+										   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) }
+										   onReply={ this.handleDataTableReply.bind(this) } />
 							</div>
 							<div className="action_detail">
 								<Actions isPrimary={ false }
@@ -147,6 +149,10 @@ export default class VenyooApp extends React.Component {
 	handleDataTableSelectionChanged (checkedTweets) {
 		console.log("VenyooApp.handleDataTableSelectionChanged checkedTweets=", checkedTweets);
 		BucketActionCreators.changeTweetsSelection(checkedTweets);
+	}
+	handleDataTableReply (tweetNumber) {
+		console.log("VenyooApp.handleDataTableReply tweetNumber=", tweetNumber);
+		BucketActionCreators.replyToTweet(tweetNumber);
 	}
 
 	_onChange () {

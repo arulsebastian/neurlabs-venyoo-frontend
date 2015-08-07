@@ -20,5 +20,12 @@ export default {
 			type:          VenyooConstants.ActionTypes.CHANGE_TWEETS_SELECTION,
 			checkedTweets: nextCheckedTweets
 		});
+	},
+
+	replyToTweet (tweetNumber) {
+		AppDispatcher.dispatch({
+			type:        VenyooConstants.ActionTypes.REPLY_TO_TWEET,
+			tweetNumber: tweetNumber
+		});
 	}
 }
