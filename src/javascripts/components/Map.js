@@ -23,6 +23,7 @@ export default class Map extends React.Component {
 
 		this.state = {
 			map:           null,
+			oms:           null, // Overlapping Marker Spiderfier (Overlapping Marker Spiderfier)
 			infowinLayout: null,
 			infowins:      [],
 			markers:       []
@@ -106,6 +107,7 @@ export default class Map extends React.Component {
 		var mapCanvas = React.findDOMNode(self.refs.mapCanvas);
 
 		self.state.map = placeGoogleMaps(mapCanvas);
+		self.state.oms = new OverlappingMarkerSpiderfier(this.state.map);
 
 		function placeGoogleMaps (canvas) {
 			var mapOptions = {
@@ -159,6 +161,7 @@ export default class Map extends React.Component {
 		if (!_.isEqual(nextProps.bucketData.tweets, this.props.bucketData.tweets)) {
 
 			/* Remove old markers and infowins */
+			self.state.oms.clearMarkers();
 			self.state.markers.forEach(function (marker) {
 				marker.infowin.setMap(null);
 				marker.setMap(null);
@@ -194,24 +197,34 @@ export default class Map extends React.Component {
 					content = content.replace('{{ infowin_tweet_to_target }}',       "#" + tweetToPrefix + i);
 
 					/* Place marker */
-					var marker = new google.maps.Marker({
+					var newMarker = new google.maps.Marker({
 						position: new google.maps.LatLng(tweet.lat, tweet.lng),
 						map:      self.state.map
 					});
-					self.state.markers.push(marker);
+					self.state.markers.push(newMarker);
+					self.state.oms.addMarker(newMarker);
 					/* Create infowindow */
 					var infowin = new google.maps.InfoWindow({
 						content: content
 					});
 					self.state.infowins.push(infowin);
-					marker.infowin = infowin;
+					newMarker.infowin = infowin;
 					/* When user clicks on a marker close all the infowindows and open only one */
-					google.maps.event.addListener(marker, 'click', function() {
-						self.state.infowins.forEach(function(infowin) {
-							infowin.close();
-						});
-						infowin.open(self.state.map, marker);
+					self.state.oms.addListener('click', function(marker, event) {
+						if (marker === newMarker) {
+							self.state.infowins.forEach(function(infowin) {
+								infowin.close();
+							});
+							infowin.open(self.state.map, marker);
+						}
 					});
+
+					// google.maps.event.addListener(newMarker, 'click', function() {
+					// 	self.state.infowins.forEach(function(infowin) {
+					// 		infowin.close();
+					// 	});
+					// 	infowin.open(self.state.map, newMarker);
+					// });
 				});			
 			}
 		}
