@@ -1,4 +1,8 @@
+/* JS dependencies */
 import React from "react";
+
+/* Static dependencies */
+import "../../stylesheets/components/dialogbox.scss";
 
 export default class DialogBox extends React.Component {
 	constructor (...args) {
@@ -37,7 +41,11 @@ export default class DialogBox extends React.Component {
 		}
 
 		return (
-			<div key={ this.props.key } className={ "modal fade custommodal " + additionalClasses } id={ this.props.id } tabindex="-1" role="dialog">
+			<div key={ this.props.key } 
+				 className={ "modal fade custommodal " + additionalClasses } 
+				 id={ this.props.id } 
+				 tabindex="-1" 
+				 role="dialog">
 				<div className="modal-dialog" role="document">
 					<div className="modal-content">
 						<div className="modal-body">

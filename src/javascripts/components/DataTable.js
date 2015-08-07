@@ -93,7 +93,7 @@ export default class DataTable extends React.Component {
 				<div className="container data-table">
 					<div id="container" className="data-table">
 						<h3 className="grey-color">{ this.state.tweetsTotal } entries {timeLabel} { this.props.buttonContent } </h3>
-						<div>
+						<div className="data-table-content">
 							<table className="table table-hover table-striped">
 								<tbody>
 									<tr>
