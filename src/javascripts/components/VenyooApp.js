@@ -77,7 +77,8 @@ export default class VenyooApp extends React.Component {
 										onBucketChange={ this.handleBucketChanged.bind(this) } />
 						</div>
 						<div className="home_detail">
-							<DataTable bucketData={ this.state.bucketData }
+							<DataTable isPrimary={ true }
+									   bucketData={ this.state.bucketData }
 									   buttonContent={ dataTableFullscreenButtonContent }
 									   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
 						</div>
@@ -87,12 +88,14 @@ export default class VenyooApp extends React.Component {
 								   actionName="111"
 								   onAction={ function () { console.log() } } >
 							<div className="popup_datalist">
-								<DataTable bucketData={ this.state.bucketData }
+								<DataTable isPrimary={ false }
+										   bucketData={ this.state.bucketData }
 										   buttonContent={ dataTableExitFullscreenButtonContent }
 										   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
 							</div>
 							<div className="action_detail">
-								<Actions bucketData={ this.state.bucketData } />
+								<Actions isPrimary={ false }
+										 bucketData={ this.state.bucketData } />
 							</div>
 						</DialogBox>
 					</div>
@@ -102,7 +105,8 @@ export default class VenyooApp extends React.Component {
 							<div className="title">
 								<h3><i className="fa fa-bars"></i>{/**} Event Duration <span>12 hours / 10 min intervals</span>{**/}</h3>
 							</div>
-							<Actions bucketData={ this.state.bucketData } />
+							<Actions isPrimary={ true }
+									 bucketData={ this.state.bucketData } />
 						</div>
 					</div>
 				</div>

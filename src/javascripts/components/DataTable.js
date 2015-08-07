@@ -65,15 +65,17 @@ export default class DataTable extends React.Component {
 					</tr>
 				);
 
-				replyPopups.push(
-					<DialogBox key={ i }
-							   id={ "Reply" + i }
-							   isInput={ true }
-							   actionName="Reply"
-							   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) }>
-						<h3>Reply to: <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
-					</DialogBox>
-				);
+				if (this.props.isPrimary) {
+					replyPopups.push(
+						<DialogBox key={ i }
+								   id={ "Reply" + i }
+								   isInput={ true }
+								   actionName="Reply"
+								   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) }>
+							<h3>Reply to: <span>{ tweetData.socialHandle }</span><br />{ tweetData.message }</h3>
+						</DialogBox>
+					);
+				}
 			}
 
 			var pagesLabels = [];
@@ -219,6 +221,7 @@ export default class DataTable extends React.Component {
 };
 
 DataTable.propTypes = {
+	isPrimary:         React.PropTypes.bool,
 	bucketData:        React.PropTypes.object.isRequired,
 	buttonContent:     React.PropTypes.object,
 	onSelectionChange: React.PropTypes.func

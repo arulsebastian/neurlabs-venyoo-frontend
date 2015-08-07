@@ -22,8 +22,45 @@ export default class Actions extends React.Component {
 		var usersAmount  = this.state.uniqueSelectedUsers.length;
 		var tweetsModalProp = (tweetsAmount > 0) ? "modal" : "";
 		var usersModalProp  = (usersAmount  > 0) ? "modal" : "";
+		var dialogBoxes = null;
 
 		console.log("Actions.render state = ", this.state);
+
+		if (this.props.isPrimary) {
+			dialogBoxes =
+				<div>
+					<DialogBox id="followSelected"
+							   isInput={ false }
+							   actionName="Follow"
+							   onAction={ this.handleFollowClick.bind(this) }>
+						<h3>You’ve selected <span>{ usersAmount } users</span><br /><span className="reg_text">Are you sure you want to Follow all the users?</span></h3>
+					</DialogBox>
+					<DialogBox id="tweetToSelected"
+							   isInput={ true }
+							   actionName="Tweet"
+							   onAction={ this.handleTweetClick.bind(this) }>
+						<h3>You’ve selected <span>{ usersAmount } users</span><br /><span className="reg_text">Enter the message to Tweet To all the users:</span></h3>
+					</DialogBox>
+					<DialogBox id="favoriteSelected"
+							   isInput={ false }
+							   actionName="Favorite"
+							   onAction={ this.handleFavoriteClick.bind(this) }>
+						<h3>You’ve selected <span>{ tweetsAmount } tweets</span><br /><span className="reg_text">Are you sure you want to Favorite all the tweets?</span></h3>
+					</DialogBox>
+					<DialogBox id="directMessageToSelected"
+							   isInput={ true }
+							   actionName="Direct Message"
+							   onAction={ this.handleDirectMessageClick.bind(this) }>
+						<h3>You’ve selected <span>{ usersAmount } users</span><br /><span className="reg_text">Enter the message to Direct Message to all the users:</span></h3>
+					</DialogBox>
+					<DialogBox id="retweetSelected"
+							   isInput={ false }
+							   actionName="Retweet"
+							   onAction={ this.handleRetweetClick.bind(this) }>
+						<h3>You’ve selected <span>{ tweetsAmount } tweets</span><br /><span className="reg_text">Are you sure you want to Retweet all the tweets?</span></h3>
+					</DialogBox>
+				</div>;
+		}
 
 		return (
 			<div className="duration_inner">
@@ -45,36 +82,7 @@ export default class Actions extends React.Component {
 					<p>Retweet</p>
 					<span className="people">{ tweetsAmount } tweets</span> </a> </li>
 				</ul>
-				<DialogBox id="followSelected"
-						   isInput={ false }
-						   actionName="Follow"
-						   onAction={ this.handleFollowClick.bind(this) }>
-					<h3>You’ve selected <span>{ usersAmount } users</span><br /><span className="reg_text">Are you sure you want to Follow all the users?</span></h3>
-				</DialogBox>
-				<DialogBox id="tweetToSelected"
-						   isInput={ true }
-						   actionName="Tweet"
-						   onAction={ this.handleTweetClick.bind(this) }>
-					<h3>You’ve selected <span>{ usersAmount } users</span><br /><span className="reg_text">Enter the message to Tweet To all the users:</span></h3>
-				</DialogBox>
-				<DialogBox id="favoriteSelected"
-						   isInput={ false }
-						   actionName="Favorite"
-						   onAction={ this.handleFavoriteClick.bind(this) }>
-					<h3>You’ve selected <span>{ tweetsAmount } tweets</span><br /><span className="reg_text">Are you sure you want to Favorite all the tweets?</span></h3>
-				</DialogBox>
-				<DialogBox id="directMessageToSelected"
-						   isInput={ true }
-						   actionName="Direct Message"
-						   onAction={ this.handleDirectMessageClick.bind(this) }>
-					<h3>You’ve selected <span>{ usersAmount } users</span><br /><span className="reg_text">Enter the message to Direct Message to all the users:</span></h3>
-				</DialogBox>
-				<DialogBox id="retweetSelected"
-						   isInput={ false }
-						   actionName="Retweet"
-						   onAction={ this.handleRetweetClick.bind(this) }>
-					<h3>You’ve selected <span>{ tweetsAmount } tweets</span><br /><span className="reg_text">Are you sure you want to Retweet all the tweets?</span></h3>
-				</DialogBox>
+				{ dialogBoxes }
 			</div>
 		);
 	}
@@ -120,5 +128,6 @@ export default class Actions extends React.Component {
 };
 
 Actions.PropTypes = {
+	isPrimary:  React.PropTypes.bool,
 	bucketData: React.PropTypes.object.isRequired
 }
