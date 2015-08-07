@@ -1,5 +1,6 @@
 /* Static dependencies */
 import socialImg from '../../images/social_1.png';
+import "../../stylesheets/components/actions.scss";
 
 /* JS dependencies */
 import React from "react";
@@ -13,7 +14,14 @@ export default class Actions extends React.Component {
 
 		this.state = {
 			selectedTweets:      [],
-			uniqueSelectedUsers: []
+			uniqueSelectedUsers: [],
+			buttonsUsed: {
+				follow:   null,
+				tweetTo:  null,
+				favorite: null,
+				message:  null,
+				retweet:  null
+			}
 		};
 	}
 
@@ -30,30 +38,35 @@ export default class Actions extends React.Component {
 			dialogBoxes =
 				<div>
 					<DialogBox id="followSelected"
+							   tag="follow"
 							   isInput={ false }
 							   actionName="Follow"
 							   onAction={ this.handleFollowClick.bind(this) }>
 						<h3>You’ve selected <span>{ usersAmount } users</span><br /><span className="reg_text">Are you sure you want to Follow all the users?</span></h3>
 					</DialogBox>
 					<DialogBox id="tweetToSelected"
+							   tag="tweetTo"
 							   isInput={ true }
 							   actionName="Tweet"
 							   onAction={ this.handleTweetClick.bind(this) }>
 						<h3>You’ve selected <span>{ usersAmount } users</span><br /><span className="reg_text">Enter the message to Tweet To all the users:</span></h3>
 					</DialogBox>
 					<DialogBox id="favoriteSelected"
+							   tag="favorite"
 							   isInput={ false }
 							   actionName="Favorite"
 							   onAction={ this.handleFavoriteClick.bind(this) }>
 						<h3>You’ve selected <span>{ tweetsAmount } tweets</span><br /><span className="reg_text">Are you sure you want to Favorite all the tweets?</span></h3>
 					</DialogBox>
 					<DialogBox id="directMessageToSelected"
+							   tag="direct"
 							   isInput={ true }
 							   actionName="Direct Message"
 							   onAction={ this.handleDirectMessageClick.bind(this) }>
 						<h3>You’ve selected <span>{ usersAmount } users</span><br /><span className="reg_text">Enter the message to Direct Message to all the users:</span></h3>
 					</DialogBox>
 					<DialogBox id="retweetSelected"
+							   tag="retweet"
 							   isInput={ false }
 							   actionName="Retweet"
 							   onAction={ this.handleRetweetClick.bind(this) }>
@@ -62,23 +75,44 @@ export default class Actions extends React.Component {
 				</div>;
 		}
 
+		var followClass   = null;
+		var tweetToClass  = null;
+		var favoriteClass = null;
+		var messageClass  = null;
+		var retweetClass  = null;
+		if (this.state.buttonsUsed.follow) {
+			followClass = "group-action-used";
+		}
+		if (this.state.buttonsUsed.tweetTo) {
+			tweetToClass = "group-action-used";
+		}
+		if (this.state.buttonsUsed.favorite) {
+			favoriteClass = "group-action-used";
+		}
+		if (this.state.buttonsUsed.message) {
+			messageClass = "group-action-used";
+		}
+		if (this.state.buttonsUsed.retweet) {
+			retweetClass = "group-action-used";
+		}
+
 		return (
 			<div className="duration_inner">
 				<h2>Actions:</h2>
 				<ul className="action_list">
-					<li> <a href="#" data-toggle={ usersModalProp } data-target="#followSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
+					<li> <a className={ followClass } href="#" data-toggle={ usersModalProp } data-target="#followSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
 					<p>Follow</p>
 					<span className="people">{ usersAmount } people</span> </a> </li>
-					<li> <a href="#" data-toggle={ usersModalProp } data-target="#tweetToSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
+					<li> <a className={ tweetToClass } href="#" data-toggle={ usersModalProp } data-target="#tweetToSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
 					<p>Tweet to</p>
 					<span className="people">{ usersAmount } people</span> </a> </li>
-					<li> <a href="#" data-toggle={ tweetsModalProp } data-target="#favoriteSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
+					<li> <a className={ favoriteClass } href="#" data-toggle={ tweetsModalProp } data-target="#favoriteSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
 					<p>Favorite</p>
 					<span className="people">{ tweetsAmount } tweets</span> </a> </li>
-					<li> <a href="#" data-toggle={ usersModalProp } data-target="#directMessageToSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
+					<li> <a className={ messageClass } href="#" data-toggle={ usersModalProp } data-target="#directMessageToSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
 					<p>Message</p>
 					<span className="people">{ usersAmount } people</span> </a> </li>
-					<li> <a href="#" data-toggle={ tweetsModalProp } data-target="#retweetSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
+					<li> <a className={ retweetClass } href="#" data-toggle={ tweetsModalProp } data-target="#retweetSelected"> <i className="social_icon"><img src={ socialImg } alt="" /></i>
 					<p>Retweet</p>
 					<span className="people">{ tweetsAmount } tweets</span> </a> </li>
 				</ul>
@@ -103,25 +137,57 @@ export default class Actions extends React.Component {
 
 		this.setState({
 			selectedTweets:      selectedTweets,
-			uniqueSelectedUsers: uniqueSelectedUsers
+			uniqueSelectedUsers: uniqueSelectedUsers,
+			buttonsUsed: {
+				follow:   false,
+				tweetTo:  false,
+				favorite: false,
+				message:  false,
+				retweet:  false
+			}
 		});
 	}
 
 	/* Event Handlers */
 
 	handleFollowClick () {
+		this.setState({
+			buttonsUsed: {
+				follow: true
+			}
+		});
 		ActionsActionCreators.sendFollow(this.state.selectedTweets[0].tweetId);
 	}
 	handleTweetClick (message) {
+		this.setState({
+			buttonsUsed: {
+				tweetTo: true
+			}
+		});
 		ActionsActionCreators.sendTweet(this.state.selectedTweets[0].socialHandle, message);
 	}
 	handleFavoriteClick () {
+		this.setState({
+			buttonsUsed: {
+				favorite: true
+			}
+		});
 		ActionsActionCreators.sendFavorite(this.state.selectedTweets[0].tweetId);
 	}
 	handleDirectMessageClick (message) {
+		this.setState({
+			buttonsUsed: {
+				message: true
+			}
+		});
 		ActionsActionCreators.sendReply(this.state.selectedTweets[0].username, message);
 	}
 	handleRetweetClick () {
+		this.setState({
+			buttonsUsed: {
+				retweet: true
+			}
+		});
 		ActionsActionCreators.sendRetweet(this.state.selectedTweets[0].tweetId);
 	}
 
