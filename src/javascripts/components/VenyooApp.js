@@ -73,9 +73,9 @@ export default class VenyooApp extends React.Component {
 							<div className="title">
 								<h3><i className="fa fa-bars"></i>{/**} Event Duration <span>12 hours / 10 min intervals</span>{**/}</h3>
 							</div>
-							<Actions bucketData={this.state.bucketData} selectedTweetsNumbers={ this.state.bucketData.selectedTweetsNumbers } />
+							<Actions bucketData={this.state.bucketData} />
 							<hr />
-							<Actions bucketData={this.state.bucketData} selectedTweetsNumbers={ this.state.bucketData.selectedTweetsNumbers } />
+							<Actions bucketData={this.state.bucketData} />
 						</div>
 					</div>
 				</div>
@@ -116,9 +116,9 @@ export default class VenyooApp extends React.Component {
 														 this.state.filters.selected.kloutScoreId,
 														 this.state.filters.selected.sentimentId);
 	}
-	handleDataTableSelectionChanged (selectedTweetsNumbers) {
-		console.log("VenyooApp.handleDataTableSelectionChanged selectedTweetsNumbers=", selectedTweetsNumbers);
-		// BucketActionCreators.changeTweetsSelection(selectedTweetsNumbers);
+	handleDataTableSelectionChanged (checkedTweets) {
+		console.log("VenyooApp.handleDataTableSelectionChanged checkedTweets=", checkedTweets);
+		BucketActionCreators.changeTweetsSelection(checkedTweets);
 	}
 
 	_onChange () {

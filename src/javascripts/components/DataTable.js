@@ -3,6 +3,7 @@ import React from "react";
 import DialogBox from "./DialogBox";
 import ActionsActionCreators from "../actions/ActionsActionCreators";
 import _ from "lodash";
+import Routines from "../utils/Routines";
 
 /* Stylesheet dependencies */
 
@@ -11,7 +12,7 @@ export default class DataTable extends React.Component {
 		super(...args);
 
 		this.state = {
-			selectedTweets: [],   // All the checkboxes across all the pages
+			checkedTweets:  [],   // All the checkboxes across all the pages
 			tweetsTotal:    0,
 			tweetsPerPage:  5,
 			pagesCount:     1,
@@ -49,7 +50,7 @@ export default class DataTable extends React.Component {
 				tweetsRows.push(
 					<tr key={ i }>
 						<td><label id="a">
-							<input type="checkbox" checked={ this.state.selectedTweets[i] } data-tweet-number={ i } onChange={ this.handleCheckBoxClick.bind(this) } />
+							<input type="checkbox" checked={ this.state.checkedTweets[ i] } data-tweet-number={ i } onChange={ this.handleCheckBoxClick.bind(this) } />
 							<span className="lbl"></span> </label>
 						</td>
 						<td><a href="#" className="reply_btn" data-toggle="modal" data-target={ "#Reply" + i } data-tweet-number={ i }><i className="fa fa-long-arrow-left"></i> Reply</a></td>
@@ -147,15 +148,12 @@ export default class DataTable extends React.Component {
 	componentWillReceiveProps (nextProps) {
 		console.log("DataTable.componentWillReceiveProps nextProps = ", nextProps);
 
-		if (!_.isEqual(nextProps.bucketData, this.props.bucketData)) {
+		this.state.checkedTweets = nextProps.bucketData.checkedTweets; 
+
+		if (!_.isEqual(nextProps.bucketData.tweets, this.props.bucketData.tweets)) {
 			this.state.tweetsTotal = nextProps.bucketData.tweets.length;
 			this.state.pageNumber  = 0;
 			this.calculateTweetNumbers();
-			this.fillSelectedTweets();
-
-			if (this.props.onSelectionChange) {
-				this.props.onSelectionChange(this.state.selectedTweets);
-			}
 		}
 	}
 
@@ -165,14 +163,6 @@ export default class DataTable extends React.Component {
 								      ? this.state.tweetsTotal
 								      : (this.state.tweetsPerPage * (this.state.pageNumber + 1));
 		this.state.tweetsOnPage = this.state.endTweetNumber - this.state.startTweetNumber + 1;
-	}
-
-	fillSelectedTweets (value = false) {
-		this.state.selectedTweets = new Array(this.state.tweetsTotal);
-		// Assign value to all the checkboxes
-		for (var i = 0; i < this.state.tweetsTotal; i++) {
-			this.state.selectedTweets[i] = value;
-		}
 	}
 
 	/* Events Handlers */
@@ -201,18 +191,16 @@ export default class DataTable extends React.Component {
 	}
 
 	handleCheckBoxClick (e) {
-		this.state.selectedTweets[e.target.dataset.tweetNumber] = e.target.checked;
+		this.state.checkedTweets[ e.target.dataset.tweetNumber] = e.target.checked;
 		if (this.props.onSelectionChange) {
-			this.props.onSelectionChange(this.state.selectedTweets);
+			this.props.onSelectionChange(this.state.checkedTweets);
 		}
-		this.forceUpdate();
 	}
 	handleCheckAllClick (e) {
-		this.fillSelectedTweets(e.target.checked);
+		var checkedTweets = Routines.fill( this.state.tweetsTotal, e.target.checked );
 		if (this.props.onSelectionChange) {
-			this.props.onSelectionChange(this.state.selectedTweets);
+			this.props.onSelectionChange(checkedTweets);
 		}
-		this.forceUpdate();
 	}
 
 	/* Helper routines */

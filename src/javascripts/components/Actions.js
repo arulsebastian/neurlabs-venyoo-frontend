@@ -85,7 +85,7 @@ export default class Actions extends React.Component {
 		var uniqueSelectedUsers = [];
 		var selectedTweets      = [];
 		nextProps.bucketData.tweets.forEach(function (tweet, i) {
-			if (nextProps.selectedTweetsNumbers[i]) {
+			if (nextProps.bucketData.checkedTweets[i]) {
 				selectedTweets.push(tweet);
 				if (uniqueSelectedUsers.indexOf(tweet.socialHandle) === -1) {
 					uniqueSelectedUsers.push(tweet.socialHandle);
@@ -120,6 +120,5 @@ export default class Actions extends React.Component {
 };
 
 Actions.PropTypes = {
-	bucketData:            React.PropTypes.object.isRequired,
-	selectedTweetsNumbers: React.PropTypes.array.isRequired
+	bucketData: React.PropTypes.object.isRequired
 }

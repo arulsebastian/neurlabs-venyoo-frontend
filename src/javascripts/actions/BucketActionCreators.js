@@ -15,10 +15,10 @@ export default {
 		VenyooWebUtils.getBucketData(eventId, bucketId, socialChannelId, kloutScoreId, sentimentId);
 	},
 
-	changeTweetsSelection (nextSelectedTweetsNumbers) {
+	changeTweetsSelection (nextCheckedTweets) {
 		AppDispatcher.dispatch({
-			type:                  VenyooConstants.ActionTypes.CHANGE_TWEETS_SELECTION,
-			selectedTweetsNumbers: nextSelectedTweetsNumbers
+			type:          VenyooConstants.ActionTypes.CHANGE_TWEETS_SELECTION,
+			checkedTweets: nextCheckedTweets
 		});
 	}
 }
