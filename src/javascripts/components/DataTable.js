@@ -92,7 +92,7 @@ export default class DataTable extends React.Component {
 			return (
 				<div className="container data-table">
 					<div id="container" className="data-table">
-						<h3 className="grey-color">{ this.state.tweetsTotal } entries {timeLabel} <a href="#" className="full_screen"><i className="fa fa-arrows-alt"></i> Full Screen</a> </h3>
+						<h3 className="grey-color">{ this.state.tweetsTotal } entries {timeLabel} { this.props.buttonContent } </h3>
 						<div>
 							<table className="table table-hover table-striped">
 								<tbody>
@@ -220,5 +220,6 @@ export default class DataTable extends React.Component {
 
 DataTable.propTypes = {
 	bucketData:        React.PropTypes.object.isRequired,
+	buttonContent:     React.PropTypes.object,
 	onSelectionChange: React.PropTypes.func
 };

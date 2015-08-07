@@ -35,6 +35,16 @@ export default class VenyooApp extends React.Component {
 	}
 
 	render () {
+		var dataTableFullscreenButtonContent = 
+			<a href="#" className="full_screen" data-toggle="modal" data-target="#FullscreenDataTable">
+				<i className="fa fa-arrows-alt"></i> Full Screen
+			</a>;
+
+		var dataTableExitFullscreenButtonContent =
+			<a href="#" className="full_screen" data-dismiss="modal">
+				Exit Full Screen
+			</a>;
+
 		return (
 			<div className="wrapper">
 				{/* Map block */}
@@ -53,7 +63,8 @@ export default class VenyooApp extends React.Component {
 								</ul>
 							</div>
 							
-							<Filters filters={this.state.filters} onFilterClick={this.handleFilterClicked.bind(this)} />
+							<Filters filters={ this.state.filters }
+									 onFilterClick={ this.handleFilterClicked.bind(this) } />
 						</div>
 						<a href="#" className="map_toggle"><i className="fa fa-bars"></i></a>
 					</div>
@@ -62,10 +73,13 @@ export default class VenyooApp extends React.Component {
 					{/* Left block */}
 					<div className="left_sec">
 						<div className="start_detail">
-							<TimeSlider eventBuckets={this.state.eventBuckets} onBucketChange={this.handleBucketChanged.bind(this)} />
+							<TimeSlider eventBuckets={ this.state.eventBuckets }
+										onBucketChange={ this.handleBucketChanged.bind(this) } />
 						</div>
 						<div className="home_detail">
-							<DataTable bucketData={this.state.bucketData} onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
+							<DataTable bucketData={ this.state.bucketData }
+									   buttonContent={ dataTableFullscreenButtonContent }
+									   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
 						</div>
 						<DialogBox id="FullscreenDataTable"
 								   isInput={ false }
@@ -73,10 +87,12 @@ export default class VenyooApp extends React.Component {
 								   actionName="111"
 								   onAction={ function () { console.log() } } >
 							<div className="popup_datalist">
-								<DataTable bucketData={this.state.bucketData} onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
+								<DataTable bucketData={ this.state.bucketData }
+										   buttonContent={ dataTableExitFullscreenButtonContent }
+										   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
 							</div>
 							<div className="action_detail">
-								<Actions bucketData={this.state.bucketData} />
+								<Actions bucketData={ this.state.bucketData } />
 							</div>
 						</DialogBox>
 					</div>
@@ -86,7 +102,7 @@ export default class VenyooApp extends React.Component {
 							<div className="title">
 								<h3><i className="fa fa-bars"></i>{/**} Event Duration <span>12 hours / 10 min intervals</span>{**/}</h3>
 							</div>
-							<Actions bucketData={this.state.bucketData} />
+							<Actions bucketData={ this.state.bucketData } />
 						</div>
 					</div>
 				</div>
