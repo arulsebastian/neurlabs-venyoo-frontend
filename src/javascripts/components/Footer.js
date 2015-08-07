@@ -1,6 +1,6 @@
-import React from "react";
-
 import "stylesheets/modules/footer";
+
+import React from "react";
 
 export default React.createClass({
 	render () {

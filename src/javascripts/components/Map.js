@@ -1,13 +1,13 @@
+/* Static dependencies */
+import '../../stylesheets/components/map.scss';
+// import tweet_content from '../../tweet_content.html';
+
 /* JS dependencies */
 import React from 'react';
 import jQuery from 'jquery';
 import _ from "lodash";
 import DialogBox from "./DialogBox";
 import ActionsActionCreators from "../actions/ActionsActionCreators";
-
-/* Static dependencies */
-import '../../stylesheets/components/map.scss';
-// import tweet_content from '../../tweet_content.html';
 
 /* Constants */
 const minZoomLevel = 2;

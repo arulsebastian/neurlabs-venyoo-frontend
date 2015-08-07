@@ -1,3 +1,6 @@
+/* Static dependencies */
+// import "stylesheets/modules/container";
+
 /* JS dependencies */
 import React from "react";
 /** React Components **/
@@ -15,9 +18,6 @@ import BucketStore       from "../stores/BucketStore";
 import FiltersActionCreators      from "../actions/FiltersActionCreators";
 import EventBucketsActionCreators from "../actions/EventBucketsActionCreators";
 import BucketActionCreators       from "../actions/BucketActionCreators";
-
-/* Static dependencies */
-// import "stylesheets/modules/container";
 
 function getStoresState (VenyooAppObj) {
 	return {
@@ -83,10 +83,7 @@ export default class VenyooApp extends React.Component {
 									   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) } />
 						</div>
 						<DialogBox id="FullscreenDataTable"
-								   isInput={ false }
-								   isBig={ true }
-								   actionName="111"
-								   onAction={ function () { console.log() } } >
+								   isBig={ true } >
 							<div className="popup_datalist">
 								<DataTable isPrimary={ false }
 										   bucketData={ this.state.bucketData }

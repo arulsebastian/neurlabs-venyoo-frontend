@@ -1,10 +1,10 @@
+/* Static dependencies */
+import socialImg from '../../images/social_1.png';
+
 /* JS dependencies */
 import React from "react";
 import ActionsActionCreators from "../actions/ActionsActionCreators";
 import DialogBox from "./DialogBox";
-
-/* Static dependencies */
-import socialImg from '../../images/social_1.png';
 
 export default class Actions extends React.Component {
 

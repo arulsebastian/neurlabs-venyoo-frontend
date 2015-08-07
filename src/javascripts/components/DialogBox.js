@@ -1,8 +1,8 @@
-/* JS dependencies */
-import React from "react";
-
 /* Static dependencies */
 import "../../stylesheets/components/dialogbox.scss";
+
+/* JS dependencies */
+import React from "react";
 
 export default class DialogBox extends React.Component {
 	constructor (...args) {
@@ -41,9 +41,8 @@ export default class DialogBox extends React.Component {
 		}
 
 		return (
-			<div key={ this.props.key } 
-				 className={ "modal fade custommodal " + additionalClasses } 
-				 id={ this.props.id } 
+			<div className={ "modal fade custommodal " + additionalClasses } 
+				 id={ this.props.id }
 				 tabindex="-1" 
 				 role="dialog">
 				<div className="modal-dialog" role="document">
@@ -68,7 +67,7 @@ export default class DialogBox extends React.Component {
 		if (!this.props.isInput || this.state.message !== "") {
 			$("#" + this.props.id).modal("hide");
 			if (this.props.onAction) {
-				this.props.onAction(this.state.message);
+				this.props.onAction(this.state.message, this.props.tag);
 			}
 			this.setState({
 				message: ""
@@ -79,7 +78,11 @@ export default class DialogBox extends React.Component {
 
 DialogBox.propTypes = {
 	id:         React.PropTypes.string.isRequired,
-	actionName: React.PropTypes.string.isRequired,
+	tag:        React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.number
+	]),
+	actionName: React.PropTypes.string,
 	isInput:    React.PropTypes.bool,
 	isBig:      React.PropTypes.bool,
 	onAction:   React.PropTypes.func,

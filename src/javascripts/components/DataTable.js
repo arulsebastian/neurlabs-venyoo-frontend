@@ -14,6 +14,7 @@ export default class DataTable extends React.Component {
 
 		this.state = {
 			checkedTweets:  [],   // All the checkboxes across all the pages
+			repliedTweets:  [],
 			tweetsTotal:    0,
 			tweetsPerPage:  5,
 			pagesCount:     1,
@@ -46,15 +47,24 @@ export default class DataTable extends React.Component {
 			var tweetsRows  = [];
 			var replyPopups = [];
 			for (var i = this.state.startTweetNumber; i < this.state.endTweetNumber; i++) {
-				var tweetData = this.props.bucketData.tweets[i];
-				
+				var tweetData    = this.props.bucketData.tweets[i];
+				var repliedClass = null;
+
+				if (this.state.repliedTweets[i]) {
+					repliedClass = "replied";
+				}
+
 				tweetsRows.push(
 					<tr key={ i }>
 						<td><label id="a">
 							<input type="checkbox" checked={ this.state.checkedTweets[ i] } data-tweet-number={ i } onChange={ this.handleCheckBoxClick.bind(this) } />
 							<span className="lbl"></span> </label>
 						</td>
-						<td><a href="#" className="reply_btn" data-toggle="modal" data-target={ "#Reply" + i } data-tweet-number={ i }><i className="fa fa-long-arrow-left"></i> Reply</a></td>
+						<td>
+							<a href="#" className={ "reply_btn " + repliedClass } data-toggle="modal" data-target={ "#Reply" + i } data-tweet-number={ i }>
+								<i className="fa fa-long-arrow-left"></i> Reply
+							</a>
+						</td>
 						<td>{ tweetData.message }</td>
 						<td>{ tweetData.mediaLink }</td>
 						<td>{ tweetData.email }</td>
@@ -68,6 +78,7 @@ export default class DataTable extends React.Component {
 				if (this.props.isPrimary) {
 					replyPopups.push(
 						<DialogBox key={ i }
+								   tag={ i }
 								   id={ "Reply" + i }
 								   isInput={ true }
 								   actionName="Reply"
@@ -157,6 +168,7 @@ export default class DataTable extends React.Component {
 			this.state.tweetsTotal = nextProps.bucketData.tweets.length;
 			this.state.pageNumber  = 0;
 			this.calculateTweetNumbers();
+			this.state.repliedTweets = Routines.fill(this.state.tweetsTotal, false);
 		}
 	}
 
@@ -187,8 +199,10 @@ export default class DataTable extends React.Component {
 	}
 
 	factoryHandleReply (username) {
-		return function (message) {
-			console.log("DataTable.handleReply username = ", username, ", message = ", message);
+		return function (message, tag) {
+			console.log("DataTable.handleReply username = ", username, ", message = ", message, ", tag = ", tag);
+			this.state.repliedTweets[tag] = true;
+			this.forceUpdate();
 			ActionsActionCreators.sendReply(username, message);
 		}
 	}

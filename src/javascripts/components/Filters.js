@@ -1,9 +1,9 @@
+/* Static dependencies */
+
 /* JS dependencies */
 import React from "react";
 import _ from "lodash";
 import FiltersActionCreators from "../actions/FiltersActionCreators";
-
-/* Static dependencies */
 
 export default class Filters extends React.Component {
 

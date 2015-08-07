@@ -1,9 +1,9 @@
+/* Static dependencies */
+import '../../stylesheets/components/timeslider.scss';
+
 /* JS dependencies */
 import React from 'react';
 import _ from "lodash";
-
-/* Static dependencies */
-import '../../stylesheets/components/timeslider.scss';
 
 /* Constants */
 const pointerColor  = '#2E7FB1';
