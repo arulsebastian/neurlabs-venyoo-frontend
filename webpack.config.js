@@ -4,7 +4,8 @@ const path = require("path");
 
 const config = {
 	entry: {
-		app: ["./src/javascripts/App.js"]
+		app:   ["./src/javascripts/App.js"],
+		login: ["./src/javascripts/Login.js"]
 	},
 	module: {
 		loaders: [

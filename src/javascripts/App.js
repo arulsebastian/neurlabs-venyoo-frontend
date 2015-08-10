@@ -1,5 +1,6 @@
 /* Static dependencies */
 import "../index.html";
+import "../app.html";
 import "../stylesheets/base";
 
 /* JS dependencies */
