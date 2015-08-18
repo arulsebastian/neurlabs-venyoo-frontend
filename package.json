@@ -1,21 +1,21 @@
 {
-  "name": "webpack-css-example",
+  "name": "neurlabs-venyoo-frontend-project",
   "version": "1.0.0",
-  "description": "Example repo showing a webpack CSS build",
+  "description": "Web Frontend for Venyoo project",
   "main": "index.js",
   "scripts": {
     "build": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bensmithett/webpack-css-example.git"
+    "url": "https://github.com/taydakov/neurlabs-venyoo-frontend"
   },
-  "author": "",
-  "license": "MIT",
+  "author": "Neurlabs",
+  "license": "",
   "bugs": {
-    "url": "https://github.com/bensmithett/webpack-css-example/issues"
+    "url": "https://github.com/taydakov/neurlabs-venyoo-frontend/issues"
   },
-  "homepage": "https://github.com/bensmithett/webpack-css-example",
+  "homepage": "http://taydakov.com/neurlabs-venyoo-frontend/",
   "dependencies": {
     "autoprefixer-loader": "1.1.0",
     "css-loader": "^0.9.1",
