@@ -16,36 +16,52 @@ class LoginForm extends React.Component {
 	}
 
 	render () {
+		var messageContent = null;
+
+		if (this.state.isInvalid) {
+			messageContent = <div className="alert alert-warning" role="alert">Credentials you entered are invalid</div>;
+		}
+
 		return (
-			<form className="form-signin">
+			<form className="form-signin" onSubmit={this.onSigninSubmit.bind(this)}>
 				<img src={logo} />
 				{/* <h2 className="form-signin-heading">Please sign in</h2> */}
-				<label for="inputUsername" className="sr-only">Username address</label>
+				{ messageContent }
+				<label for="inputUsername" className="sr-only">Username</label>
 				<input type="username" id="inputUsername" className="form-control" value={this.state.username} onChange={this.onUsernameChange.bind(this)} placeholder="Username address" required autofocus />
 				<label for="inputPassword" className="sr-only">Password</label>
-				<input type="password" id="inputPassword" className="form-control" value={this.state.password} onChange={this.onPasswordChange.bind(this)} placeholder="Password" required />
+				<input type="password" id="inputPassword" className="form-control" value={this.state.password} onChange={this.onPasswordChange.bind(this)} placeholder="Password" />
 				{/*<div className="checkbox">
 					<label>
 						<input type="checkbox" value="remember-me"> Remember me
 					</label>
 				</div>*/}
-				<button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.onSigninClick.bind(this)}>Sign in</button>
+				<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 			</form>
 		);
 	}
 
 	onUsernameChange (e) {
 		this.setState({
-			username: e.target.value
+			username:  e.target.value,
+			isInvalid: false
 		});
 	}
 	onPasswordChange (e) {
 		this.setState({
-			password: e.target.value
+			password:  e.target.value,
+			isInvalid: false
 		});
 	}
-	onSigninClick (e) {
-		window.location.href = "app.html";
+	onSigninSubmit (e) {
+		if (this.state.username === "admin") {
+			window.location.href = "app.html";
+		} else {
+			this.setState({
+				isInvalid: true
+			});
+		}
+		return false;
 	}
 }
 
