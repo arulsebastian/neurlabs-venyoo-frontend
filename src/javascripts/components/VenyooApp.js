@@ -42,7 +42,7 @@ export default class VenyooApp extends React.Component {
 
 		var dataTableExitFullscreenButtonContent =
 			<a href="#" className="full_screen" data-dismiss="modal">
-				Exit Full Screen
+				X
 			</a>;
 
 		return (
