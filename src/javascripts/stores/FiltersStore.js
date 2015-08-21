@@ -17,13 +17,7 @@ const ActionTypes = VenyooConstants.ActionTypes;
 
 /* Store State */
 var _filters = {};
-var _selectedFilters = {
-	/* Default values */
-	eventId:         1, 
-	socialChannelId: 0,
-	kloutScoreId:    2,
-	sentimentId:     0
-};
+var _selectedFilters = {};
 var _isLoading = true;
 
 var FiltersStore = assign({}, events.EventEmitter.prototype, {
@@ -66,6 +60,11 @@ FiltersStore.dispatchToken = AppDispatcher.register(function (action) {
 		case ActionTypes.RECEIVE_FILTERS_SUCCEEDED:
 			_isLoading = false;
 			_filters = action.filters;
+			/* default filters */
+			_selectedFilters.eventId         = _filters.events[0].id;
+			_selectedFilters.socialChannelId = _filters.socialChannels[0].id;
+			_selectedFilters.kloutScoreId    = _filters.kloutScores[0].id;
+			_selectedFilters.sentimentId     = _filters.sentiments[0].id;
 			FiltersStore.emitChange();
 			break;
 
@@ -74,7 +73,10 @@ FiltersStore.dispatchToken = AppDispatcher.register(function (action) {
 			FiltersStore.emitChange();
 			break;
 
-		case ActionTypes.
+		case ActionTypes.CHANGE_FILTERS_SELECTION:
+			_selectedFilters = action.selectedFilters;
+			FiltersStore.emitChange();
+			break;
 
 		default:
 			// do nothing

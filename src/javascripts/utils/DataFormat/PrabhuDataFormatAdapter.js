@@ -1,29 +1,40 @@
 /*
- * Adapter to convert Sivaram's data format to app's interval one
+ * Adapter to convert Prabhu's data format to app's interval one
  */
 
 import PassThroughDataFormatAdapter from "./PassThroughDataFormatAdapter";
 
-export default class SivaramDataFormatAdapter extends PassThroughDataFormatAdapter {
+export default class PrabhuDataFormatAdapter extends PassThroughDataFormatAdapter {
 
 	adjustFilters (originalFilters) {
-		var events = [];
+		console.log("PrabhuDataFormatAdapter.adjustFilters originalFilters=", originalFilters);
+
+		var events      = [];
+		var kloutScores = [];
 
 		/* Assemble events */
 		originalFilters.events.forEach(function (event) {
 			events.push({
 				id:        event.id,
-				awayTeam:  event.away_team,
-				homeTeam:  event.home_team,
+				teamAway:  event.away_team,
+				teamHome:  event.home_team,
 				startTime: event.startTime,
 				endTime:   event.endTime
+			});
+		});
+
+		/* Assemble klout scores */
+		originalFilters.klout_scores.forEach(function (kloutScore) {
+			kloutScores.push({
+				id:      kloutScore.id,
+				caption: kloutScore.min_score + " - " + kloutScore.max_score
 			});
 		});
 
 		return {
 			events:         events,
 			socialChannels: originalFilters.social,
-			kloutScores:    originalFilters.klout_scores,
+			kloutScores:    kloutScores,
 			sentiments:     originalFilters.sentiments
 		};
 	}

@@ -2,8 +2,6 @@ import request from "request";
 import ServerActionCreators from "../actions/ServerActionCreators";
 import DataFormatAdapter from "./DataFormat/DataFormatAdapter";
 
-const baseUrl = "http://private-23316-venyoo.apiary-mock.com";
-
 class VenyooWebUtils {
 
 	/* Getting data */
@@ -16,8 +14,9 @@ class VenyooWebUtils {
 		ServerActionCreators.receiveFiltersSending(urlParams);
 
 		request({
-			// url: baseUrl + "/metadata",
-			url: "http://52.24.255.84/metadata/",
+			// Sivaram's endpoint
+			// url: "http://52.24.255.84/metadata/",
+			url: "http://54.69.48.105/metadata/",
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {
@@ -50,8 +49,9 @@ class VenyooWebUtils {
 		ServerActionCreators.receiveEventBucketsMetadataSending(urlParams);
 
 		request({
-			// url: baseUrl + "/buckets/" + eventId,
-			url: "http://52.24.255.84/bucket/?event_id=" + eventId,
+			// Sivaram's endpoint
+			// url: "http://52.24.255.84/bucket/?event_id=" + eventId,
+			url: "http://54.69.48.105/bucket/?event_id=" + eventId,
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {
@@ -84,8 +84,9 @@ class VenyooWebUtils {
 		ServerActionCreators.receiveBucketDataSending(urlParams);
 
 		request({
-			// url: baseUrl + "/bucket/" + bucketId,
-			url: "http://52.24.255.84/filter/?bucket=" + bucketId + "&sentiment=" + sentimentId + "&klout_score=" + kloutScoreId + "&event_id=" + eventId + "&social_id=" + socialChannelId,
+			// Sivarams's
+			// url: "http://52.24.255.84/filter/?bucket=" + bucketId + "&sentiment=" + sentimentId + "&klout_score=" + kloutScoreId + "&event_id=" + eventId + "&social_id=" + socialChannelId,
+			url: "http://54.69.48.105/filter/?bucket=" + bucketId + "&sentiment=" + sentimentId + "&klout_score=" + kloutScoreId + "&event_id=" + eventId + "&social_id=" + socialChannelId,
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {

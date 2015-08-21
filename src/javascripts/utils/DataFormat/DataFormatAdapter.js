@@ -4,5 +4,6 @@
 
 import PassThroughDataFormatAdapter from "./PassThroughDataFormatAdapter";
 import SivaramDataFormatAdapter from "./SivaramDataFormatAdapter";
+import PrabhuDataFormatAdapter from "./PrabhuDataFormatAdapter";
 
-export default new SivaramDataFormatAdapter;
+export default new PrabhuDataFormatAdapter;

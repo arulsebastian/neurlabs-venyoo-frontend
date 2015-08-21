@@ -31,6 +31,7 @@ export default class Filters extends React.Component {
 
 			var self = this;
 
+			/* Assemble functions (see below) will fill this variables */
 			var currSocialChannelNumber = null;
 			var currKloutScoreNumber    = null;
 			var currSentimentNumber     = null;
@@ -48,7 +49,7 @@ export default class Filters extends React.Component {
 						<div className="event_select">
 							<div className="select-field">
 								{/* React approach to change state on onChange event is not applicable cause onChange does not work here */}
-								<select className="selectpicker" ref="eventSelector" onChange={ this.handleEventChange }>
+								<select className="selectpicker" ref="eventSelector" onChange={ this.handleEventChange.bind(this) }>
 									{events}
 								</select>
 							</div>
@@ -111,7 +112,7 @@ export default class Filters extends React.Component {
 				if (self.props.filters.events) {
 					self.props.filters.events.forEach(function (event, index) {
 						events.push(
-							<option value={ event.id } key={index}>{event.team_home + " vs " + event.team_away}</option>
+							<option value={ event.id } key={index}>{event.teamHome + " vs " + event.teamAway}</option>
 						);
 					});
 				}
