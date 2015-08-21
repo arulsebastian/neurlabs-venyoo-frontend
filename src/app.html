@@ -42,6 +42,13 @@
 	 			$('.inner_block').toggle();
 			});
 
+			$('.selectpicker').on('change', function () {
+				var selectedEventId = $(this).find('option:selected').val();
+				console.log('.selectpicker.change selectedEventId = ', selectedEventId, ', dataset = ', this.dataset);
+				if (window.eventFilterChangeHandler !== null)
+					window.eventFilterChangeHandler(selectedEventId);
+			});
+
 	// 		var $basic2 = $('#basic2').selectpicker({
 	// 			liveSearch: true,
 	// 			maxOptions: 1

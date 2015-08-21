@@ -49,7 +49,7 @@ export default class Filters extends React.Component {
 						<div className="event_select">
 							<div className="select-field">
 								{/* React approach to change state on onChange event is not applicable cause onChange does not work here */}
-								<select className="selectpicker" ref="eventSelector" onChange={ this.handleEventChange.bind(this) }>
+								<select className="selectpicker">
 									{events}
 								</select>
 							</div>
@@ -181,6 +181,11 @@ export default class Filters extends React.Component {
 		}
 	}
 
+	componentWillMount () {
+		/* React approach to change state on onChange event is not applicable cause onChange does not work for Bootstrap Selectpicker */
+		window.eventFilterChangeHandler = this.handleEventChange.bind(this);
+	}
+
 	componentWillReceiveProps (nextProps) {
 		console.log("Filters.componentWillReceiveProps nextProps = ", nextProps);
 
@@ -189,8 +194,10 @@ export default class Filters extends React.Component {
 
 	/* Event Handlers */
 
-	handleEventChange () {
-		console.log("Filters.handleEventChange");
+	handleEventChange (selectedEventId) {
+		console.log("Filters.handleEventChange selectedEventId = ", selectedEventId);
+		this.state.selected.eventId = selectedEventId;
+		this.handleFilterChange.bind(this)();
 	}
 
 	handleFilterChange () {
