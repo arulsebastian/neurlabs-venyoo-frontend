@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>Welcome to Venyoo</title>
+		<!-- App css bundle -->
+		<link rel="stylesheet" href="app.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	</head>
+	<body>
+
+		<div id="main"></div>
+
+		<!-- Google Maps API -->
+		<script src="https://maps.googleapis.com/maps/api/js"></script>
+		<!-- Map Markers Clustering -->
+		<script src="http://jawj.github.io/OverlappingMarkerSpiderfier/bin/oms.min.js"></script>
+		<!-- App js bundle -->
+		<script src="app.js"></script>
+
+<!-- This is Temporary Fix -->
+<!-- Js -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap.min.js"></script>
+<!-- Select Box -->
+<script src="libs/bootstrap-select.min.js"></script>
+<script>
+	 $(document).ready(function () {
+	 	setTimeout(function () {
+	// 		var mySelect = $('#first-disabled2');
+
+	// 		$('#special').on('click', function () {
+	// 			mySelect.find('option:selected').prop('disabled', true);
+	// 			mySelect.selectpicker('refresh');
+	// 		});
+	// 		$('#special2').on('click', function () {
+	// 			mySelect.find('option:disabled').prop('disabled', false);
+	// 			mySelect.selectpicker('refresh');
+	// 		});
+	 		$('.map_toggle').on('click', function () {
+	 			$('.inner_block').toggle();
+			});
+
+			$('.selectpicker').on('change', function () {
+				var selectedEventId = $(this).find('option:selected').val();
+				console.log('.selectpicker.change selectedEventId = ', selectedEventId, ', dataset = ', this.dataset);
+				if (window.eventFilterChangeHandler !== null)
+					window.eventFilterChangeHandler(selectedEventId);
+			});
+
+	// 		var $basic2 = $('#basic2').selectpicker({
+	// 			liveSearch: true,
+	// 			maxOptions: 1
+	// 		});
+	 	}, 1000);
+	 });
+</script>
+
+</html>
