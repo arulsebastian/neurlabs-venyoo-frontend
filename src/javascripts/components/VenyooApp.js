@@ -35,6 +35,8 @@ export default class VenyooApp extends React.Component {
 	}
 
 	render () {
+		var self = this;
+
 		var dataTableFullscreenButtonContent = 
 			<a href="#" className="full_screen" data-toggle="modal" data-target="#FullscreenDataTable">
 				<i className="fa fa-arrows-alt"></i> Full Screen
@@ -44,6 +46,15 @@ export default class VenyooApp extends React.Component {
 			<a href="#" className="full_screen" data-dismiss="modal">
 				X
 			</a>;
+
+		var eventData = null;
+		if (this.state.filters && this.state.filters.events && this.state.filters.selected) {
+			self.state.filters.events.forEach(function (event) {
+				if (event.id === self.state.filters.selected.eventId) {
+					eventData = event;
+				}
+			});
+		}
 
 		return (
 			<div className="wrapper">
@@ -73,7 +84,8 @@ export default class VenyooApp extends React.Component {
 					{/* Left block */}
 					<div className="left_sec">
 						<div className="start_detail">
-							<TimeSlider eventBuckets={ this.state.eventBuckets }
+							<TimeSlider eventData={ eventData }
+										eventBuckets={ this.state.eventBuckets }
 										onBucketChange={ this.handleBucketChanged.bind(this) } />
 						</div>
 						<div className="home_detail">

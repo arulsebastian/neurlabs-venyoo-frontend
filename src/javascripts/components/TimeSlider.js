@@ -3,7 +3,8 @@ import '../../stylesheets/components/timeslider.scss';
 
 /* JS dependencies */
 import React from 'react';
-import _ from "lodash";
+import _ from 'lodash';
+import moment from 'moment';
 
 /* Constants */
 const pointerColor  = '#2E7FB1';
@@ -11,19 +12,6 @@ const sliderHeight  = 60;
 const barHeight     = sliderHeight * 2/3;
 const pointerHeight = sliderHeight - barHeight;
 const pointerLength = pointerHeight / 0.866; // 0.866 is sin(pi/3)
-
-// USE THE FUNCTION
-
-function formatAMPM(date) {
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var ampm = hours >= 12 ? 'pm' : 'am';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0'+minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + ampm;
-  return strTime;
-}
 
 export default class TimeSlider extends React.Component {
 
@@ -49,11 +37,14 @@ export default class TimeSlider extends React.Component {
 		var sliderVisibility = (!this.props.eventBuckets.isLoading) ? "visible" : "hidden";
 		var loadingDisplay   = (this.props.eventBuckets.isLoading)  ? "block"   : "none";
 		var startTime        = null;
-		var finishTime       = null;
+		var endTime          = null;
 
-		if (this.props.eventBuckets.buckets && this.props.eventBuckets.buckets.length > 0) {
-			var startTime  = this.props.eventBuckets.buckets[0].bucketTime;
-			var finishTime = this.props.eventBuckets.buckets[this.props.eventBuckets.buckets.length - 1].bucketTime;
+		/* Prepare startTime and endTime labels */
+		if (this.props.eventData) {
+			var startMoment = moment(this.props.eventData.startTime);
+			var endMoment   = moment(this.props.eventData.endTime);
+			startTime = startMoment.format("MMM Do YYYY, h a");
+			endTime   = ((endMoment - startMoment) >= 24 * 3600000) ? endMoment.format("MMM Do YYYY, h a") : endMoment.format("h a");
 		}
 
 		return (
@@ -69,7 +60,7 @@ export default class TimeSlider extends React.Component {
 				</div>
 				<div className='slider_timescale' ref='sliderTimescale' style={{ visibility: sliderVisibility }}>
 					<span className='slider_start_time'>{startTime}</span>
-					<span className='slider_finish_time'>{finishTime}</span>
+					<span className='slider_finish_time'>{endTime}</span>
 					<canvas ref='sliderCanvas'/>
 				</div>
 
@@ -254,5 +245,6 @@ export default class TimeSlider extends React.Component {
 }
 TimeSlider.propTypes = {
 	eventBuckets:   React.PropTypes.object.isRequired,
+	eventData:      React.PropTypes.object,
 	onBucketChange: React.PropTypes.func
 };

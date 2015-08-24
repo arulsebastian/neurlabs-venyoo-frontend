@@ -35,5 +35,8 @@
     "object-assign": "~3.0.0",
     "bootstrap": "~3.3.5",
     "lodash": "~3.10.0"
+  },
+  "devDependencies": {
+    "moment": "~2.10.6"
   }
 }
