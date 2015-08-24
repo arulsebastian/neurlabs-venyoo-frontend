@@ -168,7 +168,11 @@ export default class Actions extends React.Component {
 				tweetTo: true
 			}
 		});
-		ActionsActionCreators.sendTweet(this.state.selectedTweets[0].socialHandle, message);
+		var screenNames = [];
+		this.state.uniqueSelectedUsers.forEach(function (username) {
+			screenNames.push(username);
+		});
+		ActionsActionCreators.sendTweet(screenNames, message);
 	}
 	handleFavoriteClick () {
 		this.setState({

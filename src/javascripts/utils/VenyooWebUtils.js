@@ -103,31 +103,64 @@ class VenyooWebUtils {
 
 	/* Performing actions */
 
-	sendTweet (screenName, message) {
+	sendTweet (screenNames, message) {
 		var self = this;
 
 		var urlParams = {
-			screenName: screenName,
-			message:    message
+			screenNames: screenNames,
+			message:     message
 		};
 
 		ServerActionCreators.sendTweetSending(urlParams);
 
-		request({
-			// Sivaram's
-			// url: "http://52.24.255.84/tweet/?screenname=" + encodeURIComponent(screenName) + "&message=" + encodeURIComponent(message),
-			url: "http://52.24.69.13/tweet/?screenname=" + encodeURIComponent(screenName) + "&message=" + encodeURIComponent(message),
-			withCredentials: false
-		}, function (error, response, body) {
-			if (!error && response.statusCode === 200) {
-				ServerActionCreators.sendTweetSucceeded(
-					urlParams,
-					response,
-					body);
-			} else {
-				ServerActionCreators.sendTweetFailed(urlParams, error, response, body);
-			}
-		});
+		if (screenNames.length === 1) {
+			request({
+				// Sivaram's
+				// url: "http://52.24.255.84/tweet/?screenname=" + encodeURIComponent(screenName) + "&message=" + encodeURIComponent(message),
+				url: "http://52.24.69.13/tweet/?screenname=" + encodeURIComponent(screenNames[0]) + "&message=" + encodeURIComponent(message),
+				withCredentials: false
+			}, function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					ServerActionCreators.sendTweetSucceeded(
+						urlParams,
+						response,
+						body);
+				} else {
+					ServerActionCreators.sendTweetFailed(urlParams, error, response, body);
+				}
+			});
+		} else {
+			/* Multiple user follow */
+
+			var data = {
+				accounts: [],
+				message: message,
+				type: 5
+			};
+
+			screenNames.forEach(function (screenName) {
+				data.accounts.push({
+					acc: screenName
+				});
+			});
+
+			request({
+				method: "POST",
+				url: "http://52.24.69.13/bulksendortweet/",
+				body: data,
+				json: true,
+				withCredentials: false
+			}, function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					ServerActionCreators.sendTweetSucceeded(
+						urlParams,
+						response,
+						body);
+				} else {
+					ServerActionCreators.sendTweetFailed(urlParams, error, response, body);
+				}
+			});
+		}
 	}
 
 	sendReply (username, message) {
