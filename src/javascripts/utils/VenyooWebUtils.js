@@ -209,30 +209,62 @@ class VenyooWebUtils {
 		});
 	}
 
-	sendFollow (screenName) {
+	sendFollow (screenNames) {
 		var self = this;
 
 		var urlParams = {
-			screenName: screenName
+			screenNames: screenNames
 		};
 
 		ServerActionCreators.sendFollowSending(urlParams);
 
-		request({
-			// Sivaram's
-			// url: "http://52.24.255.84/follow/?screenname=" + screenName,
-			url: "http://52.24.69.13/follow/?screenname=" + screenName,
-			withCredentials: false
-		}, function (error, response, body) {
-			if (!error && response.statusCode === 200) {
-				ServerActionCreators.sendFollowSucceeded(
-					urlParams,
-					response,
-					body);
-			} else {
-				ServerActionCreators.sendFollowFailed(urlParams, error, response, body);
-			}
-		});
+		if (screenNames.length === 1) {
+			request({
+				// Sivaram's
+				// url: "http://52.24.255.84/follow/?screenname=" + screenName,
+				url: "http://52.24.69.13/follow/?screenname=" + screenNames[0],
+				withCredentials: false
+			}, function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					ServerActionCreators.sendFollowSucceeded(
+						urlParams,
+						response,
+						body);
+				} else {
+					ServerActionCreators.sendFollowFailed(urlParams, error, response, body);
+				}
+			});
+		} else {
+			/* Multiple user follow */
+
+			var data = {
+				accounts: [],
+				type: 4
+			};
+
+			screenNames.forEach(function (screenName) {
+				data.accounts.push({
+					acc: screenName
+				});
+			});
+
+			request({
+				method: "POST",
+				url: "http://52.24.69.13/bulkfollow/",
+				body: data,
+				json: true,
+				withCredentials: false
+			}, function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					ServerActionCreators.sendFollowSucceeded(
+						urlParams,
+						response,
+						body);
+				} else {
+					ServerActionCreators.sendFollowFailed(urlParams, error, response, body);
+				}
+			});
+		}
 	}
 }
 

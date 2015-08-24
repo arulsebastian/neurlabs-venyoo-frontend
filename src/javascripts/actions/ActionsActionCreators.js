@@ -7,44 +7,44 @@ import VenyooConstants from "../constants/VenyooConstants";
 import VenyooWebUtils from "../utils/VenyooWebUtils";
 
 export default {
-	sendTweet (screenName, message) {
+	sendTweet (screenNames, message) {
 		AppDispatcher.dispatch({
 			type: VenyooConstants.ActionTypes.SEND_TWEET
 		});
 
-		VenyooWebUtils.sendTweet(screenName, message);
+		VenyooWebUtils.sendTweet(screenNames, message);
 	},
 
 	/* Direct message */
-	sendReply (username, message) {
+	sendReply (usernames, message) {
 		AppDispatcher.dispatch({
 			type: VenyooConstants.ActionTypes.SEND_REPLY
 		});
 
-		VenyooWebUtils.sendReply(username, message);
+		VenyooWebUtils.sendReply(usernames, message);
 	},
 
-	sendFavorite (tweetId) {
+	sendFavorite (tweetIds) {
 		AppDispatcher.dispatch({
 			type: VenyooConstants.ActionTypes.SEND_FAVORITE
 		});
 
-		VenyooWebUtils.sendFavorite(tweetId);
+		VenyooWebUtils.sendFavorite(tweetIds);
 	},
 
-	sendRetweet (tweetId) {
+	sendRetweet (tweetIds) {
 		AppDispatcher.dispatch({
 			type: VenyooConstants.ActionTypes.SEND_RETWEET
 		});
 
-		VenyooWebUtils.sendRetweet(tweetId);
+		VenyooWebUtils.sendRetweet(tweetIds);
 	},
 
-	sendFollow (tweetId) {
+	sendFollow (screenNames) {
 		AppDispatcher.dispatch({
 			type: VenyooConstants.ActionTypes.SEND_FOLLOW
 		});
 
-		VenyooWebUtils.sendFollow(tweetId);
+		VenyooWebUtils.sendFollow(screenNames);
 	},
 }

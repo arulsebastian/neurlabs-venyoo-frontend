@@ -129,8 +129,8 @@ export default class Actions extends React.Component {
 		nextProps.bucketData.tweets.forEach(function (tweet, i) {
 			if (nextProps.bucketData.checkedTweets[i]) {
 				selectedTweets.push(tweet);
-				if (uniqueSelectedUsers.indexOf(tweet.socialHandle) === -1) {
-					uniqueSelectedUsers.push(tweet.socialHandle);
+				if (uniqueSelectedUsers.indexOf(tweet.username) === -1) {
+					uniqueSelectedUsers.push(tweet.username);
 				}
 			}
 		});
@@ -156,7 +156,11 @@ export default class Actions extends React.Component {
 				follow: true
 			}
 		});
-		ActionsActionCreators.sendFollow(this.state.selectedTweets[0].tweetId);
+		var screenNames = [];
+		this.state.uniqueSelectedUsers.forEach(function (username) {
+			screenNames.push(username);
+		});
+		ActionsActionCreators.sendFollow(screenNames);
 	}
 	handleTweetClick (message) {
 		this.setState({
