@@ -130,7 +130,7 @@ class VenyooWebUtils {
 				}
 			});
 		} else {
-			/* Multiple user follow */
+			/* Multiple user tweet */
 
 			var data = {
 				accounts: [],
@@ -167,8 +167,8 @@ class VenyooWebUtils {
 		var self = this;
 
 		var urlParams = {
-			username: screenNames,
-			message:  message
+			screenNames: screenNames,
+			message:     message
 		};
 
 		ServerActionCreators.sendReplySending(urlParams);
@@ -190,7 +190,7 @@ class VenyooWebUtils {
 				}
 			});
 		} else {
-			/* Multiple user follow */
+			/* Multiple user message */
 
 			var data = {
 				accounts: [],
@@ -249,30 +249,62 @@ class VenyooWebUtils {
 		});
 	}
 
-	sendRetweet (tweetId) {
+	sendRetweet (tweetIds) {
 		var self = this;
 
 		var urlParams = {
-			tweetId: tweetId
+			tweetIds: tweetIds
 		};
 
 		ServerActionCreators.sendRetweetSending(urlParams);
 
-		request({
-			// Sivaram's
-			// url: "http://52.24.255.84/retweet/?tweet_id=" + tweetId,
-			url: "http://52.24.69.13/retweet/?tweet_id=" + tweetId,
-			withCredentials: false
-		}, function (error, response, body) {
-			if (!error && response.statusCode === 200) {
-				ServerActionCreators.sendRetweetSucceeded(
-					urlParams,
-					response,
-					body);
-			} else {
-				ServerActionCreators.sendRetweetFailed(urlParams, error, response, body);
-			}
-		});
+		if (tweetIds.length === 1) {
+			request({
+				// Sivaram's
+				// url: "http://52.24.255.84/retweet/?tweet_id=" + tweetId,
+				url: "http://52.24.69.13/retweet/?tweet_id=" + tweetIds[0],
+				withCredentials: false
+			}, function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					ServerActionCreators.sendRetweetSucceeded(
+						urlParams,
+						response,
+						body);
+				} else {
+					ServerActionCreators.sendRetweetFailed(urlParams, error, response, body);
+				}
+			});
+		} else {
+			/* Multiple user retweet */
+
+			var data = {
+				tweetID: [],
+				type: 3
+			};
+
+			tweetIds.forEach(function (screenName) {
+				data.tweetID.push({
+					id: screenName
+				});
+			});
+
+			request({
+				method: "POST",
+				url: "http://52.24.69.13/bulkfavouriteorretweet/",
+				body: data,
+				json: true,
+				withCredentials: false
+			}, function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					ServerActionCreators.sendRetweetSucceeded(
+						urlParams,
+						response,
+						body);
+				} else {
+					ServerActionCreators.sendRetweetFailed(urlParams, error, response, body);
+				}
+			});
+		}
 	}
 
 	sendFollow (screenNames) {

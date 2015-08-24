@@ -200,7 +200,11 @@ export default class Actions extends React.Component {
 				retweet: true
 			}
 		});
-		ActionsActionCreators.sendRetweet(this.state.selectedTweets[0].tweetId);
+		var tweetIds = [];
+		this.state.selectedTweets.forEach(function (tweet) {
+			tweetIds.push(tweet.tweetId);
+		});
+		ActionsActionCreators.sendRetweet(tweetIds);
 	}
 
 };
