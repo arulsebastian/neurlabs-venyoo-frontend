@@ -180,7 +180,11 @@ export default class Actions extends React.Component {
 				favorite: true
 			}
 		});
-		ActionsActionCreators.sendFavorite(this.state.selectedTweets[0].tweetId);
+		var tweetIds = [];
+		this.state.selectedTweets.forEach(function (tweet) {
+			tweetIds.push(tweet.tweetId);
+		});
+		ActionsActionCreators.sendFavorite(tweetIds);
 	}
 	handleDirectMessageClick (message) {
 		this.setState({

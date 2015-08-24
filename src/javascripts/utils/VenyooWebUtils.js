@@ -223,30 +223,62 @@ class VenyooWebUtils {
 		}
 	}
 
-	sendFavorite (tweetId) {
+	sendFavorite (tweetIds) {
 		var self = this;
 
 		var urlParams = {
-			tweetId: tweetId
+			tweetIds: tweetIds
 		};
 
 		ServerActionCreators.sendFavoriteSending(urlParams);
 
-		request({
-			// Sivaram's
-			// url: "http://52.24.255.84/favorite/?tweet_id=" + tweetId,
-			url: "http://52.24.69.13/favorite/?tweet_id=" + tweetId,
-			withCredentials: false
-		}, function (error, response, body) {
-			if (!error && response.statusCode === 200) {
-				ServerActionCreators.sendFavoriteSucceeded(
-					urlParams,
-					response,
-					body);
-			} else {
-				ServerActionCreators.sendFavoriteFailed(urlParams, error, response, body);
-			}
-		});
+		if (tweetIds.length === 1) {
+			request({
+				// Sivaram's
+				// url: "http://52.24.255.84/favorite/?tweet_id=" + tweetIds[0],
+				url: "http://52.24.69.13/favorite/?tweet_id=" + tweetIds[0],
+				withCredentials: false
+			}, function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					ServerActionCreators.sendFavoriteSucceeded(
+						urlParams,
+						response,
+						body);
+				} else {
+					ServerActionCreators.sendFavoriteFailed(urlParams, error, response, body);
+				}
+			});
+		} else {
+			/* Multiple tweet favorite */
+
+			var data = {
+				tweetID: [],
+				type: 2
+			};
+
+			tweetIds.forEach(function (screenName) {
+				data.tweetID.push({
+					id: screenName
+				});
+			});
+
+			request({
+				method: "POST",
+				url: "http://52.24.69.13/bulkfavouriteorretweet/",
+				body: data,
+				json: true,
+				withCredentials: false
+			}, function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					ServerActionCreators.sendFavoriteSucceeded(
+						urlParams,
+						response,
+						body);
+				} else {
+					ServerActionCreators.sendFavoriteFailed(urlParams, error, response, body);
+				}
+			});
+		}
 	}
 
 	sendRetweet (tweetIds) {
@@ -275,7 +307,7 @@ class VenyooWebUtils {
 				}
 			});
 		} else {
-			/* Multiple user retweet */
+			/* Multiple retweet */
 
 			var data = {
 				tweetID: [],
