@@ -188,7 +188,11 @@ export default class Actions extends React.Component {
 				message: true
 			}
 		});
-		ActionsActionCreators.sendReply(this.state.selectedTweets[0].username, message);
+		var screenNames = [];
+		this.state.uniqueSelectedUsers.forEach(function (username) {
+			screenNames.push(username);
+		});
+		ActionsActionCreators.sendReply(screenNames, message);
 	}
 	handleRetweetClick () {
 		this.setState({

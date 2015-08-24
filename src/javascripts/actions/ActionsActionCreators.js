@@ -16,12 +16,12 @@ export default {
 	},
 
 	/* Direct message */
-	sendReply (usernames, message) {
+	sendReply (screenNames, message) {
 		AppDispatcher.dispatch({
 			type: VenyooConstants.ActionTypes.SEND_REPLY
 		});
 
-		VenyooWebUtils.sendReply(usernames, message);
+		VenyooWebUtils.sendReply(screenNames, message);
 	},
 
 	sendFavorite (tweetIds) {

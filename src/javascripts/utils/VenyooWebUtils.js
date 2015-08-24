@@ -163,31 +163,64 @@ class VenyooWebUtils {
 		}
 	}
 
-	sendReply (username, message) {
+	sendReply (screenNames, message) {
 		var self = this;
 
 		var urlParams = {
-			username: username,
+			username: screenNames,
 			message:  message
 		};
 
 		ServerActionCreators.sendReplySending(urlParams);
 
-		request({
-			// Sivaram's
-			// url: "http://52.24.255.84/send/?username=" + encodeURIComponent(username) + "&message=" + encodeURIComponent(message),
-			url: "http://52.24.69.13/send/?username=" + encodeURIComponent(username) + "&message=" + encodeURIComponent(message),
-			withCredentials: false
-		}, function (error, response, body) {
-			if (!error && response.statusCode === 200) {
-				ServerActionCreators.sendReplySucceeded(
-					urlParams,
-					response,
-					body);
-			} else {
-				ServerActionCreators.sendReplyFailed(urlParams, error, response, body);
-			}
-		});
+		if (screenNames.length === 1) {
+			request({
+				// Sivaram's
+				// url: "http://52.24.255.84/send/?username=" + encodeURIComponent(screenNames[0]) + "&message=" + encodeURIComponent(message),
+				url: "http://52.24.69.13/send/?username=" + encodeURIComponent(screenNames[0]) + "&message=" + encodeURIComponent(message),
+				withCredentials: false
+			}, function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					ServerActionCreators.sendReplySucceeded(
+						urlParams,
+						response,
+						body);
+				} else {
+					ServerActionCreators.sendReplyFailed(urlParams, error, response, body);
+				}
+			});
+		} else {
+			/* Multiple user follow */
+
+			var data = {
+				accounts: [],
+				message:  message,
+				type: 1
+			};
+
+			screenNames.forEach(function (screenName) {
+				data.accounts.push({
+					acc: screenName
+				});
+			});
+
+			request({
+				method: "POST",
+				url: "http://52.24.69.13/bulksendortweet/",
+				body: data,
+				json: true,
+				withCredentials: false
+			}, function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					ServerActionCreators.sendReplySucceeded(
+						urlParams,
+						response,
+						body);
+				} else {
+					ServerActionCreators.sendReplyFailed(urlParams, error, response, body);
+				}
+			});
+		}
 	}
 
 	sendFavorite (tweetId) {
