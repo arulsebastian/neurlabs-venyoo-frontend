@@ -4,10 +4,13 @@ import logo from "../images/venyoo_logo.png";
 
 /* JS dependencies */
 import React from "react";
+import Cookies from "js-cookie";
 
 class LoginForm extends React.Component {
 	constructor (...args) {
 		super(...args);
+
+		Cookies.remove("login");
 
 		this.state = {
 			username: "",
@@ -54,7 +57,8 @@ class LoginForm extends React.Component {
 		});
 	}
 	onSigninSubmit (e) {
-		if (this.state.username === "admin") {
+		if (this.state.username === "admin" && this.state.password === "nimda") {
+			Cookies.set("login", "done");
 			window.location.href = "app.html";
 		} else {
 			this.setState({

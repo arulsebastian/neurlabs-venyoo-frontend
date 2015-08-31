@@ -3,6 +3,7 @@
 
 /* JS dependencies */
 import React from "react";
+import Cookies from "js-cookie";
 /** React Components **/
 import Map from "./Map";
 import TimeSlider from "./TimeSlider";
@@ -70,7 +71,7 @@ export default class VenyooApp extends React.Component {
 								<ul>
 									<li><a href="#" className="select">MAP</a></li>
 									<li><a href="#">STADUIM</a></li>
-									<li><a href="#">LOGOUT</a></li>
+									<li><a href="login.html">LOGOUT</a></li>
 								</ul>
 							</div>
 							
