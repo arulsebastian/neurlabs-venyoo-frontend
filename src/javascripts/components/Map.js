@@ -197,6 +197,10 @@ export default class Map extends React.Component {
 					content = content.replace('{{ infowin_tweet_to_target }}',       "#" + tweetToPrefix + i);
 
 					/* Place marker */
+					if (parseFloat(tweet.lat) === 0 && parseFloat(tweet.lng) === 0) {
+						tweet.lat = 34.78;
+						tweet.lng = -40.48;
+					}
 					var newMarker = new google.maps.Marker({
 						position: new google.maps.LatLng(tweet.lat, tweet.lng),
 						map:      self.state.map
