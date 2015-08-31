@@ -20,6 +20,7 @@ const ActionTypes  = VenyooConstants.ActionTypes;
 
 /* Store State */
 var _selectedBucketId = 0;
+var _selectedBucket   = {};
 var _eventBuckets     = {};
 var _isLoading        = true;
 
@@ -40,6 +41,7 @@ var EventBucketsStore = assign({}, events.EventEmitter.prototype, {
 	getState: function () {
 		var state = {
 			buckets:          _.cloneDeep(_eventBuckets.buckets),
+			selectedBucket:   _selectedBucket,
 			selectedBucketId: _selectedBucketId,
 			isLoading:        _isLoading
 		};
@@ -53,6 +55,11 @@ EventBucketsStore.dispatchToken = AppDispatcher.register(function (action) {
 		/* UI events */
 		case ActionTypes.CHANGE_BUCKET_SELECTION:
 			_selectedBucketId = action.selectedBucketId;
+			_eventBuckets.buckets.forEach(function (bucket) {
+				if (bucket.bucketId == _selectedBucketId) {
+					_selectedBucket = bucket;
+				}
+			});
 			EventBucketsStore.emitChange();
 			break;
 
@@ -65,6 +72,12 @@ EventBucketsStore.dispatchToken = AppDispatcher.register(function (action) {
 		case ActionTypes.RECEIVE_EVENTBUCKETS_SUCCEEDED:
 			_isLoading = false;
 			_eventBuckets.buckets = action.eventBuckets.buckets;
+			_selectedBucketId     = action.bucketId || _eventBuckets.buckets[0].bucketId;
+			_eventBuckets.buckets.forEach(function (bucket) {
+				if (bucket.bucketId == _selectedBucketId) {
+					_selectedBucket = bucket;
+				}
+			});
 			EventBucketsStore.emitChange();
 			break;
 

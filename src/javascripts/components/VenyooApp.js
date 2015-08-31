@@ -92,6 +92,7 @@ export default class VenyooApp extends React.Component {
 						<div className="home_detail">
 							<DataTable isPrimary={ true }
 									   bucketData={ this.state.bucketData }
+									   selectedBucket={ this.state.eventBuckets.selectedBucket }
 									   buttonContent={ dataTableFullscreenButtonContent }
 									   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) }
 									   onReply={ this.handleDataTableReply.bind(this) } />
@@ -101,6 +102,7 @@ export default class VenyooApp extends React.Component {
 							<div className="popup_datalist">
 								<DataTable isPrimary={ false }
 										   bucketData={ this.state.bucketData }
+										   selectedBucket={ this.state.eventBuckets.selectedBucket }
 										   buttonContent={ dataTableExitFullscreenButtonContent }
 										   onSelectionChange={ this.handleDataTableSelectionChanged.bind(this) }
 										   onReply={ this.handleDataTableReply.bind(this) } />

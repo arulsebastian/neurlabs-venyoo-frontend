@@ -17,10 +17,10 @@ const CHANGE_EVENT = "change";
 const ActionTypes  = VenyooConstants.ActionTypes;
 
 /* Store State */
-var _tweets        = [];
-var _checkedTweets = [];
-var _repliedTweets = [];
-var _isLoading     = true;
+var _tweets         = [];
+var _checkedTweets  = [];
+var _repliedTweets  = [];
+var _isLoading      = true;
 
 var BucketStore = assign({}, events.EventEmitter.prototype, {
 
@@ -38,10 +38,10 @@ var BucketStore = assign({}, events.EventEmitter.prototype, {
 
 	getState: function () {
 		var state = {
-			tweets:        _.cloneDeep(_tweets),
-			checkedTweets: _checkedTweets,
-			repliedTweets: _repliedTweets,
-			isLoading:     _isLoading
+			tweets:         _.cloneDeep(_tweets),
+			checkedTweets:  _checkedTweets,
+			repliedTweets:  _repliedTweets,
+			isLoading:      _isLoading
 		};
 		return state;
 	}
@@ -68,9 +68,9 @@ BucketStore.dispatchToken = AppDispatcher.register(function (action) {
 
 		case ActionTypes.RECEIVE_BUCKET_SUCCEEDED:
 		 	_isLoading = false;
-		 	_tweets        = action.bucket.tweets;
-		 	_checkedTweets = Routines.fill(_tweets.length, false);
-		 	_repliedTweets = Routines.fill(_tweets.length, false);
+		 	_tweets         = action.bucket.tweets;
+		 	_checkedTweets  = Routines.fill(_tweets.length, false);
+		 	_repliedTweets  = Routines.fill(_tweets.length, false);
 		 	BucketStore.emitChange();
 		 	break;
 

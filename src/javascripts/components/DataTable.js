@@ -98,8 +98,10 @@ export default class DataTable extends React.Component {
 			}
 
 			var timeLabel = null;
-			if (this.props.bucketData.tweets.length !== 0)
-				timeLabel = <a className="btn btn-sm grey_bg">{ this.props.bucketData.tweets[0].timeStamp }</a>
+			{
+				console.log("DataTable selectedBucket = ", this.props.selectedBucket);
+				timeLabel = <a className="btn btn-sm grey_bg">{ this.props.selectedBucket.bucketTime }</a>
+			}
 
 			return (
 				<div className="container data-table">
@@ -236,6 +238,7 @@ export default class DataTable extends React.Component {
 DataTable.propTypes = {
 	isPrimary:         React.PropTypes.bool,
 	bucketData:        React.PropTypes.object.isRequired,
+	selectedBucket:    React.PropTypes.object.isRequired,
 	buttonContent:     React.PropTypes.object,
 	onSelectionChange: React.PropTypes.func,
 	onReply:           React.PropTypes.func

@@ -4,11 +4,11 @@ import VenyooWebUtils from "../utils/VenyooWebUtils";
 import BucketActionCreators from "../actions/BucketActionCreators";
 
 export default {
-	getEventBuckets (eventId         = 1, 
-					 socialChannelId = 0,
-					 kloutScoreId    = 2,
-					 sentimentId     = 0,
-					 bucketId        = 0) {
+	getEventBuckets (eventId, 
+					 socialChannelId,
+					 kloutScoreId,
+					 sentimentId,
+					 bucketId) {
 		AppDispatcher.dispatch({
 			type: VenyooConstants.ActionTypes.GET_EVENTBUCKETS_METADATA
 		});
@@ -20,11 +20,11 @@ export default {
 											   bucketId);
 	},
 
-	changeBucketSelection (nextBucketId        = 0,
-						   nextEventId         = 1,
-						   nextSocialChannelId = 0,
-						   nextKloutScoreId    = 0,
-						   nextSentimentId     = 0) {
+	changeBucketSelection (nextBucketId,
+						   nextEventId,
+						   nextSocialChannelId,
+						   nextKloutScoreId,
+						   nextSentimentId) {
 		AppDispatcher.dispatch({
 			type:             VenyooConstants.ActionTypes.CHANGE_BUCKET_SELECTION,
 			selectedBucketId: nextBucketId

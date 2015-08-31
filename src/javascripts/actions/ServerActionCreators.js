@@ -49,7 +49,8 @@ export default {
 	receiveEventBucketsMetadataSucceeded: function (urlParams, eventBuckets, response, body) {
 		AppDispatcher.dispatch({
 			type:         ActionTypes.RECEIVE_EVENTBUCKETS_SUCCEEDED,
-			eventBuckets: eventBuckets
+			eventBuckets: eventBuckets,
+			bucketId:     urlParams.bucketId
 		});
 
 		BucketActionCreators.getBucket(urlParams.eventId, 
