@@ -2,6 +2,7 @@ import AppDispatcher from "../AppDispatcher";
 import VenyooConstants from "../constants/VenyooConstants";
 import EventBucketsActionCreators from "./EventBucketsActionCreators";
 import BucketActionCreators from "./BucketActionCreators";
+import FiltersStore from "../stores/FiltersStore";
 
 var ActionTypes = VenyooConstants.ActionTypes;
 
@@ -21,7 +22,12 @@ export default {
 			filters: filters
 		});
 
-		EventBucketsActionCreators.getEventBuckets(filters.events[0].id);
+		var selectedFilters = FiltersStore.getState().selected;
+
+		EventBucketsActionCreators.getEventBuckets(selectedFilters.eventId,
+												   selectedFilters.socialChannelId,
+												   selectedFilters.kloutScoreId,
+												   selectedFilters.sentimentId);
 	},
 
 	receiveFiltersFailed: function (urlParams, error, response, body) {

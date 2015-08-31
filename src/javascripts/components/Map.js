@@ -11,7 +11,7 @@ import ActionsActionCreators from "../actions/ActionsActionCreators";
 
 /* Constants */
 const minZoomLevel = 2;
-const directMessagePrefix = "directMessage";
+const replyPrefix         = "reply";
 const tweetToPrefix       = "tweetTo";
 const followPrefix        = "followPrefix";
 const favoritePrefix      = "favoritePrefix";
@@ -31,7 +31,7 @@ export default class Map extends React.Component {
 	}
 
 	render () {
-		var directMessagePopups = [];
+		var replyPopups = [];
 		var tweetToPopups       = [];
 		var followPopups        = [];
 		var favoritePopups      = [];
@@ -39,13 +39,13 @@ export default class Map extends React.Component {
 		for (var i = 0; i < this.props.bucketData.tweets.length; i++) {
 			var tweetData = this.props.bucketData.tweets[i];
 
-			directMessagePopups.push(
+			replyPopups.push(
 				<DialogBox key={ i }
-						   id={ directMessagePrefix + i }
+						   id={ replyPrefix + i }
 						   isInput={ true }
-						   actionName="Direct Message"
+						   actionName="Reply To"
 						   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) }>
-					<h3>Direct Message to: <span>{ tweetData.socialHandle }</span><br /><span className="reg_text">{ tweetData.message }</span></h3>
+					<h3>Reply to: <span>{ tweetData.socialHandle }</span><br /><span className="reg_text">{ tweetData.message }</span></h3>
 				</DialogBox>
 			);
 			
@@ -93,7 +93,7 @@ export default class Map extends React.Component {
 		return (
 			<div>
 				<div ref="mapCanvas" className="map_canvas"></div>
-				{ directMessagePopups }
+				{ replyPopups }
 				{ followPopups }
 				{ favoritePopups }
 				{ retweetPopups }
@@ -189,11 +189,11 @@ export default class Map extends React.Component {
 					content = content.replace('{{ infowin_handle }}',   tweet.socialHandle);
 					content = content.replace('{{ infowin_picUrl }}',   tweet.picUrl);
 					content = content.replace('{{ infowin_tweet }}',    tweet.message);
-					content = content.replace('{{ infowin_reply_target }}',    "#" + directMessagePrefix + i);
+					content = content.replace('{{ infowin_reply_target }}',    "#" + replyPrefix + i);
 					content = content.replace('{{ infowin_follow_target }}',   "#" + followPrefix + i);
 					content = content.replace('{{ infowin_favorite_target }}', "#" + favoritePrefix + i);
 					content = content.replace('{{ infowin_retweet_target }}',  "#" + retweetPrefix + i);
-					content = content.replace('{{ infowin_direct_message_target }}', "#" + directMessagePrefix + i);
+					content = content.replace('{{ infowin_direct_message_target }}', "#" + replyPrefix + i);
 					content = content.replace('{{ infowin_tweet_to_target }}',       "#" + tweetToPrefix + i);
 
 					/* Place marker */
@@ -235,31 +235,31 @@ export default class Map extends React.Component {
 	factoryHandleReply (username) {
 		return function (message) {
 			console.log("Map.factoryHandleReply username = ", username, ", message = ", message);
-			ActionsActionCreators.sendReply(username, message);
+			ActionsActionCreators.sendReply([username], message);
 		}
 	}
 	factoryHandleTweetTo (username) {
 		return function (message) {
 			console.log("Map.factoryHandleTweetTo username = ", username, ", message = ", message);
-			ActionsActionCreators.sendTweet(username, message);
+			ActionsActionCreators.sendTweet([username], message);
 		}
 	}
 	factoryHandleFollow (screenName) {
 		return function () {
 			console.log("Map.factoryHandleFollow screenName = ", screenName);
-			ActionsActionCreators.sendFollow(screenName);
+			ActionsActionCreators.sendFollow([screenName]);
 		}
 	}
 	factoryHandleFavorite (tweetId) {
 		return function () {
 			console.log("Map.factoryHandleFavorite tweetId = ", tweetId);
-			ActionsActionCreators.sendFavorite(tweetId);
+			ActionsActionCreators.sendFavorite([tweetId]);
 		}
 	}
 	factoryHandleRetweet (tweetId) {
 		return function () {
 			console.log("Map.factoryHandleRetweet tweetId = ", tweetId);
-			ActionsActionCreators.sendRetweet(tweetId);
+			ActionsActionCreators.sendRetweet([tweetId]);
 		}
 	}
 

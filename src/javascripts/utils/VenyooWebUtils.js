@@ -16,7 +16,7 @@ class VenyooWebUtils {
 		request({
 			// Sivaram's endpoint
 			// url: "http://52.24.255.84/metadata/",
-			url: "http://52.24.69.13/metadata/",
+			url: "http://52.24.69.13:5000/metadata/",
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {
@@ -32,10 +32,10 @@ class VenyooWebUtils {
 	}
 
 	getEventBucketsMetadata (eventId, 
-							 socialChannelId = 0,
-							 kloutScoreId    = 2,
-							 sentimentId     = 0,
-							 bucketId        = 0) {
+							 socialChannelId,
+							 kloutScoreId,
+							 sentimentId,
+							 bucketId) {
 		var self = this;
 
 		var urlParams = {
@@ -51,7 +51,7 @@ class VenyooWebUtils {
 		request({
 			// Sivaram's endpoint
 			// url: "http://52.24.255.84/bucket/?event_id=" + eventId,
-			url: "http://52.24.69.13/bucket/?event_id=" + eventId,
+			url: "http://52.24.69.13:5000/bucket/?event_id=" + eventId,
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {
@@ -86,7 +86,7 @@ class VenyooWebUtils {
 		request({
 			// Sivarams's
 			// url: "http://52.24.255.84/filter/?bucket=" + bucketId + "&sentiment=" + sentimentId + "&klout_score=" + kloutScoreId + "&event_id=" + eventId + "&social_id=" + socialChannelId,
-			url: "http://52.24.69.13/filter/?bucket=" + bucketId + "&sentiment=" + sentimentId + "&klout_score=" + kloutScoreId + "&event_id=" + eventId + "&social_id=" + socialChannelId,
+			url: "http://52.24.69.13:5000/filter/?bucket=" + bucketId + "&sentiment=" + sentimentId + "&klout_score=" + kloutScoreId + "&event_id=" + eventId + "&social_id=" + socialChannelId,
 			withCredentials: false
 		}, function (error, response, body) {
 			if (!error && response.statusCode === 200) {
@@ -117,7 +117,7 @@ class VenyooWebUtils {
 			request({
 				// Sivaram's
 				// url: "http://52.24.255.84/tweet/?screenname=" + encodeURIComponent(screenName) + "&message=" + encodeURIComponent(message),
-				url: "http://52.24.69.13/tweet/?screenname=" + encodeURIComponent(screenNames[0]) + "&message=" + encodeURIComponent(message),
+				url: "http://52.24.69.13:5000/tweet/?screenname=" + encodeURIComponent(screenNames[0]) + "&message=" + encodeURIComponent(message),
 				withCredentials: false
 			}, function (error, response, body) {
 				if (!error && response.statusCode === 200) {
@@ -146,7 +146,7 @@ class VenyooWebUtils {
 
 			request({
 				method: "POST",
-				url: "http://52.24.69.13/bulksendortweet/",
+				url: "http://52.24.69.13:5000/bulksendortweet/",
 				body: data,
 				json: true,
 				withCredentials: false
@@ -177,7 +177,7 @@ class VenyooWebUtils {
 			request({
 				// Sivaram's
 				// url: "http://52.24.255.84/send/?username=" + encodeURIComponent(screenNames[0]) + "&message=" + encodeURIComponent(message),
-				url: "http://52.24.69.13/send/?username=" + encodeURIComponent(screenNames[0]) + "&message=" + encodeURIComponent(message),
+				url: "http://52.24.69.13:5000/send/?username=" + encodeURIComponent(screenNames[0]) + "&message=" + encodeURIComponent(message),
 				withCredentials: false
 			}, function (error, response, body) {
 				if (!error && response.statusCode === 200) {
@@ -206,7 +206,7 @@ class VenyooWebUtils {
 
 			request({
 				method: "POST",
-				url: "http://52.24.69.13/bulksendortweet/",
+				url: "http://52.24.69.13:5000/bulksendortweet/",
 				body: data,
 				json: true,
 				withCredentials: false
@@ -236,7 +236,7 @@ class VenyooWebUtils {
 			request({
 				// Sivaram's
 				// url: "http://52.24.255.84/favorite/?tweet_id=" + tweetIds[0],
-				url: "http://52.24.69.13/favorite/?tweet_id=" + tweetIds[0],
+				url: "http://52.24.69.13:5000/favorite/?tweet_id=" + tweetIds[0],
 				withCredentials: false
 			}, function (error, response, body) {
 				if (!error && response.statusCode === 200) {
@@ -264,7 +264,7 @@ class VenyooWebUtils {
 
 			request({
 				method: "POST",
-				url: "http://52.24.69.13/bulkfavouriteorretweet/",
+				url: "http://52.24.69.13:5000/bulkfavouriteorretweet/",
 				body: data,
 				json: true,
 				withCredentials: false
@@ -294,7 +294,7 @@ class VenyooWebUtils {
 			request({
 				// Sivaram's
 				// url: "http://52.24.255.84/retweet/?tweet_id=" + tweetId,
-				url: "http://52.24.69.13/retweet/?tweet_id=" + tweetIds[0],
+				url: "http://52.24.69.13:5000/retweet/?tweet_id=" + tweetIds[0],
 				withCredentials: false
 			}, function (error, response, body) {
 				if (!error && response.statusCode === 200) {
@@ -322,7 +322,7 @@ class VenyooWebUtils {
 
 			request({
 				method: "POST",
-				url: "http://52.24.69.13/bulkfavouriteorretweet/",
+				url: "http://52.24.69.13:5000/bulkfavouriteorretweet/",
 				body: data,
 				json: true,
 				withCredentials: false
@@ -352,7 +352,7 @@ class VenyooWebUtils {
 			request({
 				// Sivaram's
 				// url: "http://52.24.255.84/follow/?screenname=" + screenName,
-				url: "http://52.24.69.13/follow/?screenname=" + screenNames[0],
+				url: "http://52.24.69.13:5000/follow/?screenname=" + screenNames[0],
 				withCredentials: false
 			}, function (error, response, body) {
 				if (!error && response.statusCode === 200) {
@@ -380,7 +380,7 @@ class VenyooWebUtils {
 
 			request({
 				method: "POST",
-				url: "http://52.24.69.13/bulkfollow/",
+				url: "http://52.24.69.13:5000/bulkfollow/",
 				body: data,
 				json: true,
 				withCredentials: false
