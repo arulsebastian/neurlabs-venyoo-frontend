@@ -44,7 +44,8 @@ export default class PrabhuDataFormatAdapter extends PassThroughDataFormatAdapte
 		originalEventBuckets.bucket.forEach(function (bucket) {
 			result.buckets.push({
 				bucketId:     bucket.id,
-				bucketTime:   bucket.start_time,
+				startTime:    bucket.start_time,
+				endTime:      bucket.end_time,
 				tweetsNumber: bucket.number_of_tweets
 			});
 		});

@@ -4,6 +4,7 @@ import DialogBox from "./DialogBox";
 import ActionsActionCreators from "../actions/ActionsActionCreators";
 import _ from "lodash";
 import Routines from "../utils/Routines";
+import moment from 'moment';
 
 /* Static dependencies */
 import "../../stylesheets/components/datatable.scss";
@@ -100,7 +101,7 @@ export default class DataTable extends React.Component {
 			var timeLabel = null;
 			{
 				console.log("DataTable selectedBucket = ", this.props.selectedBucket);
-				timeLabel = <a className="btn btn-sm grey_bg">{ this.props.selectedBucket.bucketTime }</a>
+				timeLabel = <a className="btn btn-sm grey_bg">{ moment(this.props.selectedBucket.startTime).format("h:m a") } - {moment(this.props.selectedBucket.endTime).format("h:m a")}</a>
 			}
 
 			return (
