@@ -51,7 +51,7 @@ export default class VenyooApp extends React.Component {
 		var eventData = null;
 		if (this.state.filters && this.state.filters.events && this.state.filters.selected) {
 			self.state.filters.events.forEach(function (event) {
-				if (event.id === self.state.filters.selected.eventId) {
+				if (event.id === parseInt(self.state.filters.selected.eventId)) {
 					eventData = event;
 				}
 			});

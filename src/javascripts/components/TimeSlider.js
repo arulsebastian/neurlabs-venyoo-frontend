@@ -36,15 +36,19 @@ export default class TimeSlider extends React.Component {
 
 		var sliderVisibility = (!this.props.eventBuckets.isLoading) ? "visible" : "hidden";
 		var loadingDisplay   = (this.props.eventBuckets.isLoading)  ? "block"   : "none";
-		var startDate        = null;
-		var endDate          = null;
+		var startDate  = null;
+		var endDate    = null;
+		var startTime  = null;
+		var endTime    = null;
 
 		/* Prepare startTime and endTime labels */
 		if (this.props.eventData) {
 			var startMoment = moment(this.props.eventData.startTime);
 			var endMoment   = moment(this.props.eventData.endTime);
-			startDate = startMoment.format("MMM Do YYYY");
-			endDate   = endMoment.format("MMM Do YYYY");
+			startDate  = startMoment.format("MMM Do YYYY");
+			endDate    = endMoment.format("MMM Do YYYY");
+			startTime  = startMoment.format("hh:mm a");
+			endTime    = endMoment.format("hh:mm a");
 		}
 
 		return (
@@ -61,8 +65,8 @@ export default class TimeSlider extends React.Component {
 					<span className='slider_finish_time'>{endDate}</span>
 				</div>
 				<div className='slider_timescale' ref='sliderTimescale' style={{ visibility: sliderVisibility }}>
-					
-					
+					<span className='slider_start_time'>{startTime}</span>
+					<span className='slider_finish_time'>{endTime}</span>
 					<canvas ref='sliderCanvas'/>
 				</div>
 
