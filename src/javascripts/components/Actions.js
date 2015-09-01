@@ -47,6 +47,7 @@ export default class Actions extends React.Component {
 					<DialogBox id="tweetToSelected"
 							   tag="tweetTo"
 							   isInput={ true }
+							   isLimitedInput={ true }
 							   actionName="Tweet"
 							   onAction={ this.handleTweetClick.bind(this) }>
 						<h3>You’ve selected <span>{ usersAmount } users</span><br /><span className="reg_text">Enter the message to Tweet To all the users:</span></h3>

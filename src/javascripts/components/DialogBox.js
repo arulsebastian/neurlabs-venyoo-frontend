@@ -19,7 +19,17 @@ export default class DialogBox extends React.Component {
 		var content           = null;
 
 		if (this.props.isInput) {
-			inputElement = <input type="text" name="" className="input_field" value={ this.state.message } onChange={ this.handleMessageChange.bind(this) } />;
+			var maxlength = "";
+			if (this.props.isLimitedInput) {
+				maxlength = "140";
+			}
+			inputElement = <input 
+								type="text"
+								name=""
+								className="input_field"
+								value={ this.state.message }
+								onChange={ this.handleMessageChange.bind(this) }
+								maxLength={ maxlength } />;
 		}
 
 		if (this.props.isBig) {
@@ -82,8 +92,9 @@ DialogBox.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.number
 	]),
-	actionName: React.PropTypes.string,
-	isInput:    React.PropTypes.bool,
-	isBig:      React.PropTypes.bool,
-	onAction:   React.PropTypes.func,
+	actionName:     React.PropTypes.string,
+	isInput:        React.PropTypes.bool,
+	isLimitedInput: React.PropTypes.bool,
+	isBig:          React.PropTypes.bool,
+	onAction:       React.PropTypes.func,
 }

@@ -43,6 +43,7 @@ export default class Map extends React.Component {
 				<DialogBox key={ i }
 						   id={ replyPrefix + i }
 						   isInput={ true }
+						   isLimitedInput={ true }
 						   actionName="Reply To"
 						   onAction={ this.factoryHandleReply(tweetData.socialHandle).bind(this) }>
 					<h3>Reply to: <span>{ tweetData.socialHandle }</span><br /><span className="reg_text">{ tweetData.message }</span></h3>
@@ -53,6 +54,7 @@ export default class Map extends React.Component {
 				<DialogBox key={ i }
 						   id={ tweetToPrefix + i }
 						   isInput={ true }
+						   isLimitedInput={ true }
 						   actionName="Tweet"
 						   onAction={ this.factoryHandleTweetTo(tweetData.socialHandle).bind(this) }>
 					<h3>Tweet to: <span>{ tweetData.socialHandle }</span><br /><span className="reg_text">{ tweetData.message }</span></h3>
